@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Plants vs Zombies" />
+        <module name="plants-vs-zombies" />
       </profile>
     </annotationProcessing>
   </component>
