@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/plants-vs-zombies.iml" filepath="$PROJECT_DIR$/plants-vs-zombies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Plants vs Zombies.iml" filepath="$PROJECT_DIR$/.idea/Plants vs Zombies.iml" />
     </modules>
   </component>
 </project>
