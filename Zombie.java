@@ -8,6 +8,7 @@ public abstract class Zombie {
     }
 
     public int getHp(){
+        System.out.println();
         return hp;
     }
     public int getSpeed() {
