@@ -1,3 +1,5 @@
+package Character;
+
 public abstract class Zombie {
     private int speed;
     private int hp;
