@@ -71,7 +71,10 @@ abstract class PeaPlant extends Plant {
     }
 
     //every time this method called a bullet object will be created!
-    public abstract void shoot();
+    // باید در بازی بررسی بشه که در سطر تا زمانی که زامبی هست صدا زده بشه
+    public void shoot() {
+
+    }
 
 }
 
