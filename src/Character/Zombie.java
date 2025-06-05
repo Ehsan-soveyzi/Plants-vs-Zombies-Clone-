@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 public abstract class Zombie {
 
 
-    private double hp;
+    private int hp;
     private double speed;
     private double eatingSpeed;
     private int row;
@@ -22,7 +22,7 @@ public abstract class Zombie {
 
 
 
-    public Zombie(double hp, double speed, double eatingSpeed, int row, double x, double y) {
+    public Zombie(int hp, double speed, double eatingSpeed, int row, double x, double y) {
         this.hp = hp;
         this.speed = speed;
         this.eatingSpeed = eatingSpeed;
@@ -44,9 +44,9 @@ public abstract class Zombie {
     }
 
 
-    public void takeDamage(double dmg) {
+    public void takeDamage() {
         if (isDead) return;
-        hp -= dmg;
+        hp--;
         if (hp <= 0) die();
     }
 
@@ -61,6 +61,13 @@ public abstract class Zombie {
         playEatingAnimation();
     }
 
+    //if the target is a plant
+    public void bite(Plant target) {
+        target.takeDamage();
+    }
+
+
+
     public void stopEating() {
         isEating = false;
         playWalkingAnimation();
@@ -71,7 +78,6 @@ public abstract class Zombie {
     protected abstract void playWalkingAnimation();
     protected abstract void playEatingAnimation();
     protected abstract void playDeathAnimation();
-
 
 
 
@@ -152,7 +158,7 @@ public abstract class Zombie {
         this.speed = speed;
     }
 
-    public void setHp(double hp) {
+    public void setHp(int hp) {
         this.hp = hp;
     }
 }

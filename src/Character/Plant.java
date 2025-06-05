@@ -1,78 +1,111 @@
 package Character;
 
+import javafx.scene.image.ImageView;
+
 public abstract class Plant {
 
 
-
     private int cost;
-    private double eatDuration;
-    private double hp;
+    private int hp;
+    private double cooldown;
     private double x, y;
 
-    static private double cooldown;
 
-    Plant(int cost, double eatDuration, double hp, double x, double y) {
+    private boolean isDead;
+
+    private ImageView imageView = new ImageView();
+
+
+    Plant(int cost, int hp, double x, double y) {
         this.cost = cost;
-        this.eatDuration = eatDuration;
         this.hp = hp;
+        this.isDead = false;
         this.x = x;
         this.y = y;
-
+        setupImage();
     }
-    public void takeDamage(double dmg) {
-        hp -= dmg;
+    public void takeDamage() {
+        if (isDead) return;
+        hp--;
         if (hp <= 0) die();
     }
 
     public void die() {
+        isDead = true;
         clearDiedPlant();
     }
+
     private void clearDiedPlant(){ // با مختصات گرید
 
     }
 
+    public abstract void update(double deltaTime);
+
+    public abstract void setupImage();
+
     public int getCost() {return cost;}
     public void setCost(int cost) {this.cost = cost;}
-    public double getEatDuration() {return eatDuration;}
-    public void setEatDuration(double eatDuration) {this.eatDuration = eatDuration;}
     public double getHp() {return hp;}
-    public void setHp(double hp) {this.hp = hp;}
+    public void setHp(int hp) {this.hp = hp;}
     public double getX() {return x;}
     public void setX(double x) {this.x = x;}
     public double getY() {return y;}
     public void setY(double y) {this.y = y;}
-    public static double getCooldown() {return cooldown;}
-    public static void setCooldown(double cooldown) {Plant.cooldown = cooldown;}
+    public double getCooldown() {return cooldown;}
+    public void setCooldown(double cooldown) {this.cooldown = cooldown;}
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
 }
 
 abstract class PeaPlant extends Plant {
-    private int attackPower; // amount of damage per seconds
-    private int attackSpeed; // seconds between
 
-    PeaPlant(int cost,double eatDuration, double hp, double x, double y, int attackPower, int attackSpeed) {
-        super(cost, eatDuration, hp, x, y);
-        this.attackPower = attackPower;
-        this.attackSpeed = attackSpeed;
+    PeaPlant(int cost, int hp, double x, double y) {
+        super(cost, hp, x, y);
     }
-    private void attack(){
-//        if(!listOfZombieInRow[y].isEmpty()){
-//            listOfZombieInRow[y].getTop().takedamge();
-//        }
-    }
+
+    //every time this method called a bullet object will be created!
+    public abstract void shoot();
+
 }
+
 abstract class NutPlant extends Plant {
     // میتونیم با خود کلاس نوشت
-    NutPlant(int cost,double eatDuration, double hp, double x, double y) {
-        super(cost, eatDuration, hp, x, y);
+    NutPlant(int cost, int hp, double x, double y) {
+        super(cost, hp, x, y);
+    }
+
+}
+class WallNut extends NutPlant {
+    WallNut(double x, double y) {
+        super(50, 10, x, y);
+    }
+
+    public void update(double deltaTime) {
+        //no movement
+    }
+
+    public void setupImage() {
+        //set the unique image here
     }
 }
+
 abstract class BombPlant extends Plant {
-    BombPlant(int cost,double eatDuration, double hp, double x, double y) {
-        super(cost, eatDuration, hp, x, y);
+    BombPlant(int cost, int hp, double x, double y) {
+        super(cost,hp, x, y);
     }
 }
+
 abstract class otherPlant extends Plant {
-    otherPlant(int cost,double eatDuration, double hp, double x, double y) {
-        super(cost, eatDuration, hp, x, y);
+    otherPlant(int cost, int hp, double x, double y) {
+        super(cost, hp, x, y);
     }
 }
