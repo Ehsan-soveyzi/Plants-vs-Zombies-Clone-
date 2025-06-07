@@ -9,8 +9,6 @@ public abstract class Plant {
     private int hp;
     private double cooldown;
     private double x, y;
-
-
     private boolean isDead;
 
     private ImageView imageView = new ImageView();
@@ -73,7 +71,10 @@ abstract class PeaPlant extends Plant {
     }
 
     //every time this method called a bullet object will be created!
-    public abstract void shoot();
+    // باید در بازی بررسی بشه که در سطر تا زمانی که زامبی هست صدا زده بشه
+    public void shoot() {
+
+    }
 
 }
 
@@ -104,8 +105,10 @@ abstract class BombPlant extends Plant {
     }
 }
 
-abstract class otherPlant extends Plant {
-    otherPlant(int cost, int hp, double x, double y) {
+
+abstract class SunFlower extends Plant {
+    //
+    SunFlower(int cost, int hp, double x, double y) {
         super(cost, hp, x, y);
     }
 }

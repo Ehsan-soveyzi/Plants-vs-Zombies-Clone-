@@ -44,9 +44,9 @@ public abstract class Zombie {
     }
 
 
-    public void takeDamage() {
+    public void takeDamage(int damage) {
         if (isDead) return;
-        hp--;
+        hp -= damage;
         if (hp <= 0) die();
     }
 
@@ -123,10 +123,10 @@ public abstract class Zombie {
     public void setSlowed(boolean slowed) {
         isSlowed = slowed;
         if(isSlowed){
-            setSpeed(getSpeed() / 2);
+            setSpeed(speed / 2);
         }
         else{
-            setSpeed(getSpeed() * 2);
+            setSpeed(speed * 2);
         }
     }
 
