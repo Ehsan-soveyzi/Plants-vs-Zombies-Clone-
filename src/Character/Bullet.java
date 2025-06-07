@@ -3,7 +3,6 @@ package Character;
 
 import javafx.scene.image.ImageView;
 
-enum BulletType {NORMAL, ICE, DOUBLE}
 public abstract class Bullet {
     private double speed;
     private double x,y;
@@ -13,25 +12,14 @@ public abstract class Bullet {
     private ImageView imageView = new ImageView();
 
     private boolean isAlive;
-    public Bullet(double x,double y,int row, BulletType type) {
+    public Bullet(double x,double y,int row, int damage, int speed) {
         this.x = x;
         this.y = y;
         this.row = row;
-        switch (type) {
-            case ICE:
-                slower = true;
-            case NORMAL:
-                speed = 1;
-                damage = 1;
-                break;
-            case DOUBLE: // 0.5 seconds later make a new bullet Normal
-                speed = 1;
-                damage = 1;
-                break;
-        }
-
+        this.damage = damage;
+        this.speed = speed;
     }
-    public void update(double deltaTime) {
+    public void move(double deltaTime) {
         if(!isAlive)return;
         x += speed * deltaTime;
         imageView.setLayoutX(x);
@@ -48,9 +36,7 @@ public abstract class Bullet {
         isAlive = false;
     }
 
-
-
-    public abstract void setupImage();
+//    public abstract void setupImage();
 
     public void onHit(Zombie zombie){
         if(slower) zombie.setSlowed(true);
@@ -77,3 +63,30 @@ public abstract class Bullet {
     }
 }
 //other class like peashot and iceshot extent this bullets!
+
+class NormalBullet extends Bullet{
+    public NormalBullet(double x,double y,int row, int damage, int speed) {
+        super(x,y,row,damage,speed);
+    }
+}
+class SlowBullet extends Bullet{
+    public SlowBullet(double x,double y,int row, int damage, int speed) {
+        super(x,y,row,damage,speed);
+    }
+}
+
+
+
+//enum BulletType {NORMAL, ICE, DOUBLE}
+//switch (type) {
+//        case ICE:
+//slower = true;
+//        case NORMAL:
+//speed = 1;
+//damage = 1;
+//        break;
+//        case DOUBLE: // 0.5 seconds later make a new bullet Normal
+//speed = 1;
+//damage = 1;
+//        break;
+//        }

@@ -37,9 +37,9 @@ public abstract class Plant {
 
     }
 
-    public abstract void update(double deltaTime);
+    public void update(double deltaTime){} // abstract
 
-    public abstract void setupImage();
+    public  void setupImage(){}; //abstract
 
     public int getCost() {return cost;}
     public void setCost(int cost) {this.cost = cost;}
@@ -64,51 +64,3 @@ public abstract class Plant {
     }
 }
 
-abstract class PeaPlant extends Plant {
-
-    PeaPlant(int cost, int hp, double x, double y) {
-        super(cost, hp, x, y);
-    }
-
-    //every time this method called a bullet object will be created!
-    // باید در بازی بررسی بشه که در سطر تا زمانی که زامبی هست صدا زده بشه
-    public void shoot() {
-
-    }
-
-}
-
-abstract class NutPlant extends Plant {
-    // میتونیم با خود کلاس نوشت
-    NutPlant(int cost, int hp, double x, double y) {
-        super(cost, hp, x, y);
-    }
-
-}
-class WallNut extends NutPlant {
-    WallNut(double x, double y) {
-        super(50, 10, x, y);
-    }
-
-    public void update(double deltaTime) {
-        //no movement
-    }
-
-    public void setupImage() {
-        //set the unique image here
-    }
-}
-
-abstract class BombPlant extends Plant {
-    BombPlant(int cost, int hp, double x, double y) {
-        super(cost,hp, x, y);
-    }
-}
-
-
-abstract class SunFlower extends Plant {
-    //
-    SunFlower(int cost, int hp, double x, double y) {
-        super(cost, hp, x, y);
-    }
-}

@@ -74,10 +74,10 @@ public abstract class Zombie {
     }
 
 
-    protected abstract void setupImage();
-    protected abstract void playWalkingAnimation();
-    protected abstract void playEatingAnimation();
-    protected abstract void playDeathAnimation();
+    protected void setupImage(){} //abstract
+    protected void playWalkingAnimation() {}//abstract
+    protected void playEatingAnimation(){}//abstract
+    protected void playDeathAnimation(){}//abstract
 
 
 
