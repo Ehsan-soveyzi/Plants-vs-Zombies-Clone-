@@ -1,9 +1,11 @@
 package Character;
 
+import javafx.scene.image.Image;
+
 public abstract class PeaPlant extends Plant {
     protected Bullet bullet;
-    PeaPlant(int cost, int hp, double x, double y, int row) {
-        super(cost, hp, x, y,row);
+    PeaPlant(int cost, int hp, double x, double y, int row, Image image) {
+        super(cost, hp, x, y,row, image);
     }
 
     //every time this method called a bullet object will be created!
@@ -11,8 +13,11 @@ public abstract class PeaPlant extends Plant {
     abstract public void shoot();
 }
 class PeaShooter extends PeaPlant {
+
+    private static final String peaShooterImageAddress = "/Character/peaShooter.png";
+
     public PeaShooter(int cost, int hp, double x, double y, int row) {
-        super(cost, hp, x, y, row);
+        super(cost, hp, x, y, row, new Image(peaShooterImageAddress));
 
     }
 
@@ -27,15 +32,12 @@ class PeaShooter extends PeaPlant {
 
     }
 
-    @Override
-    public void setupImage() {
-
-    }
 
 }
 class Repeater extends PeaPlant {
+    private static final String repeaterImageAddress = "/Character/repeater.png";
     public Repeater(int cost, int hp, double x, double y, int row) {
-        super(cost, hp, x, y, row);
+        super(cost, hp, x, y, row, new Image(repeaterImageAddress));
 
     }
 
@@ -52,15 +54,11 @@ class Repeater extends PeaPlant {
 
     }
 
-    @Override
-    public void setupImage() {
-
-    }
-
 }
 class SnowPea extends PeaPlant {
+    private static final String snowPeaImageAddress = "/Character/snowPea.png";
     public SnowPea(int cost, int hp, double x, double y, int row) {
-        super(cost, hp, x, y, row);
+        super(cost, hp, x, y, row, new Image(snowPeaImageAddress));
 
     }
 
@@ -75,9 +73,5 @@ class SnowPea extends PeaPlant {
 //
 //    }
 
-    @Override
-    public void setupImage() {
-
-    }
 
 }

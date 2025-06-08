@@ -1,5 +1,6 @@
 package Character;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Plant {
@@ -13,17 +14,16 @@ public abstract class Plant {
     private int row;
 
 
-    private ImageView imageView = new ImageView();
+    private ImageView imageView; // pay attention when the plant dies should set another image
 
-
-    Plant(int cost, int hp, double x, double y, int row) {
+    Plant(int cost, int hp, double x, double y, int row, Image image) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
         this.x = x;
         this.y = y;
         this.row = row;
-        setupImage();
+        imageView = new ImageView(image);
     }
     public void takeDamage() {
         if (isDead) return;
@@ -42,7 +42,6 @@ public abstract class Plant {
 
     public void update(double deltaTime){} // abstract
 
-    public  void setupImage(){}; //abstract
     public int getRow(){return row;};
     public int getCost() {return cost;}
     public void setCost(int cost) {this.cost = cost;}

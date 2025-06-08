@@ -1,5 +1,6 @@
 package Character;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
@@ -17,12 +18,12 @@ public abstract class Zombie {
     private boolean isEating;
     private boolean isSlowed;
 
+//    protected Image image;
+    private ImageView imageView;
 
-    private ImageView imageView = new ImageView();
 
 
-
-    public Zombie(int hp, double speed, double eatingSpeed, int row, double x, double y) {
+    public Zombie(int hp, double speed, double eatingSpeed, int row, double x, double y, Image image) {
         this.hp = hp;
         this.speed = speed;
         this.eatingSpeed = eatingSpeed;
@@ -32,7 +33,7 @@ public abstract class Zombie {
         this.isDead = false;
         this.isEating = false;
         this.isSlowed = false;
-        setupImage();
+        imageView = new ImageView(image);
     }
 
     //updating zombie movement per moment.

@@ -19,7 +19,7 @@ public class Sun {
         this.y = y;
         imageView.setX(x);
         imageView.setY(y);
-        // imageview should add as a child
+        // imageview should add as a child for being watchable
         sunCollector();
     }
     public void sunCollector(){
