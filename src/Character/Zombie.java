@@ -1,6 +1,13 @@
 package Character;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 
 public abstract class Zombie {
@@ -74,10 +81,10 @@ public abstract class Zombie {
     }
 
 
-    protected abstract void setupImage();
-    protected abstract void playWalkingAnimation();
-    protected abstract void playEatingAnimation();
-    protected abstract void playDeathAnimation();
+    public abstract void setupImage();
+    public abstract void playWalkingAnimation();
+    public abstract void playEatingAnimation();
+    public abstract void playDeathAnimation();
 
 
 
@@ -115,6 +122,7 @@ public abstract class Zombie {
     public ImageView getImageView() {
         return imageView;
     }
+
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
@@ -160,5 +168,55 @@ public abstract class Zombie {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+}
+class NormalZombie extends Zombie {
+
+    public NormalZombie(int row, double x, double y) {
+        super(5,10, 0.5, row, x, y);
+    }
+
+    @Override
+    public void setupImage() {
+        Image firstFrame = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_0.png")));
+        ImageView iv = getImageView();
+        iv.setImage(firstFrame);
+        iv.setLayoutX(getX());
+        iv.setLayoutY(getY());
+//        iv.setFitWidth(120);
+//        iv.setFitHeight(110);
+    }
+
+    @Override
+    public void playWalkingAnimation() {
+        Image[] frames = new Image[22];
+        for (int i = 0; i < 22; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_" + i + ".png"
+            )));
+        }
+
+        ImageView zombieView = getImageView();
+
+        final int[] frameIndex = {0};
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            this.update(0.1);
+            zombieView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    @Override
+    public void playEatingAnimation() {
+
+    }
+
+    @Override
+    public void playDeathAnimation() {
+
     }
 }

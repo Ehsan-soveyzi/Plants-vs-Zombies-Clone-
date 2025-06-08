@@ -6,8 +6,8 @@ public class GameMap {
     private final int ROWS = 5;
     private final int COLS = 9;
 
-    private final int CELL_WIDTH = 80;
-    private final int CELL_HEIGHT = 100;
+    private final int CELL_WIDTH = 1100;
+    private final int CELL_HEIGHT = 700;
     private final int OFFSET_Y = 20;
 
     private final Plant[][] grid = new Plant[ROWS][COLS];
@@ -41,13 +41,14 @@ public class GameMap {
         return row*CELL_HEIGHT + OFFSET_Y;
     }
 
-    public int getColForX(double x){
-        return (int)(x/CELL_WIDTH);
-    }
+    //no need
+//    public int getColForX(double x){
+//        return (int)(x/CELL_WIDTH);
+//    }
 
-    public int getRowForY(double y){
-        return (int)((y - OFFSET_Y) / CELL_HEIGHT);
-    }
+//    public int getRowForY(double y){
+//        return (int)((y - OFFSET_Y) / CELL_HEIGHT);
+//    }
 
     public int getRows(){
         return ROWS;
