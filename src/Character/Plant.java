@@ -10,16 +10,19 @@ public abstract class Plant {
     private double cooldown;
     private double x, y;
     private boolean isDead;
+    private int row;
+
 
     private ImageView imageView = new ImageView();
 
 
-    Plant(int cost, int hp, double x, double y) {
+    Plant(int cost, int hp, double x, double y, int row) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
         this.x = x;
         this.y = y;
+        this.row = row;
         setupImage();
     }
     public void takeDamage() {
@@ -40,7 +43,7 @@ public abstract class Plant {
     public void update(double deltaTime){} // abstract
 
     public  void setupImage(){}; //abstract
-
+    public int getRow(){return row;};
     public int getCost() {return cost;}
     public void setCost(int cost) {this.cost = cost;}
     public double getHp() {return hp;}

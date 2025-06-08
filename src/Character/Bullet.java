@@ -12,7 +12,7 @@ public abstract class Bullet {
     private ImageView imageView = new ImageView();
 
     private boolean isAlive;
-    public Bullet(double x,double y,int row, int damage, int speed) {
+    public Bullet(double x,double y,int row, int damage, double speed) {
         this.x = x;
         this.y = y;
         this.row = row;
@@ -65,12 +65,12 @@ public abstract class Bullet {
 //other class like peashot and iceshot extent this bullets!
 
 class NormalBullet extends Bullet{
-    public NormalBullet(double x,double y,int row, int damage, int speed) {
+    public NormalBullet(double x,double y,int row, int damage, double speed) {
         super(x,y,row,damage,speed);
     }
 }
 class SlowBullet extends Bullet{
-    public SlowBullet(double x,double y,int row, int damage, int speed) {
+    public SlowBullet(double x,double y,int row, int damage, double speed) {
         super(x,y,row,damage,speed);
     }
 }
