@@ -1,6 +1,6 @@
 package Map;
 
-import Character.Plant;
+import Character.KindsOfPlants.Plant;
 
 import javax.swing.text.html.ImageView;
 import java.util.ArrayList;

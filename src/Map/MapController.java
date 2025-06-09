@@ -1,12 +1,13 @@
 package Map;
 
+import Character.KindsOfZombie.Regular;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import Character.Zombie;
+import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
-import Character.Plant;
-import Character.PeaShooter;
+import Character.KindsOfPlants.Plant;
+import Character.KindsOfPlants.PeaShooter;
 
 public class MapController {
 
@@ -28,7 +29,8 @@ public class MapController {
 
         double cellWidth = gridPane.getPrefWidth() / gridPane.getColumnCount();
         double cellHeight = gridPane.getPrefHeight() / gridPane.getRowCount();
-        Zombie zombie1 = ZombieFactory.createNormalZombie(1,1500,85);
+//        Zombie zombie1 = ZombieFactory.createNormalZombie(1,1500,85);
+        Zombie zombie1 = new Regular(1,1500,85);
         zombie1.getImageView().setFitWidth(cellWidth);
         zombie1.getImageView().setFitHeight(cellHeight);
         paneWindow.getChildren().add(zombie1.getImageView());
