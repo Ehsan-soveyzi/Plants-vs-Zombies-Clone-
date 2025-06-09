@@ -8,4 +8,8 @@ public class TallNut extends NutPlant {
         super(cost, hp, x, y, row, new Image(TallNutImageAddress));
     }
 
+    @Override
+    public void updateImageSituation() {
+
+    }
 }

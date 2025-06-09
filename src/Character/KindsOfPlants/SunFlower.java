@@ -31,4 +31,8 @@ public class SunFlower extends Plant{
 
     }
 
+    @Override
+    public void updateImageSituation() {
+
+    }
 }

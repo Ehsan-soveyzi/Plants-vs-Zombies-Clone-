@@ -18,4 +18,8 @@ public class Repeater extends PeaPlant {
         Bullet secondBullet = new NormalBullet(getX(), getY(), getRow(), 1, 0.5);
     }
 
+    @Override
+    public void updateImageSituation() {
+
+    }
 }

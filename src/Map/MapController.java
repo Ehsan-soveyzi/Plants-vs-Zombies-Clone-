@@ -30,7 +30,7 @@ public class MapController {
         double cellWidth = gridPane.getPrefWidth() / gridPane.getColumnCount();
         double cellHeight = gridPane.getPrefHeight() / gridPane.getRowCount();
 //        Zombie zombie1 = ZombieFactory.createNormalZombie(1,1500,85);
-        Zombie zombie1 = new Regular(1,1500,85);
+        Zombie zombie1 = new Regular(10,12,13,1,1500,85);
         zombie1.getImageView().setFitWidth(cellWidth);
         zombie1.getImageView().setFitHeight(cellHeight);
         paneWindow.getChildren().add(zombie1.getImageView());
@@ -38,7 +38,9 @@ public class MapController {
         createGrid();
     }
     public void choosePeaShooter(){
-        choosenPlant = ZombieFactory.createPeaPlant(100,5,750,90);
+//        choosenPlant = ZombieFactory.createPeaPlant(100,5,750,90);
+        choosenPlant = new PeaShooter(100,5,1000,50,2);
+
     }
 
     public void createGrid(){
@@ -64,6 +66,7 @@ public class MapController {
 //                        gridPane.add(choosenPlant.getImageView(), finalI, finalJ);
                         cell.getChildren().add(choosenPlant.getImageView());
                         map.addPlant(choosenPlant, finalI, finalJ);
+                        choosenPlant.updateImageSituation();
                         choosenPlant = null;
                     }
                 });

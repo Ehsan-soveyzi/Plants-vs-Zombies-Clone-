@@ -46,7 +46,7 @@ public abstract class Plant {
         // remove from array
         // remove from the grid
     }
-    public void updateImageSituation() {} // abstract
+    public abstract void updateImageSituation(); // abstract
 
     public int getRow(){return row;};
     public int getCost() {return cost;}

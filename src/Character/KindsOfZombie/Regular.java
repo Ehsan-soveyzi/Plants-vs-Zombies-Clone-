@@ -10,7 +10,7 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class Regular extends Zombie {
-    private final static String regularImageAddress = "/Character/regular.png";
+    private final static String regularImageAddress = "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_0.png";
     // or have a image field in parent class and
     // static because before making this field the super execute
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
@@ -20,7 +20,7 @@ public class Regular extends Zombie {
     }
 
     @Override
-    protected void playWalkingAnimation() {
+    public void playWalkingAnimation() {
 
         time = new Timeline(new KeyFrame(Duration.millis(1000)));
 

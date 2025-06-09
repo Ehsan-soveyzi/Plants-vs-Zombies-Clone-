@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class PeaShooter extends PeaPlant {
 
-    private static final String peaShooterImageAddress = "/Character/peaShooter.png";
+    private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter_0.png";
 
     public PeaShooter(int cost, int hp, double x, double y, int row) {
         super(cost, hp, x, y, row, new Image(peaShooterImageAddress));
@@ -42,5 +42,8 @@ public class PeaShooter extends PeaPlant {
     }
 
 
-
+    @Override
+    public void updateImageSituation() {
+        this.playAnimation();
+    }
 }

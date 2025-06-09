@@ -13,7 +13,7 @@ public class ScreenDoorZombie extends Zombie {
     }
 
     @Override
-    protected void playWalkingAnimation() {
+    public void playWalkingAnimation() {
 
     }
 

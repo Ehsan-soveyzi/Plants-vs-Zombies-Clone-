@@ -9,7 +9,7 @@ public class IMPZombie extends Zombie {
     }
 
     @Override
-    protected void playWalkingAnimation() {
+    public void playWalkingAnimation() {
 
     }
 

@@ -9,4 +9,8 @@ public class WallNut extends NutPlant {
         super(cost, hp, x, y, row, new Image(WallNutImageAddress));
     }
 
+    @Override
+    public void updateImageSituation() {
+
+    }
 }

@@ -17,5 +17,8 @@ public class SnowPea extends PeaPlant {
     }
 
 
+    @Override
+    public void updateImageSituation() {
 
+    }
 }

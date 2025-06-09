@@ -104,7 +104,7 @@ public abstract class Zombie {
 //        updateImageHP();
     } // abstract
     protected void updateImageHP() {}; // abstract
-    protected  abstract void playWalkingAnimation();//abstract
+    public   abstract void playWalkingAnimation();//abstract
     protected  abstract void  playEatingAnimation();
     protected void playDeathAnimation(){}//abstract
     private void playBurningAnimation(){};

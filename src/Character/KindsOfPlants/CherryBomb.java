@@ -8,6 +8,12 @@ public  class CherryBomb extends BombPlant {
         super(cost, hp, x, y, row, image);
 
     }
+
+    @Override
+    public void updateImageSituation() {
+
+    }
+
     public void burnZombies(){
 
     }
