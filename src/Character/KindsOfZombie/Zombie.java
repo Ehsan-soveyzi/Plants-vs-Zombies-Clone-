@@ -14,7 +14,7 @@ public abstract class Zombie {
     private double speed;
     private double eatingSpeed;
     private int row;
-    private double x = 0.0, y = 0.0;
+    private double x = 1500, y = 0.0;
 
 
     private boolean isDead;

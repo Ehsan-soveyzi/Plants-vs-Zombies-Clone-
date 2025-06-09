@@ -21,7 +21,9 @@ public class Regular extends Zombie {
     private final static int ZOMBIE_DAMAGE_SPEED = 2;
 
     public Regular(int row) {
-        super(5,1,1,row,new Image(regularImageAddress));
+        super(5,50,1,row,new Image(regularImageAddress));
+        setY(row * 140 + 100);
+        getImageView().setLayoutY(row * 140 + 80);
 
     }
 
