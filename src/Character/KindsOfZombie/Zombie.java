@@ -14,7 +14,7 @@ public abstract class Zombie {
     private double speed;
     private double eatingSpeed;
     private int row;
-    private double x, y;
+    private double x = 0.0, y = 0.0;
 
 
     private boolean isDead;
@@ -27,13 +27,12 @@ public abstract class Zombie {
     private ImageView imageView;
 
 
-    public Zombie(int hp, double speed, double eatingSpeed, int row, double x, double y, Image image) {
+
+    public Zombie(int hp, double speed, double eatingSpeed, int row, Image image) {
         this.hp = hp;
         this.speed = speed;
         this.eatingSpeed = eatingSpeed;
         this.row = row;
-        this.x = x;
-        this.y = y;
         this.isDead = false;
         this.isEating = false;
         this.isSlowed = false;

@@ -24,10 +24,7 @@ public class Sun {
     }
     public void sunCollector(){
         imageView.setOnMouseClicked(event -> {
-            if(clicked) {
-                removeSun();
-            }
-            else clicked = true;
+            clicked = true;
         });
 
         new Thread(()->{

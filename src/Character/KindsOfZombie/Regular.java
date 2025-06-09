@@ -10,13 +10,19 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class Regular extends Zombie {
-    private final static String regularImageAddress = "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_0.png";
+    private final static String regularImageAddress =
+            "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_0.png";
     // or have a image field in parent class and
     // static because before making this field the super execute
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
+    private final static int ZOMBIE_HP = 7;
+    private final static int ZOMBIE_DAMAGE = 1;
+    private final static int ZOMBIE_SPEED = 1;
+    private final static int ZOMBIE_DAMAGE_SPEED = 2;
 
-    public Regular(int hp, double speed, double eatingSpeed, int row, double x, double y) {
-        super(hp, speed, eatingSpeed, row, x, y, new Image(regularImageAddress));
+    public Regular(int row) {
+        super(5,1,1,row,new Image(regularImageAddress));
+
     }
 
     @Override
