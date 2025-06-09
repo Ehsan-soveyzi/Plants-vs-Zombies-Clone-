@@ -55,11 +55,15 @@ public class MapController {
                 int finalI = i;
                 int finalJ = j;
                 cell.setOnMouseClicked(event -> {
-                    if (choosenPlant == null){
+                    if (choosenPlant == null ){
                         System.out.println("No plant selected");
                     }
+                    else if(!map.isCellEmpty(finalI, finalJ)){
+                        System.out.println("cell is already not empty");
+                    }
                     else{
-                        gridPane.add(choosenPlant.getImageView(), finalI, finalJ);
+//                        gridPane.add(choosenPlant.getImageView(), finalI, finalJ);
+                        cell.getChildren().add(choosenPlant.getImageView());
                         map.addPlant(choosenPlant, finalI, finalJ);
                         choosenPlant = null;
                     }
