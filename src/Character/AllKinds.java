@@ -26,6 +26,10 @@ class ScreenDoor extends Zombie {
     public ScreenDoor(int hp, double speed, double eatingSpeed, int row, double x, double y) {
         super(hp, speed, eatingSpeed, row, x, y, new Image(screenDoorImageAddress));
     }
+    @Override
+    public void updateImageSituation(){
+
+    }
 }
 class IMPZombie extends Zombie {
     private final static String IMPZombieImageAddress = "/Character/IMPZombie.png";

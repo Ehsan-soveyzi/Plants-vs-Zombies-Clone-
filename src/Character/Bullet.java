@@ -1,6 +1,7 @@
 package Character;
 
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Bullet {
@@ -9,15 +10,16 @@ public abstract class Bullet {
     private int damage;
     private int row;
     private boolean slower = false;
-    private ImageView imageView = new ImageView();
+    private ImageView imageView;
 
     private boolean isAlive;
-    public Bullet(double x,double y,int row, int damage, double speed) {
+    public Bullet(double x, double y, int row, int damage, double speed, Image image) {
         this.x = x;
         this.y = y;
         this.row = row;
         this.damage = damage;
         this.speed = speed;
+        this.imageView = new ImageView(image);
     }
     public void move(double deltaTime) {
         if(!isAlive)return;
@@ -35,8 +37,6 @@ public abstract class Bullet {
     public void die(){
         isAlive = false;
     }
-
-//    public abstract void setupImage();
 
     public void onHit(Zombie zombie){
         if(slower) zombie.setSlowed(true);
@@ -62,16 +62,18 @@ public abstract class Bullet {
         this.y = y;
     }
 }
-//other class like peashot and iceshot extent this bullets!
+//other class like peashot and iceshot use this bullets!
 
 class NormalBullet extends Bullet{
+    private static final String normalBulletImageAddress = "/Character/normalBullet.png";
     public NormalBullet(double x,double y,int row, int damage, double speed) {
-        super(x,y,row,damage,speed);
+        super(x,y,row,damage,speed,  new Image(normalBulletImageAddress));
     }
 }
 class SlowBullet extends Bullet{
+    private static final String snowBulletImageAddress = "/Character/SnowBullet.png";
     public SlowBullet(double x,double y,int row, int damage, double speed) {
-        super(x,y,row,damage,speed);
+        super(x,y,row,damage,speed,  new Image(snowBulletImageAddress));
     }
 }
 

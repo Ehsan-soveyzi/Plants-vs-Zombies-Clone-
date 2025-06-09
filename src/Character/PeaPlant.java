@@ -27,10 +27,6 @@ class PeaShooter extends PeaPlant {
 
     }
 
-    @Override
-    public void update(double deltaTime) {
-
-    }
 
 
 }
@@ -49,11 +45,6 @@ class Repeater extends PeaPlant {
         Bullet secondBullet = new NormalBullet(getX(), getY(), getRow(), 1, 0.5);
     }
 
-    @Override
-    public void update(double deltaTime) {
-
-    }
-
 }
 class SnowPea extends PeaPlant {
     private static final String snowPeaImageAddress = "/Character/snowPea.png";
@@ -68,10 +59,6 @@ class SnowPea extends PeaPlant {
 
     }
 
-//    @Override
-//    public void update(double deltaTime) {
-//
-//    }
 
 
 }

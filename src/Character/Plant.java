@@ -27,8 +27,12 @@ public abstract class Plant {
     }
     public void takeDamage() {
         if (isDead) return;
+        if (hp <= 0){
+            die();
+            return;
+        }
         hp--;
-        if (hp <= 0) die();
+        updateImageSituation();
     }
 
     public void die() {
@@ -37,10 +41,10 @@ public abstract class Plant {
     }
 
     private void clearDiedPlant(){ // با مختصات گرید
-
+        // remove from array
+        // remove from the grid
     }
-
-    public void update(double deltaTime){} // abstract
+    public void updateImageSituation() {} // abstract
 
     public int getRow(){return row;};
     public int getCost() {return cost;}

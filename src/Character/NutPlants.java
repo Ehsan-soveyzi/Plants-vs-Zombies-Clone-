@@ -18,10 +18,6 @@ class WallNut extends NutPlant {
         super(cost, hp, x, y, row, new Image(WallNutImageAddress));
     }
 
-    public void update(double deltaTime) {
-        //no movement
-    }
-
 }
 class TallNut extends NutPlant {
     private static final String TallNutImageAddress = "/Character/TallNut.png";

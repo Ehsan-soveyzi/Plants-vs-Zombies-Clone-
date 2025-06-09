@@ -1,5 +1,6 @@
 package Character;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -17,6 +18,7 @@ public abstract class Zombie {
     private boolean isDead;
     private boolean isEating;
     private boolean isSlowed;
+    private boolean isBurn;
 
 //    protected Image image;
     private ImageView imageView;
@@ -35,6 +37,7 @@ public abstract class Zombie {
         this.isSlowed = false;
         imageView = new ImageView(image);
     }
+
 
     //updating zombie movement per moment.
     public void update(double deltaTime) {
@@ -74,11 +77,40 @@ public abstract class Zombie {
         playWalkingAnimation();
     }
 
+    public void stopWalkingAnimation() {} // abstract
 
-    protected void setupImage(){} //abstract
+    protected void updateImageSituation(){
+        if (isBurn) {
+            playBurningAnimation();
+            return;
+        }
+        else if (isDead){
+            playDeathAnimation();
+            return;
+        }
+        if (isSlowed) {
+        }
+
+        if (isEating) {
+            playEatingAnimation();
+            return;
+        }
+
+        updateImageHP();
+    } // abstract
+    protected void updateImageHP() {}; // abstract
     protected void playWalkingAnimation() {}//abstract
     protected void playEatingAnimation(){}//abstract
     protected void playDeathAnimation(){}//abstract
+    private void playBurningAnimation(){};
+
+    private void playWakingSlowerAnimation(){
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(-1);
+        colorAdjust.setContrast(-0.07);
+        colorAdjust.setBrightness(-0.19);
+        imageView.setEffect(colorAdjust);
+    }
 
 
 
