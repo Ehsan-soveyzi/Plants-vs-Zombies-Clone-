@@ -14,7 +14,7 @@ public class Sun {
         sunMovement();
         sunCollector();
     }
-    Sun(double x, double y) {
+    public Sun(double x, double y) {
         this.x = x;
         this.y = y;
         imageView.setX(x);

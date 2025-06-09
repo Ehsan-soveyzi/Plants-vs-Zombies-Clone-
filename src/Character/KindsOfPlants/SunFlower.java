@@ -1,5 +1,5 @@
 package Character.KindsOfPlants;
-
+import Character.Sun;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
