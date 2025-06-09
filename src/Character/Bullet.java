@@ -2,8 +2,11 @@ package Character;
 
 
 import Character.KindsOfZombie.Zombie;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public abstract class Bullet {
     private double speed;
@@ -21,6 +24,7 @@ public abstract class Bullet {
         this.damage = damage;
         this.speed = speed;
         this.imageView = new ImageView(image);
+        update();
     }
     public void move(double deltaTime) {
         if(!isAlive)return;
@@ -32,6 +36,11 @@ public abstract class Bullet {
         //the implementation of the damaging to the zombies would be here.
         //checking the distance between each zombie and bullet!
 
+    }
+    public void update() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),e ->{
+            move(0.1);
+        }));
     }
 
     //after each shot the current bullet will die!

@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -20,8 +21,9 @@ public class PeaShooter extends PeaPlant {
     }
 
     @Override
-    public void shoot() {
-        Bullet normalBullet = new NormalBullet(getX(),getY(),getRow(), 1, 0.5);
+    public void shoot(Pane pane) {
+        Bullet normalBullet = new NormalBullet(1000,100,getRow(), 1, 0.5);
+        pane.getChildren().add(normalBullet.getImageView());
 
     }
     public void playAnimation() {

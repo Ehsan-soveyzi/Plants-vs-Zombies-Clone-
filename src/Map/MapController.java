@@ -82,6 +82,7 @@ public class MapController {
                 choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
                 choosenPlant.updateImageSituation();
                 choosenPlant.setRow(row);
+                ((PeaShooter)(choosenPlant)).shoot(paneWindow);
                 System.out.println(choosenPlant.getRow() + " .. ");
                 System.out.println(choosenPlant.getX() + " " + choosenPlant.getY());
                 choosenPlant = null;
