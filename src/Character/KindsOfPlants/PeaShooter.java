@@ -1,5 +1,7 @@
-package Character;
-
+package Character.KindsOfPlants;
+import Character.Bullet;
+import Character.NormalBullet;
+import Character.SlowBullet;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;

@@ -1,5 +1,6 @@
-package Character;
+package Character.KindsOfZombie;
 
+import Character.KindsOfPlants.Plant;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;

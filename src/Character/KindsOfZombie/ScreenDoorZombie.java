@@ -1,4 +1,4 @@
-package Character;
+package Character.KindsOfZombie;
 
 import javafx.scene.image.Image;
 

@@ -1,4 +1,4 @@
-package Character;
+package Character.KindsOfZombie;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

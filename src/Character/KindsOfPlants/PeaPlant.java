@@ -1,5 +1,5 @@
-package Character;
-
+package Character.KindsOfPlants;
+import  Character.Bullet;
 import javafx.scene.image.Image;
 
 public abstract class PeaPlant extends Plant {

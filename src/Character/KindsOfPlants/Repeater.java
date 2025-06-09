@@ -1,5 +1,6 @@
-package Character;
-
+package Character.KindsOfPlants;
+import Character.Bullet;
+import Character.NormalBullet;
 import javafx.scene.image.Image;
 
 public class Repeater extends PeaPlant {

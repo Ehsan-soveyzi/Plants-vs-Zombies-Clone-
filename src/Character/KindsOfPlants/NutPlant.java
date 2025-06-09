@@ -1,4 +1,4 @@
-package Character;
+package Character.KindsOfPlants;
 
 import javafx.scene.image.Image;
 

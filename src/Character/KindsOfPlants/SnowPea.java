@@ -1,5 +1,6 @@
-package Character;
-
+package Character.KindsOfPlants;
+import Character.Bullet;
+import Character.SlowBullet;
 import javafx.scene.image.Image;
 
 public class SnowPea extends PeaPlant {

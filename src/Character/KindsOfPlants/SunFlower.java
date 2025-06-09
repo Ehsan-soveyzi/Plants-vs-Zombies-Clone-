@@ -1,4 +1,4 @@
-package Character;
+package Character.KindsOfPlants;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,6 +1,7 @@
 package Character;
 
 
+import Character.KindsOfZombie.Zombie;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
