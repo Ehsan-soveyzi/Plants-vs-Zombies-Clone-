@@ -64,18 +64,7 @@ public abstract class Bullet {
 }
 //other class like peashot and iceshot use this bullets!
 
-class NormalBullet extends Bullet{
-    private static final String normalBulletImageAddress = "/Character/normalBullet.png";
-    public NormalBullet(double x,double y,int row, int damage, double speed) {
-        super(x,y,row,damage,speed,  new Image(normalBulletImageAddress));
-    }
-}
-class SlowBullet extends Bullet{
-    private static final String snowBulletImageAddress = "/Character/SnowBullet.png";
-    public SlowBullet(double x,double y,int row, int damage, double speed) {
-        super(x,y,row,damage,speed,  new Image(snowBulletImageAddress));
-    }
-}
+
 
 
 

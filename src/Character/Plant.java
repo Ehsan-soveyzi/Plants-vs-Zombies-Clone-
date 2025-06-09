@@ -24,6 +24,8 @@ public abstract class Plant {
         this.y = y;
         this.row = row;
         imageView = new ImageView(image);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
     }
     public void takeDamage() {
         if (isDead) return;

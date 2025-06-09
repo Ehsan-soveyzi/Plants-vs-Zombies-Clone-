@@ -1,5 +1,6 @@
 package Character;
 
+import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +20,7 @@ public abstract class Zombie {
     private boolean isEating;
     private boolean isSlowed;
     private boolean isBurn;
+    protected Timeline time;
 
 //    protected Image image;
     private ImageView imageView;
@@ -77,10 +79,11 @@ public abstract class Zombie {
         playWalkingAnimation();
     }
 
-    public void stopWalkingAnimation() {} // abstract
+    public void stopWalking() {} // abstract
 
     protected void updateImageSituation(){
         if (isBurn) {
+
             playBurningAnimation();
             return;
         }
@@ -94,13 +97,14 @@ public abstract class Zombie {
         if (isEating) {
             playEatingAnimation();
             return;
+
         }
 
-        updateImageHP();
+//        updateImageHP();
     } // abstract
     protected void updateImageHP() {}; // abstract
-    protected void playWalkingAnimation() {}//abstract
-    protected void playEatingAnimation(){}//abstract
+    protected  abstract void playWalkingAnimation();//abstract
+    protected  abstract void  playEatingAnimation();
     protected void playDeathAnimation(){}//abstract
     private void playBurningAnimation(){};
 
