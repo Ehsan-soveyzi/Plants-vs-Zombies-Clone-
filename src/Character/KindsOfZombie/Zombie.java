@@ -27,7 +27,6 @@ public abstract class Zombie {
     private ImageView imageView;
 
 
-
     public Zombie(int hp, double speed, double eatingSpeed, int row, double x, double y, Image image) {
         this.hp = hp;
         this.speed = speed;

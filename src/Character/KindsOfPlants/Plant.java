@@ -16,16 +16,13 @@ public abstract class Plant {
 
     private ImageView imageView; // pay attention when the plant dies should set another image
 
-    Plant(int cost, int hp, double x, double y, int row, Image image) {
+    Plant(int cost, int hp, int row, Image image) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
-        this.x = x;
-        this.y = y;
         this.row = row;
         imageView = new ImageView(image);
-        imageView.setLayoutX(x);
-        imageView.setLayoutY(y);
+
     }
     public void takeDamage() {
         if (isDead) return;
@@ -49,6 +46,7 @@ public abstract class Plant {
     public abstract void updateImageSituation(); // abstract
 
     public int getRow(){return row;};
+    public void setRow(int row){this.row = row;};
     public int getCost() {return cost;}
     public void setCost(int cost) {this.cost = cost;}
     public double getHp() {return hp;}

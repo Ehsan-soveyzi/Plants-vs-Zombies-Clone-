@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 
 public class SnowPea extends PeaPlant {
     private static final String snowPeaImageAddress = "/Character/snowPea.png";
-    public SnowPea(int cost, int hp, double x, double y, int row) {
-        super(cost, hp, x, y, row, new Image(snowPeaImageAddress));
+    public SnowPea(int cost, int hp, int row) {
+        super(cost, hp, row, new Image(snowPeaImageAddress));
 
     }
 

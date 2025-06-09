@@ -14,8 +14,8 @@ public class SunFlower extends Plant{
     // static because before making this field the super execute
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
 
-    SunFlower(int cost, int hp, double x, double y, int row) {
-        super(cost, hp, x, y, row, new Image(sunImageAddress));
+    SunFlower(int cost, int hp, int row) {
+        super(cost, hp, row, new Image(sunImageAddress));
 
         sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             if (!isDead()) {
