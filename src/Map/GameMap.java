@@ -1,14 +1,25 @@
 package Map;
 
 import Character.Plant;
+
+import javax.swing.text.html.ImageView;
+import java.util.ArrayList;
+
 public class GameMap {
 
     private final int ROWS = 5;
     private final int COLS = 9;
 
+//    ArrayList<ImageView> imageViews = new ArrayList<>();
+
+
     private final int CELL_WIDTH = 1100;
     private final int CELL_HEIGHT = 700;
     private final int OFFSET_Y = 20;
+
+//    public GameMap(ArrayList<ImageView> plants) {
+//        this.imageViews = plants;
+//    }
 
     private final Plant[][] grid = new Plant[ROWS][COLS];
 
@@ -68,3 +79,4 @@ public class GameMap {
 
 
 }
+
