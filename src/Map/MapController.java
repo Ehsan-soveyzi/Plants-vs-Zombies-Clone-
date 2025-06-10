@@ -1,13 +1,16 @@
 package Map;
 
+import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.Regular;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
-import Character.KindsOfPlants.Plant;
-import Character.KindsOfPlants.PeaShooter;
+import Character.Sun;
+import javafx.util.Duration;
 
 public class MapController {
 
@@ -20,12 +23,28 @@ public class MapController {
     private GridPane gridPane;
     @FXML
     private ImageView peeShooter;
+    @FXML
+    private ImageView sunFlower;
+    @FXML
+    private ImageView nutFlower;
+    @FXML
+    private ImageView iceShooter;
 
     @FXML
     public void initialize() {
         peeShooter.setOnMouseClicked(event -> {
             choosePeaShooter();
         });
+        sunFlower.setOnMouseClicked(event -> {
+            choosenPlant = new SunFlower(0,0,0);
+        });
+        iceShooter.setOnMouseClicked(event -> {
+            choosenPlant = new SnowPea(0,1,2);
+        });
+        nutFlower.setOnMouseClicked(event -> {
+            choosenPlant = new WallNut(1,2,2);
+        });
+
 
         double cellWidth = gridPane.getPrefWidth() / gridPane.getColumnCount();
         double cellHeight = gridPane.getPrefHeight() / gridPane.getRowCount();
@@ -35,6 +54,14 @@ public class MapController {
         zombie1.getImageView().setFitHeight(cellHeight);
         paneWindow.getChildren().add(zombie1.getImageView());
         zombie1.playWalkingAnimation();
+
+        Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.millis(10000), event -> {
+            Sun sun = new Sun();
+            sun.sunMovement();
+            paneWindow.getChildren().add(sun.getImageView());
+        }));
+        timeBetweenSun.setCycleCount(10);
+        timeBetweenSun.play();
         createGrid();
     }
     public void choosePeaShooter(){
@@ -89,6 +116,7 @@ public class MapController {
             }
         });
     }
+
 
 
 }

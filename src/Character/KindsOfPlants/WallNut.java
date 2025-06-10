@@ -3,9 +3,9 @@ package Character.KindsOfPlants;
 import javafx.scene.image.Image;
 
 public class WallNut extends NutPlant {
-    private static final String WallNutImageAddress = "/Character/WallNut.png";
+    private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut_0.png";
 
-    WallNut(int cost, int hp, int row) {
+    public WallNut(int cost, int hp, int row) {
         super(cost, hp,row, new Image(WallNutImageAddress));
     }
 
