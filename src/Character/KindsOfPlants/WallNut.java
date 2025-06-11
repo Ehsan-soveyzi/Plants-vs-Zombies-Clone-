@@ -1,16 +1,28 @@
 package Character.KindsOfPlants;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 public class WallNut extends NutPlant {
-    private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut_0.png";
+    private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut_";
+//    private static final String WallNutImageAddress = "C:\\Users\\user\\Downloads\\wallNut.";
 
     public WallNut(int cost, int hp, int row) {
-        super(cost, hp,row, new Image(WallNutImageAddress));
+        super(cost, hp,row, new Image(WallNutImageAddress + "0.png"));
+        playAnimation(15, WallNutImageAddress);
     }
 
     @Override
     public void updateImageSituation() {
 
     }
+//    public void playAnimation() {
+
+//    }
 }

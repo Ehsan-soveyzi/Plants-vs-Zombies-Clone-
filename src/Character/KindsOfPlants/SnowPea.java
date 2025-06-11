@@ -5,9 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 public class SnowPea extends PeaPlant {
-    private static final String snowPeaImageAddress = "/Character/snowPea.png";
+    private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea_";
+
     public SnowPea(int cost, int hp, int row) {
-        super(cost, hp, row, new Image(snowPeaImageAddress));
+        super(cost, hp, row, new Image(snowPeaImageAddress + "0.png"));
+        playAnimation(14, snowPeaImageAddress );
 
     }
 

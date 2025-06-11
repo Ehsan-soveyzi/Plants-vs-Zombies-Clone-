@@ -1,7 +1,13 @@
 package Character.KindsOfPlants;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 public abstract class Plant {
 
@@ -38,10 +44,28 @@ public abstract class Plant {
         isDead = true;
         clearDiedPlant();
     }
+    public void playAnimation(int number, String address) {
+        Image[] frames = new Image[number];
+        for (int i = 0; i < number; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    address + i + ".png"
+            )));
+        }
+        ImageView imageView = getImageView();
+
+        final int[] frameIndex = {0};
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            imageView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
 
     private void clearDiedPlant(){ // با مختصات گرید
-        // remove from array
-        // remove from the grid
+        imageView.setImage(null);
     }
     public abstract void updateImageSituation(); // abstract
 
