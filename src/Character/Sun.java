@@ -16,12 +16,13 @@ public class Sun {
     double x;
     double y;
     boolean clicked = false;
-    static ImageView sunImageView;
+    private ImageView sunImageView;
     private static String sunAddress = "/Images/resources/graphics/Plants/Sun/Sun_0.png";
 //    ImageView imageView = new ImageView(new Image("images/sun.png"));
     public Sun(){ // random in map
-//        sunMovement();
+
         sunImageView = new ImageView(sunAddress);
+        sunMovement();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
             removeSun();
@@ -33,10 +34,12 @@ public class Sun {
     public Sun(double x, double y) {
         this.x = x;
         this.y = y;
-        sunImageView.setX(x);
-        sunImageView.setY(y);
-        // imageview should add as a child for being watchable
-        sunCollector();
+        sunImageView = new ImageView(sunAddress);
+        sunImageView.setLayoutX(x);
+        sunImageView.setLayoutY(y);
+
+//        // imageview should add as a child for being watchable
+//        sunCollector();
     }
     public void sunCollector(){
 

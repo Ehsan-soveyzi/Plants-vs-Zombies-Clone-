@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
 import Character.Sun;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 public class MapController {
@@ -37,6 +38,8 @@ public class MapController {
         });
         sunFlower.setOnMouseClicked(event -> {
             choosenPlant = new SunFlower(0,0,0);
+            Sun sun = new Sun(0, 0);
+            paneWindow.getChildren().add(sun.getImageView());
         });
         iceShooter.setOnMouseClicked(event -> {
             choosenPlant = new SnowPea(0,1,2);
@@ -57,7 +60,7 @@ public class MapController {
 
         Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.millis(10000), event -> {
             Sun sun = new Sun();
-            sun.sunMovement();
+//            sun.sunMovement();
             paneWindow.getChildren().add(sun.getImageView());
         }));
         timeBetweenSun.setCycleCount(10);

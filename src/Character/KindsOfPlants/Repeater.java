@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 public class Repeater extends PeaPlant {
     private static final String repeaterImageAddress = "/Images/resources/graphics/Plants/RepeaterPea/RepeaterPea_.png";
     public Repeater(int cost, int hp, int row) {
-        super(cost, hp, row, new Image(repeaterImageAddress));
+        super(cost, hp, row, new Image(repeaterImageAddress + "0.png"));
         playAnimation(14, repeaterImageAddress);
 
     }
