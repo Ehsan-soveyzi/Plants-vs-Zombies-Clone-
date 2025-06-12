@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class WallNut extends NutPlant {
     }
 
     @Override
-    public void updateImageSituation() {
+    public void updateImageSituation(Pane pane) {
 
     }
 //    public void playAnimation() {

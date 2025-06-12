@@ -110,7 +110,7 @@ public class MapController {
                 map.addPlant(choosenPlant, row, col);
                 choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
                 choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
-                choosenPlant.updateImageSituation();
+                choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 ((PeaShooter)(choosenPlant)).shoot(paneWindow);
                 System.out.println(choosenPlant.getRow() + " .. ");

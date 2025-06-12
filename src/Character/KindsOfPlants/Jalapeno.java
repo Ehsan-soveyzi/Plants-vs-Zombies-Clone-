@@ -1,6 +1,7 @@
 package Character.KindsOfPlants;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 
 public class Jalapeno extends BombPlant {
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno_";
@@ -21,7 +22,7 @@ public class Jalapeno extends BombPlant {
     }
 
     @Override
-    public void updateImageSituation() {
+    public void updateImageSituation(Pane pane) {
 
     }
 }

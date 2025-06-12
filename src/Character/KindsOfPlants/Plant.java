@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -37,7 +38,6 @@ public abstract class Plant {
             return;
         }
         hp--;
-        updateImageSituation();
     }
 
     public void die() {
@@ -67,7 +67,7 @@ public abstract class Plant {
     private void clearDiedPlant(){ // با مختصات گرید
         imageView.setImage(null);
     }
-    public abstract void updateImageSituation(); // abstract
+    public abstract void updateImageSituation(Pane pane); // abstract
 
     public int getRow(){return row;};
     public void setRow(int row){this.row = row;};
