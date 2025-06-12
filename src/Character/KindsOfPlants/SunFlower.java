@@ -3,6 +3,7 @@ import Character.Sun;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class SunFlower extends Plant{
@@ -14,8 +15,8 @@ public class SunFlower extends Plant{
     // static because before making this field the super execute
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
 
-    SunFlower(int cost, int hp, int row) {
-        super(cost, hp, row, new Image(sunImageAddress));
+    public SunFlower(int cost, int hp) {
+        super(cost, hp, new Image(sunImageAddress));
 
         sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             if (!isDead()) {
@@ -32,7 +33,7 @@ public class SunFlower extends Plant{
     }
 
     @Override
-    public void updateImageSituation() {
+    public void updateImageSituation(Pane pane) {
 
     }
 }

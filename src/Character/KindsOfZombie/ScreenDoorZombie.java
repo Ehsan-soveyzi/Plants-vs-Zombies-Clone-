@@ -1,6 +1,7 @@
 package Character.KindsOfZombie;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 
 public class ScreenDoorZombie extends Zombie {
     private final static String screenDoorImageAddress = "/Character/screenDoor.png";
@@ -13,7 +14,7 @@ public class ScreenDoorZombie extends Zombie {
     }
 
     @Override
-    public void playWalkingAnimation() {
+    public void playWalkingAnimation(Pane pane) {
 
     }
 

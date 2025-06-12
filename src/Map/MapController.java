@@ -1,45 +1,97 @@
 package Map;
 
+import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.Regular;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
-import Character.KindsOfPlants.Plant;
-import Character.KindsOfPlants.PeaShooter;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 public class MapController {
 
-    GameMap map = new GameMap();
-    Plant choosenPlant;
-
     @FXML
-    private Pane paneWindow;
+    public Pane paneWindow;
     @FXML
     private GridPane gridPane;
     @FXML
     private ImageView peeShooter;
+    @FXML
+    private ImageView iceShooter;
+    @FXML
+    private ImageView sunFlower;
+    @FXML
+    private ImageView nutFlower;
+
+
+    GameMap map = new GameMap();
+    Plant choosenPlant;
+    ZombieFactory zombieFactory;
+    Timeline waveZombies;
+    Timeline gameLoop;
+
+    ArrayList<Plant> plants = new ArrayList<>();
+
+
+
+
 
     @FXML
     public void initialize() {
-        peeShooter.setOnMouseClicked(event -> {
-            choosePeaShooter();
-        });
 
-        double cellWidth = gridPane.getPrefWidth() / gridPane.getColumnCount();
-        double cellHeight = gridPane.getPrefHeight() / gridPane.getRowCount();
-//        Zombie zombie1 = ZombieFactory.createNormalZombie(1,1500,85);
-        Zombie zombie1 = new Regular(4);
-        zombie1.getImageView().setFitWidth(cellWidth);
-        zombie1.getImageView().setFitHeight(cellHeight);
-        paneWindow.getChildren().add(zombie1.getImageView());
-        zombie1.playWalkingAnimation();
+        mouseEvents();
+
+        zombieFactory = new ZombieFactory(160,160,paneWindow);
+
+        waveZombies = new Timeline(new KeyFrame(Duration.seconds(4),e -> {
+            //wave 1:
+            attackOne();
+        }));
+        waveZombies.setCycleCount(1);
+        waveZombies.play();
+
+//        gameLoop = new Timeline(new KeyFrame(Duration.millis(1000),e -> {
+//            map.checkWar();
+//        }));
+//        gameLoop.setCycleCount(Timeline.INDEFINITE);
+//        gameLoop.play();
+
+
+
         createGrid();
     }
     public void choosePeaShooter(){
-//        choosenPlant = ZombieFactory.createPeaPlant(100,5,750,90);
-        choosenPlant = new PeaShooter(100,5,0,0,2);
+        choosenPlant = new PeaShooter(100,5);
+    }
+    public void chooseIceShooter(){
+        choosenPlant = new SnowPea(175,5);
+    }
+    public void chooseSunFlower(){
+        choosenPlant = new SunFlower(50,5);
+    }
+    public void chooseNutFlower(){
+        choosenPlant = new WallNut(50,10);
+    }
+
+    public void mouseEvents(){
+        peeShooter.setOnMouseClicked(event -> {
+            choosePeaShooter();
+        });
+        iceShooter.setOnMouseClicked(event -> {
+            chooseIceShooter();
+        });
+        sunFlower.setOnMouseClicked(event -> {
+            chooseSunFlower();
+        });
+        nutFlower.setOnMouseClicked(event -> {
+            chooseNutFlower();
+        });
     }
 
     public void createGrid(){
@@ -50,29 +102,42 @@ public class MapController {
             for(int j = 0; j < cols; j++){
 
                 Pane cell = new Pane();
-                cell.setPrefSize(80, 80); // سایز دلخواه
+                cell.setPrefSize(80, 80);
 
-                int finalI = i;
-                int finalJ = j;
-                cell.setOnMouseClicked(event -> {
-                    if (choosenPlant == null ){
-                        System.out.println("No plant selected");
-                    }
-                    else if(!map.isCellEmpty(finalI, finalJ)){
-                        System.out.println("cell is already not empty");
-                    }
-                    else{
-//                        gridPane.add(choosenPlant.getImageView(), finalI, finalJ);
-                        cell.getChildren().add(choosenPlant.getImageView());
-                        map.addPlant(choosenPlant, finalI, finalJ);
-                        choosenPlant.updateImageSituation();
-                        choosenPlant = null;
-                    }
-                });
+                setOnCell(cell, i, j);
 
                 gridPane.add(cell, j, i);
             }
         }
+    }
+    public void setOnCell(Pane cell,int row,int col){
+        cell.setOnMouseClicked(event -> {
+            if (choosenPlant == null ){
+                System.out.println("No plant selected");
+            }
+            else if(!map.isCellEmpty(row, col)){
+                System.out.println("cell is already not empty");
+            }
+            else{
+
+                cell.getChildren().add(choosenPlant.getImageView());
+                map.addPlant(choosenPlant, row, col);
+                choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
+                choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
+                choosenPlant.setRow(row);
+                System.out.println(choosenPlant.getRow());
+                System.out.println(choosenPlant.getX() + " ..." + choosenPlant.getY());
+                choosenPlant.updateImageSituation(paneWindow);
+                choosenPlant.setRow(row);
+                choosenPlant.setCol(col);
+                choosenPlant = null;
+            }
+        });
+    }
+    public void attackOne(){
+        zombieFactory.createRegularZombie(0);
+        zombieFactory.createRegularZombie(1);
+        zombieFactory.createRegularZombie(2);
     }
 
 

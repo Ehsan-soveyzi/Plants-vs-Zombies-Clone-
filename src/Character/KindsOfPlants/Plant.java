@@ -1,7 +1,10 @@
 package Character.KindsOfPlants;
 
+import Map.GameMap;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 public abstract class Plant {
 
@@ -12,17 +15,19 @@ public abstract class Plant {
     private double x, y;
     private boolean isDead;
     private int row;
+    private int col;
+    protected Timeline timeline;
 
 
     private ImageView imageView; // pay attention when the plant dies should set another image
 
-    Plant(int cost, int hp, int row, Image image) {
+    Plant(int cost, int hp, Image image) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
-        this.row = row;
         imageView = new ImageView(image);
-
+        getImageView().setLayoutX(getX() + 20);
+        getImageView().setLayoutY(getY() + 30);
     }
     public void takeDamage() {
         if (isDead) return;
@@ -31,25 +36,22 @@ public abstract class Plant {
             return;
         }
         hp--;
-        updateImageSituation();
+//        updateImageSituation();
     }
 
     public void die() {
         isDead = true;
-        clearDiedPlant();
+        System.out.println("this die..");
+        if(timeline != null) timeline.stop();
+        GameMap.plants.remove(this);
     }
-
-    private void clearDiedPlant(){ // با مختصات گرید
-        // remove from array
-        // remove from the grid
-    }
-    public abstract void updateImageSituation(); // abstract
+    public abstract void updateImageSituation(Pane pane); // abstract
 
     public int getRow(){return row;};
     public void setRow(int row){this.row = row;};
     public int getCost() {return cost;}
     public void setCost(int cost) {this.cost = cost;}
-    public double getHp() {return hp;}
+    public int getHp() {return hp;}
     public void setHp(int hp) {this.hp = hp;}
     public double getX() {return x;}
     public void setX(double x) {this.x = x;}
@@ -60,6 +62,8 @@ public abstract class Plant {
     public boolean isDead() {
         return isDead;
     }
+    public void setCol(int col) {this.col = col;}
+    public int getCol() {return col;}
 
     public ImageView getImageView() {
         return imageView;

@@ -1,10 +1,19 @@
 package Character.KindsOfZombie;
 
 import Character.KindsOfPlants.Plant;
+import Map.GameMap;
+import Map.ZombieFactory;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 
 public abstract class Zombie {
@@ -21,7 +30,9 @@ public abstract class Zombie {
     private boolean isEating;
     private boolean isSlowed;
     private boolean isBurn;
-    protected Timeline time;
+    protected Timeline timeline;
+    private Pane parentPane;
+    private PauseTransition slowTimer;
 
 //    protected Image image;
     private ImageView imageView;
@@ -37,6 +48,14 @@ public abstract class Zombie {
         this.isEating = false;
         this.isSlowed = false;
         imageView = new ImageView(image);
+        setY(row * 140 + 80);
+        getImageView().setLayoutX(x);
+        getImageView().setLayoutY(y);
+    }
+
+    public void addToPane(Pane pane) {
+        this.parentPane = pane;
+        pane.getChildren().add(imageView);
     }
 
 
@@ -45,6 +64,7 @@ public abstract class Zombie {
         if (!isEating && !isDead) {
             x -= speed * deltaTime;
             imageView.setLayoutX(x);
+            updateImageSituation();
         }
     }
 
@@ -52,13 +72,17 @@ public abstract class Zombie {
     public void takeDamage(int damage) {
         if (isDead) return;
         hp -= damage;
-        if (hp <= 0) die();
+        if (hp <= 0){
+            die();
+
+        }
     }
 
     public void die() {
         isDead = true;
-        speed = 0;
-        playDeathAnimation();
+        if(timeline != null)timeline.stop();
+        updateImageSituation();
+//        if(parentPane != null)parentPane.getChildren().remove(imageView);
     }
 
     public void startEating() {
@@ -75,36 +99,59 @@ public abstract class Zombie {
 
     public void stopEating() {
         isEating = false;
-        playWalkingAnimation();
     }
 
-    public void stopWalking() {} // abstract
+    public void stopWalking() {
+        isEating = true;
+    } // abstract
 
     protected void updateImageSituation(){
         if (isBurn) {
-
             playBurningAnimation();
             return;
         }
-        else if (isDead){
+        if (isDead){
+            System.out.println("one zombie die");
             playDeathAnimation();
             return;
         }
         if (isSlowed) {
+            playWakingSlowerAnimation();
         }
 
         if (isEating) {
+            System.out.println("one zombie eating");
+            timeline.stop();
             playEatingAnimation();
-            return;
-
+        }
+    }
+    public abstract void playWalkingAnimation(Pane pane);//abstract
+    protected abstract void  playEatingAnimation();
+    public void playDeathAnimation(){
+        Image[] frames = new Image[22];
+        for (int i = 0; i < 10; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/Images/resources/graphics/Zombies/NormalZombie/ZombieDie/ZombieDie_" + i + ".png"
+            )));
         }
 
-//        updateImageHP();
-    } // abstract
-    protected void updateImageHP() {}; // abstract
-    public   abstract void playWalkingAnimation();//abstract
-    protected  abstract void  playEatingAnimation();
-    protected void playDeathAnimation(){}//abstract
+        ImageView zombieView = getImageView();
+
+        final int[] frameIndex = {0};
+
+         timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+//            this.update(0.1);
+            zombieView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
+
+        timeline.setCycleCount(frames.length);
+        timeline.play();
+        timeline.setOnFinished(e -> {
+            if(parentPane != null)parentPane.getChildren().remove(imageView);
+        });
+        timeline.playFromStart();
+    }
     private void playBurningAnimation(){};
 
     private void playWakingSlowerAnimation(){
@@ -115,6 +162,61 @@ public abstract class Zombie {
         imageView.setEffect(colorAdjust);
     }
 
+
+
+    //this method will call after the ice bullet damage.
+    public void setSlowed(boolean slowed) {
+        if (slowed) {
+            // فقط اگر سرعت فعلی هنوز زیاد بود، کندش کن
+            if (!isSlowed) {
+                setSpeed(speed / 2.0);
+            }
+
+            isSlowed = true;
+
+            if (slowTimer != null) {
+                slowTimer.stop();
+            }
+
+            //new timer for affect slowing for 5 sec!
+            slowTimer = new PauseTransition(Duration.seconds(5));
+            slowTimer.setOnFinished(event -> {
+                //if after 5 seconds ice shoot did not applied remove the slow.
+                isSlowed = false;
+                setSpeed(speed * 2.0);
+            });
+            slowTimer.playFromStart();
+        }
+    }
+
+
+    public void setEating(boolean eating) {
+        isEating = eating;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setEatingSpeed(double eatingSpeed) {
+        this.eatingSpeed = eatingSpeed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
 
 
     public double getEatingSpeed() {
@@ -153,45 +255,6 @@ public abstract class Zombie {
     }
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
-    }
-
-    //this method will call after the ice bullet damage.
-    public void setSlowed(boolean slowed) {
-        isSlowed = slowed;
-        if(isSlowed){
-            setSpeed(speed / 2);
-        }
-        else{
-            setSpeed(speed * 2);
-        }
-    }
-
-    public void setEating(boolean eating) {
-        isEating = eating;
-    }
-
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setEatingSpeed(double eatingSpeed) {
-        this.eatingSpeed = eatingSpeed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
     }
 
     public void setHp(int hp) {

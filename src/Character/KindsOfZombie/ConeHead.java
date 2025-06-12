@@ -1,6 +1,7 @@
 package Character.KindsOfZombie;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 
 public class ConeHead extends Zombie {
     private final static String coneHeadImageAddress = "/Character/coneHead.png";
@@ -9,7 +10,7 @@ public class ConeHead extends Zombie {
     }
 
     @Override
-    public void playWalkingAnimation() {
+    public void playWalkingAnimation(Pane pane) {
 
     }
 

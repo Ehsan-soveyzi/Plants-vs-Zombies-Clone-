@@ -1,6 +1,12 @@
 package Map;
 
 import Character.KindsOfPlants.Plant;
+import Character.KindsOfZombie.Regular;
+import Character.KindsOfZombie.Zombie;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
@@ -10,16 +16,14 @@ public class GameMap {
     private final int ROWS = 5;
     private final int COLS = 9;
 
-//    ArrayList<ImageView> imageViews = new ArrayList<>();
+    public static ArrayList<Plant> plants = new ArrayList<>();
+
 
 
     private final int CELL_WIDTH = 1100;
     private final int CELL_HEIGHT = 700;
     private final int OFFSET_Y = 20;
 
-//    public GameMap(ArrayList<ImageView> plants) {
-//        this.imageViews = plants;
-//    }
 
     private final Plant[][] grid = new Plant[ROWS][COLS];
 
@@ -30,7 +34,30 @@ public class GameMap {
     public boolean addPlant(Plant plant, int row, int col) {
         if(!isCellEmpty(row, col)) return false;
         grid[row][col] = plant;
+        plants.add(plant);
         return true;
+    }
+
+    public void checkWar(){
+        for(Zombie z : ZombieFactory.zombies){
+            for(Plant plant : GameMap.plants){
+                if(z.getX() - plant.getX() >= 100 && z.getRow() == plant.getRow() ){
+//                    System.out.println("zombie eating .........");
+                    z.stopWalking();
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
+                        z.bite(plant);
+//                        System.out.println("bite....");
+//                        System.out.println(plant.getHp());
+                        if(plant.getHp() == 0){
+                            removePlant(plant.getRow(),plant.getCol());
+//                            System.out.println(grid[plant.getRow()][plant.getCol()]);
+                        }
+                    }));
+                    timeline.setCycleCount(Timeline.INDEFINITE);
+                    timeline.play();
+                }
+            }
+        }
     }
 
     public void removePlant(int row, int col) {

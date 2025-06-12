@@ -6,21 +6,21 @@ import javafx.scene.layout.Pane;
 
 public class Repeater extends PeaPlant {
     private static final String repeaterImageAddress = "/Character/repeater.png";
-    public Repeater(int cost, int hp, int row) {
-        super(cost, hp, row, new Image(repeaterImageAddress));
+    public Repeater(int cost, int hp) {
+        super(cost, hp, new Image(repeaterImageAddress));
 
     }
 
     // we should check the same row for checking there is a zombie or not .
     @Override
     public void shoot(Pane pane) {
-        Bullet firstBullet = new NormalBullet(getX(), getY(), getRow(), 1, 0.5);
+        Bullet firstBullet = new NormalBullet(getX(), getY(), getRow());
 
-        Bullet secondBullet = new NormalBullet(getX(), getY(), getRow(), 1, 0.5);
+        Bullet secondBullet = new NormalBullet(getX(), getY(), getRow());
     }
 
     @Override
-    public void updateImageSituation() {
+    public void updateImageSituation(Pane pane) {
 
     }
 }
