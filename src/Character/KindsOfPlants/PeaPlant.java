@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public abstract class PeaPlant extends Plant {
     private boolean checkShot;
     ArrayList<Bullet> bulletQueue = new ArrayList<>();
-    PeaPlant(int cost, int hp, Image image) {
-        super(cost, hp, image);
+    PeaPlant(int cost, int hp, int row, Image image) {
+        super(cost, hp, row, image);
         this.checkShot = false;
     }
 

@@ -73,10 +73,10 @@ public class MapController {
         choosenPlant = new SnowPea(175,5);
     }
     public void chooseSunFlower(){
-        choosenPlant = new SunFlower(50,5);
+        choosenPlant = new SunFlower(50,5,0);
     }
     public void chooseNutFlower(){
-        choosenPlant = new WallNut(50,10);
+        choosenPlant = new WallNut(50,10 ,0);
     }
 
     public void mouseEvents(){

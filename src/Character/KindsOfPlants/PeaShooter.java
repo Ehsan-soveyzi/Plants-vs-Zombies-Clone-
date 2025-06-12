@@ -18,10 +18,11 @@ import java.util.Objects;
 
 public class PeaShooter extends PeaPlant {
 
-    private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter_0.png";
+    private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter_";
 
-    public PeaShooter(int cost, int hp) {
-        super(cost, hp, new Image(peaShooterImageAddress));
+    public PeaShooter(int cost, int hp, double x, double y, int row) {
+        super(cost, hp,row, new Image(peaShooterImageAddress + "0.png"));
+        playAnimation(12, peaShooterImageAddress);
 
     }
 

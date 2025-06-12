@@ -11,9 +11,11 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class SnowPea extends PeaPlant {
-    private static final String snowPeaImageAddress = "/Images/resources/graphics/Plants/SnowPea/SnowPea_0.png";
-    public SnowPea(int cost, int hp) {
-        super(cost, hp, new Image(snowPeaImageAddress));
+    private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea_";
+
+    public SnowPea(int cost, int hp, int row) {
+        super(cost, hp, row, new Image(snowPeaImageAddress + "0.png"));
+        playAnimation(14, snowPeaImageAddress );
 
     }
 

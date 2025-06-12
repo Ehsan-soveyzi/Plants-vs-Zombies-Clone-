@@ -1,10 +1,15 @@
 package Character.KindsOfPlants;
 
 import Map.GameMap;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 public abstract class Plant {
 
@@ -21,13 +26,12 @@ public abstract class Plant {
 
     private ImageView imageView; // pay attention when the plant dies should set another image
 
-    Plant(int cost, int hp, Image image) {
+    Plant(int cost, int hp, int row, Image image) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
+        this.row = row;
         imageView = new ImageView(image);
-        getImageView().setLayoutX(getX() + 20);
-        getImageView().setLayoutY(getY() + 30);
     }
     public void takeDamage() {
         if (isDead) return;
@@ -44,6 +48,29 @@ public abstract class Plant {
         System.out.println("this die..");
         if(timeline != null) timeline.stop();
         GameMap.plants.remove(this);
+    }
+    public void playAnimation(int number, String address) {
+        Image[] frames = new Image[number];
+        for (int i = 0; i < number; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    address + i + ".png"
+            )));
+        }
+        ImageView imageView = getImageView();
+
+        final int[] frameIndex = {0};
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            imageView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private void clearDiedPlant(){ // با مختصات گرید
+        imageView.setImage(null);
     }
     public abstract void updateImageSituation(Pane pane); // abstract
 
