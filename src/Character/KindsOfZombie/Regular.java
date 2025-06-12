@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -15,22 +16,17 @@ public class Regular extends Zombie {
     // or have a image field in parent class and
     // static because before making this field the super execute
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
-    private final static int ZOMBIE_HP = 7;
-    private final static int ZOMBIE_DAMAGE = 1;
-    private final static int ZOMBIE_SPEED = 1;
-    private final static int ZOMBIE_DAMAGE_SPEED = 2;
 
     public Regular(int row) {
         super(5,50,1,row,new Image(regularImageAddress));
-        setY(row * 140 + 100);
-        getImageView().setLayoutY(row * 140 + 80);
+
 
     }
 
     @Override
-    public void playWalkingAnimation() {
-
-        time = new Timeline(new KeyFrame(Duration.millis(1000)));
+    public void playWalkingAnimation(Pane pane) {
+        addToPane(pane);
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000)));
 
             Image[] frames = new Image[22];
             for (int i = 0; i < 22; i++) {

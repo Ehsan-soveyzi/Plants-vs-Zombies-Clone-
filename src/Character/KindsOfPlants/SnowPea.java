@@ -6,8 +6,8 @@ import javafx.scene.layout.Pane;
 
 public class SnowPea extends PeaPlant {
     private static final String snowPeaImageAddress = "/Character/snowPea.png";
-    public SnowPea(int cost, int hp, int row) {
-        super(cost, hp, row, new Image(snowPeaImageAddress));
+    public SnowPea(int cost, int hp) {
+        super(cost, hp, new Image(snowPeaImageAddress));
 
     }
 
@@ -19,7 +19,7 @@ public class SnowPea extends PeaPlant {
 
 
     @Override
-    public void updateImageSituation() {
+    public void updateImageSituation(Pane pane) {
 
     }
 }

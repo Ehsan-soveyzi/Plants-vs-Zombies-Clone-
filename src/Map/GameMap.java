@@ -1,6 +1,9 @@
 package Map;
 
 import Character.KindsOfPlants.Plant;
+import Character.KindsOfZombie.Regular;
+import Character.KindsOfZombie.Zombie;
+import javafx.scene.layout.Pane;
 
 import javax.swing.text.html.ImageView;
 import java.util.ArrayList;

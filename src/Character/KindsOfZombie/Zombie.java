@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 
 public abstract class Zombie {
@@ -21,7 +22,8 @@ public abstract class Zombie {
     private boolean isEating;
     private boolean isSlowed;
     private boolean isBurn;
-    protected Timeline time;
+    protected Timeline timeline;
+    private Pane parentPane;
 
 //    protected Image image;
     private ImageView imageView;
@@ -37,6 +39,14 @@ public abstract class Zombie {
         this.isEating = false;
         this.isSlowed = false;
         imageView = new ImageView(image);
+        setY(row * 140 + 80);
+        getImageView().setLayoutX(x);
+        getImageView().setLayoutY(y);
+    }
+
+    public void addToPane(Pane pane) {
+        this.parentPane = pane;
+        pane.getChildren().add(imageView);
     }
 
 
@@ -52,12 +62,16 @@ public abstract class Zombie {
     public void takeDamage(int damage) {
         if (isDead) return;
         hp -= damage;
-        if (hp <= 0) die();
+        if (hp <= 0){
+            die();
+
+        }
     }
 
     public void die() {
         isDead = true;
-        speed = 0;
+        if(timeline != null)timeline.stop();
+        if(parentPane != null)parentPane.getChildren().remove(imageView);
         playDeathAnimation();
     }
 
@@ -75,7 +89,6 @@ public abstract class Zombie {
 
     public void stopEating() {
         isEating = false;
-        playWalkingAnimation();
     }
 
     public void stopWalking() {} // abstract
@@ -102,7 +115,7 @@ public abstract class Zombie {
 //        updateImageHP();
     } // abstract
     protected void updateImageHP() {}; // abstract
-    public   abstract void playWalkingAnimation();//abstract
+    public   abstract void playWalkingAnimation(Pane pane);//abstract
     protected  abstract void  playEatingAnimation();
     protected void playDeathAnimation(){}//abstract
     private void playBurningAnimation(){};

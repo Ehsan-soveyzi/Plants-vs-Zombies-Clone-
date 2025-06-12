@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public abstract class Bullet {
@@ -13,10 +14,12 @@ public abstract class Bullet {
     private double x,y;
     private int damage;
     private int row;
-    private boolean slower = false;
     private ImageView imageView;
-
     private boolean isAlive;
+    private Pane parentPane;
+
+    private Timeline timeline;
+
     public Bullet(double x, double y, int row, int damage, double speed, Image image) {
         this.x = x;
         this.y = y;
@@ -24,35 +27,49 @@ public abstract class Bullet {
         this.damage = damage;
         this.speed = speed;
         this.imageView = new ImageView(image);
+        this.isAlive = true;
+        imageView.setLayoutY(y);
+        imageView.setLayoutX(x);
         update();
     }
-    public void move(double deltaTime) {
-        if(!isAlive)return;
-        x += speed * deltaTime;
-        imageView.setLayoutX(x);
-//        int length = ;     // اگر از زمین خارج شد
-//        if(x > length) die();
 
-        //the implementation of the damaging to the zombies would be here.
-        //checking the distance between each zombie and bullet!
 
-    }
-    public void update() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),e ->{
-            move(0.1);
-        }));
+
+    public void addToPane(Pane pane) {
+        this.parentPane = pane;
+        pane.getChildren().add(imageView);
+        update();
     }
 
-    //after each shot the current bullet will die!
-    public void die(){
+    public void die() {
         isAlive = false;
+        if (timeline != null) timeline.stop();
+        if (parentPane != null) parentPane.getChildren().remove(imageView);
+        // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
     }
 
-    public void onHit(Zombie zombie){
-        if(slower) zombie.setSlowed(true);
+    public void onHit(Zombie zombie) {
         zombie.takeDamage(damage);
         die();
+    }
 
+    public void move(double deltaTime) {
+        if (!isAlive) return;
+
+        x += speed * deltaTime;
+        imageView.setLayoutX(x);
+
+        if (x > 1550) {
+            die();
+        }
+    }
+
+    public void update() {
+        timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+            move(0.1);
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
     // از طریق بورد بازی صف اون ردیف را بگیریم و به زامبی های اون دسترسی پیذا کنیم به چپ ترین زامبی رو به عنوان پارامتر
 
@@ -68,9 +85,22 @@ public abstract class Bullet {
     public double getY(){
         return y;
     }
+    public void setX(double x){
+        this.x = x;
+    }
+    public double getX(){
+        return x;
+    }
     public void setY(double y){
         this.y = y;
     }
+    public Bullet getBullet(){
+        return this;
+    }
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
 }
 //other class like peashot and iceshot use this bullets!
 

@@ -6,8 +6,8 @@ import javafx.scene.layout.Pane;
 
 public class Repeater extends PeaPlant {
     private static final String repeaterImageAddress = "/Character/repeater.png";
-    public Repeater(int cost, int hp, int row) {
-        super(cost, hp, row, new Image(repeaterImageAddress));
+    public Repeater(int cost, int hp) {
+        super(cost, hp, new Image(repeaterImageAddress));
 
     }
 
@@ -20,7 +20,7 @@ public class Repeater extends PeaPlant {
     }
 
     @Override
-    public void updateImageSituation() {
+    public void updateImageSituation(Pane pane) {
 
     }
 }

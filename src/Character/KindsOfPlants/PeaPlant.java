@@ -1,13 +1,59 @@
 package Character.KindsOfPlants;
 import  Character.Bullet;
+import Character.KindsOfZombie.Zombie;
+import Map.ZombieFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public abstract class PeaPlant extends Plant {
-    protected Bullet bullet;
-    PeaPlant(int cost, int hp, int row, Image image) {
-        super(cost, hp,row, image);
+    private boolean checkShot;
+    ArrayList<Bullet> bulletQueue = new ArrayList<>();
+    PeaPlant(int cost, int hp, Image image) {
+        super(cost, hp, image);
+        this.checkShot = false;
     }
+
+    public boolean getCheckShot() {
+        return checkShot;
+    }
+    public void setCheckShot(boolean checkShot) {
+        this.checkShot = checkShot;
+    }
+    public void sameRowZombies() {
+        boolean zombieInRow = false;
+
+        for (Zombie z : ZombieFactory.zombies) {
+            if (z.getRow() == getRow() && z.getX() >= getX()) {
+                zombieInRow = true;
+            }
+        }
+
+        setCheckShot(zombieInRow);
+    }
+
+
+    public void sameRowBullet() {
+        //both these arraylist used to remove elements!
+        ArrayList<Bullet> toRemove1 = new ArrayList<>();
+        ArrayList<Zombie> toRemove2 = new ArrayList<>();
+        for(Bullet b : bulletQueue) {
+            for (Zombie z : ZombieFactory.zombies) {
+                if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 30) {
+                    b.die();
+                    toRemove1.add(b);
+                    z.takeDamage(1);
+                    if (z.isDead())toRemove2.add(z);
+                }
+            }
+        }
+        bulletQueue.removeAll(toRemove1);
+        ZombieFactory.zombies.removeAll(toRemove2);
+    }
+
 
     //every time this method called a bullet object will be created!
     // باید در بازی بررسی بشه که در سطر تا زمانی که زامبی هست صدا زده بشه
