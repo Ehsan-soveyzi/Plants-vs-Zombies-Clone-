@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 public class WallNut extends NutPlant {
     private static final String WallNutImageAddress = "/Character/WallNut.png";
 
-    WallNut(int cost, int hp) {
+    public WallNut(int cost, int hp) {
         super(cost, hp, new Image(WallNutImageAddress));
     }
 

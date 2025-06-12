@@ -2,7 +2,7 @@ package Character.KindsOfPlants;
 import Character.Bullet;
 import Character.KindsOfZombie.Zombie;
 import Character.NormalBullet;
-import Character.SlowBullet;
+import Character.SnowBullet;
 import Map.ZombieFactory;
 import Map.MapController;
 import Map.ZombieFactory;
@@ -29,7 +29,7 @@ public class PeaShooter extends PeaPlant {
     public void shoot(Pane pane) {
 
 //        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
-            Bullet normalBullet = new NormalBullet(getX() + 20,getY(),getRow(), 1, 40);
+            Bullet normalBullet = new NormalBullet(getX() + 20,getY(),getRow());
             normalBullet.addToPane(pane);
             bulletQueue.add(normalBullet);
 //        }));
@@ -39,7 +39,6 @@ public class PeaShooter extends PeaPlant {
 
 
     public void playAnimation() {
-        boolean check = false;
         Image[] frames = new Image[12];
         for(int i = 0;i < 12;i++){
             frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/resources/graphics/Plants/Peashooter/Peashooter_" + i + ".png")));
@@ -47,7 +46,7 @@ public class PeaShooter extends PeaPlant {
         final int[] index = {0};
         ImageView peaShooter = getImageView();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), e ->{
+         timeline = new Timeline(new KeyFrame(Duration.millis(20), e ->{
 //            this.update(0.1);
             peaShooter.setImage(frames[index[0]]);
             index[0] = (index[0] + 1) % frames.length;

@@ -48,10 +48,11 @@ public abstract class Bullet {
         // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
     }
 
-    public void onHit(Zombie zombie) {
-        zombie.takeDamage(damage);
-        die();
-    }
+//    public void onHit(Zombie zombie) {
+//        zombie.takeDamage(damage);
+//        die();
+//    }
+    public abstract void onHit(Zombie z);
 
     public void move(double deltaTime) {
         if (!isAlive) return;

@@ -18,16 +18,12 @@ public class Regular extends Zombie {
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
 
     public Regular(int row) {
-        super(5,50,1,row,new Image(regularImageAddress));
-
-
+        super(5,100,1,row,new Image(regularImageAddress));
     }
 
     @Override
     public void playWalkingAnimation(Pane pane) {
-        addToPane(pane);
-        timeline = new Timeline(new KeyFrame(Duration.millis(1000)));
-
+            addToPane(pane);
             Image[] frames = new Image[22];
             for (int i = 0; i < 22; i++) {
                 frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
@@ -39,7 +35,7 @@ public class Regular extends Zombie {
 
             final int[] frameIndex = {0};
 
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+             timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
                 this.update(0.1);
                 zombieView.setImage(frames[frameIndex[0]]);
                 frameIndex[0] = (frameIndex[0] + 1) % frames.length;
@@ -51,6 +47,22 @@ public class Regular extends Zombie {
 
 
     protected void  playEatingAnimation(){
+        timeline.stop();
+        Image[] frames = new Image[21];
+        for(int i = 0;i < 22;i++){
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/Images/resources/graphics/Zombies/NormalZombie/ZombieAttack/ZombieAttack_" + i + ".png"
+            )));
+        }
+        ImageView zombieView = getImageView();
+        final int[] frameIndex = {0};
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+
+            zombieView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
 
     }
 }

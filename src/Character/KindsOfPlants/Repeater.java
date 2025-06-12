@@ -14,9 +14,9 @@ public class Repeater extends PeaPlant {
     // we should check the same row for checking there is a zombie or not .
     @Override
     public void shoot(Pane pane) {
-        Bullet firstBullet = new NormalBullet(getX(), getY(), getRow(), 1, 0.5);
+        Bullet firstBullet = new NormalBullet(getX(), getY(), getRow());
 
-        Bullet secondBullet = new NormalBullet(getX(), getY(), getRow(), 1, 0.5);
+        Bullet secondBullet = new NormalBullet(getX(), getY(), getRow());
     }
 
     @Override
