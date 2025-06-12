@@ -138,6 +138,7 @@ public class MapController {
         zombieFactory.createRegularZombie(0);
         zombieFactory.createRegularZombie(1);
         zombieFactory.createRegularZombie(2);
+        zombieFactory.createRegularZombie(3);
     }
 
 
