@@ -9,11 +9,11 @@ public class WallNut extends NutPlant {
 
     public WallNut(int cost, int hp, int row) {
         super(cost, hp, row, new Image(WallNutImageAddress + "0.png"));
-        playAnimation(15, WallNutImageAddress);
+
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        playAnimation(15, WallNutImageAddress);
     }
 }

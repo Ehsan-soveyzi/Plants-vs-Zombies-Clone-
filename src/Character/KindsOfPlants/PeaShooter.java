@@ -22,10 +22,8 @@ public class PeaShooter extends PeaPlant {
 
     public PeaShooter(int cost, int hp, int row) {
         super(cost, hp,row, new Image(peaShooterImageAddress + "0.png"));
-        playAnimation(12, peaShooterImageAddress);
 
     }
-
     @Override
     public void shoot(Pane pane) {
 
@@ -38,31 +36,9 @@ public class PeaShooter extends PeaPlant {
 //        timeline.play();
     }
 
-
-    public void playAnimation() {
-        Image[] frames = new Image[12];
-        for(int i = 0;i < 12;i++){
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/resources/graphics/Plants/Peashooter/Peashooter_" + i + ".png")));
-        }
-        final int[] index = {0};
-        ImageView peaShooter = getImageView();
-
-         timeline = new Timeline(new KeyFrame(Duration.millis(20), e ->{
-//            this.update(0.1);
-            peaShooter.setImage(frames[index[0]]);
-            index[0] = (index[0] + 1) % frames.length;
-            sameRowZombies();
-            sameRowBullet();
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
-
-
-
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation();
+        playAnimation(12, peaShooterImageAddress);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e ->{
             if(getCheckShot()){
                 shoot(pane);

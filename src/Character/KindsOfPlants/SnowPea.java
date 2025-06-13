@@ -15,28 +15,6 @@ public class SnowPea extends PeaPlant {
 
     public SnowPea(int cost, int hp, int row) {
         super(cost, hp, row, new Image(snowPeaImageAddress + "0.png"));
-        playAnimation(14, snowPeaImageAddress );
-
-    }
-
-    public void playAnimation() {
-        boolean check = false;
-        Image[] frames = new Image[14];
-        for(int i = 0;i < 14;i++){
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/resources/graphics/Plants/SnowPea/SnowPea_" + i + ".png")));
-        }
-        final int[] index = {0};
-        ImageView SnowPea = getImageView();
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), e ->{
-//            this.update(0.1);
-            SnowPea.setImage(frames[index[0]]);
-            index[0] = (index[0] + 1) % frames.length;
-            sameRowZombies();
-            sameRowBullet();
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
     }
 
     @Override
@@ -44,12 +22,11 @@ public class SnowPea extends PeaPlant {
         Bullet snowBullet = new SnowBullet(getX(), getY(),getRow());
         snowBullet.addToPane(pane);
         bulletQueue.add(snowBullet);
-
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation();
+        playAnimation(14, snowPeaImageAddress );
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e ->{
             if(getCheckShot()){
                 shoot(pane);

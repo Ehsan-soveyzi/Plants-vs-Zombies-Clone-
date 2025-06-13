@@ -8,7 +8,7 @@ public class Repeater extends PeaPlant {
     private static final String repeaterImageAddress = "/Images/resources/graphics/Plants/RepeaterPea/RepeaterPea_.png";
     public Repeater(int cost, int hp, int row) {
         super(cost, hp, row, new Image(repeaterImageAddress + "0.png"));
-        playAnimation(14, repeaterImageAddress);
+
 
     }
 
@@ -22,6 +22,6 @@ public class Repeater extends PeaPlant {
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        playAnimation(14, repeaterImageAddress);
     }
 }

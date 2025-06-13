@@ -58,7 +58,6 @@ public class MapController {
         waveZombies.play();
         Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.millis(10000), event -> {
             Sun sun = new Sun();
-//            sun.sunMovement();
             paneWindow.getChildren().add(sun.getImageView());
         }));
         timeBetweenSun.setCycleCount(10);

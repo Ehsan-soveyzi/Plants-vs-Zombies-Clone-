@@ -8,7 +8,7 @@ public class Jalapeno extends BombPlant {
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoExplode_";
     Jalapeno(int cost, int hp, int row) {
         super(cost, hp, row, new Image(JalapenoImageAddress +"0.png"));
-        playAnimation(7, JalapenoImageAddress);
+
         // امتحان کن اگه ایتچا متود سوختن اجرا بشه یا باید اوراید بشه برای متود burnanimation
     }
 
@@ -23,6 +23,6 @@ public class Jalapeno extends BombPlant {
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        playAnimation(7, JalapenoImageAddress);
     }
 }
