@@ -11,9 +11,8 @@ public class SunFlower extends Plant{
     Timeline sunGenerationTime;
 
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower_";
-    // or have a image field in parent class and
     // static because before making this field the super execute
-    // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
+
 
     public SunFlower(int cost, int hp, int row) {
         super(cost, hp, row, new Image(sunImageAddress + "0.png"));

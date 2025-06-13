@@ -69,9 +69,7 @@ public abstract class Plant {
         timeline.play();
     }
 
-    private void clearDiedPlant(){ // با مختصات گرید
-        imageView.setImage(null);
-    }
+
     public abstract void updateImageSituation(Pane pane); // abstract
 
     public int getRow(){return row;};

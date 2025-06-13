@@ -48,10 +48,6 @@ public abstract class Bullet {
         // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
     }
 
-//    public void onHit(Zombie zombie) {
-//        zombie.takeDamage(damage);
-//        die();
-//    }
     public abstract void onHit(Zombie z);
 
     public void move(double deltaTime) {
@@ -103,22 +99,3 @@ public abstract class Bullet {
     }
 
 }
-//other class like peashot and iceshot use this bullets!
-
-
-
-
-
-//enum BulletType {NORMAL, ICE, DOUBLE}
-//switch (type) {
-//        case ICE:
-//slower = true;
-//        case NORMAL:
-//speed = 1;
-//damage = 1;
-//        break;
-//        case DOUBLE: // 0.5 seconds later make a new bullet Normal
-//speed = 1;
-//damage = 1;
-//        break;
-//        }
