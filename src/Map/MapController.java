@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import Character.Sun;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -53,14 +54,15 @@ public class MapController {
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
-        waveZombies = new Timeline(new KeyFrame(Duration.seconds(240),e -> {
+        waveZombies = new Timeline(new KeyFrame(Duration.seconds(1),e -> {
             //wave 1:
-            if(waveZombies.getCurrentTime() == Duration.seconds(120)) {
-                attackOne();
-            }
-            else if(waveZombies.getCurrentTime() == Duration.seconds(240)) {
-                attackOne();
-            }
+//            if(waveZombies.getCurrentTime() == Duration.seconds(120)) {
+//                attackOne();
+//            }
+//            else if(waveZombies.getCurrentTime() == Duration.seconds(240)) {
+//                attackOne();
+//            }
+            attackOne();
 
         }));
         waveZombies.setCycleCount(1);
@@ -71,6 +73,14 @@ public class MapController {
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
+
+
+        Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.millis(10000), event -> {
+            Sun sun = new Sun();
+            paneWindow.getChildren().add(sun.getImageView());
+        }));
+        timeBetweenSun.setCycleCount(10);
+        timeBetweenSun.play();
 
 
 
@@ -129,10 +139,12 @@ public class MapController {
     public void setOnCell(Pane cell,int row,int col){
         cell.setOnMouseClicked(event -> {
             if(!map.isCellEmpty(row, col) && shovelUsed){
+                //using shovel
                 shovel(row, col);
                 System.out.println("cell is already not empty");
-            }
-            else if (choosenPlant == null ){
+            } else if (!map.isCellEmpty(row, col)) {
+                System.out.println("cell is already not empty");
+            } else if (choosenPlant == null ){
                 System.out.println("No plant selected");
             }
             else{

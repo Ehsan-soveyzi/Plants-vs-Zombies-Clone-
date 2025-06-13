@@ -4,15 +4,16 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 public  class CherryBomb extends BombPlant {
-    private static final String cherryBombImageAddress = "/Character/CherryBomb.png";
-    CherryBomb(int cost, int hp, Image image) {
-        super(cost, hp, image);
+    private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb_";
+    CherryBomb(int cost, int hp) {
+        super(cost, hp, new Image(cherryBombImageAddress + "0.png"));
+
 
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        playAnimation(6, cherryBombImageAddress);
     }
 
     public void burnZombies(){

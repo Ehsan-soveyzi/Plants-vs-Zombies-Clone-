@@ -10,17 +10,25 @@ public class SunFlower extends Plant{
 
     Timeline sunGenerationTime;
 
-    private static final String sunImageAddress = "/Character/sun.png";
-    // or have a image field in parent class and
+    private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower_";
     // static because before making this field the super execute
-    // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
+
 
     public SunFlower(int cost, int hp) {
-        super(cost, hp, new Image(sunImageAddress));
+        super(cost, hp, new Image(sunImageAddress + "0.png"));
 
+
+
+
+    }
+
+    @Override
+    public void updateImageSituation(Pane pane) {
+        playAnimation(17, sunImageAddress);
         sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             if (!isDead()) {
                 Sun sun = new Sun(super.getX(), super.getY());
+                pane.getChildren().add(sun.getImageView());
             }
             else {
                 sunGenerationTime.stop();
@@ -29,11 +37,6 @@ public class SunFlower extends Plant{
 
         sunGenerationTime.setCycleCount(Timeline.INDEFINITE);
         sunGenerationTime.play();
-
-    }
-
-    @Override
-    public void updateImageSituation(Pane pane) {
 
     }
 }

@@ -2,10 +2,16 @@ package Character.KindsOfPlants;
 import  Character.Bullet;
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class PeaPlant extends Plant {
     private boolean checkShot;
@@ -53,6 +59,29 @@ public abstract class PeaPlant extends Plant {
             bulletQueue.removeAll(toRemove1);
         }
         ZombieFactory.zombies.removeAll(toRemove2);
+    }
+
+    @Override
+    public void playAnimation(int number, String address) {
+        Image[] frames = new Image[number];
+        for (int i = 0; i < number; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    address + i + ".png"
+            )));
+        }
+        ImageView imageView = getImageView();
+
+        final int[] frameIndex = {0};
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            imageView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+            sameRowBullet();
+            sameRowZombies();
+        }));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
 
