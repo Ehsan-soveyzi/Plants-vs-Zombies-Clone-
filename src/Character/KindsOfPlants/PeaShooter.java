@@ -29,7 +29,7 @@ public class PeaShooter extends PeaPlant {
     public void shoot(Pane pane) {
             if(!isDead()) {
 //        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
-                Bullet normalBullet = new NormalBullet(getX() + 20, getY(), getRow());
+                Bullet normalBullet = new NormalBullet(getX() + 10, getY(), getRow());
                 normalBullet.addToPane(pane);
                 bulletQueue.add(normalBullet);
 //        }));
@@ -47,7 +47,7 @@ public class PeaShooter extends PeaPlant {
         final int[] index = {0};
         ImageView peaShooter = getImageView();
 
-         timeline = new Timeline(new KeyFrame(Duration.millis(20), e ->{
+         timeline = new Timeline(new KeyFrame(Duration.millis(80), e ->{
 //            this.update(0.1);
             peaShooter.setImage(frames[index[0]]);
             index[0] = (index[0] + 1) % frames.length;
@@ -63,7 +63,7 @@ public class PeaShooter extends PeaPlant {
     @Override
     public void updateImageSituation(Pane pane) {
         playAnimation();
-        timeline = new Timeline(new KeyFrame(Duration.millis(1000), e ->{
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
             if(getCheckShot()){
                 shoot(pane);
             }

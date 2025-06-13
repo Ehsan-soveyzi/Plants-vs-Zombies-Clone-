@@ -2,8 +2,6 @@ package Character.KindsOfZombie;
 
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
-import Map.ZombieFactory;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -13,8 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.sql.Time;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public abstract class Zombie {
@@ -200,9 +198,10 @@ public abstract class Zombie {
 
     public void startBiting(Plant plant, GameMap map) {
         if (biteTimeline != null) return; // اگر در حال گاز زدن هست، برنگرد
-
-        biteTimeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
+        AtomicInteger i = new AtomicInteger(1);
+        biteTimeline = new Timeline(new KeyFrame(Duration.millis(eatingSpeed), e -> {
             bite(plant);
+            System.out.println("bite " + i.getAndIncrement());
             if(isDead){
                 stopBiting();
             }

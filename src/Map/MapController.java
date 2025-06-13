@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MapController {
 
@@ -28,6 +29,8 @@ public class MapController {
     private ImageView sunFlower;
     @FXML
     private ImageView nutFlower;
+    @FXML
+    private ImageView shovel;
 
 
     GameMap map = new GameMap();
@@ -35,6 +38,7 @@ public class MapController {
     ZombieFactory zombieFactory;
     Timeline waveZombies;
     Timeline gameLoop;
+    boolean shovelUsed  = false;
 
     ArrayList<Plant> plants = new ArrayList<>();
 
@@ -49,11 +53,11 @@ public class MapController {
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
-        waveZombies = new Timeline(new KeyFrame(Duration.seconds(4),e -> {
+        waveZombies = new Timeline(new KeyFrame(Duration.seconds(1),e -> {
             //wave 1:
             attackOne();
         }));
-        waveZombies.setCycleCount(4);
+        waveZombies.setCycleCount(1);
         waveZombies.play();
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
@@ -67,7 +71,7 @@ public class MapController {
         createGrid();
     }
     public void choosePeaShooter(){
-        choosenPlant = new PeaShooter(100,1);
+        choosenPlant = new PeaShooter(100,5);
     }
     public void chooseIceShooter(){
         choosenPlant = new SnowPea(175,5);
@@ -92,6 +96,10 @@ public class MapController {
         nutFlower.setOnMouseClicked(event -> {
             chooseNutFlower();
         });
+        shovel.setOnMouseClicked(event -> {
+            shovelUsed = true;
+            choosenPlant = null;
+        });
     }
 
     public void createGrid(){
@@ -100,8 +108,8 @@ public class MapController {
 
         for(int i = 0 ; i < rows ; i++){
             for(int j = 0; j < cols; j++){
-
                 Pane cell = new Pane();
+
                 cell.setPrefSize(80, 80);
 
                 setOnCell(cell, i, j);
@@ -110,13 +118,16 @@ public class MapController {
             }
         }
     }
+
+
     public void setOnCell(Pane cell,int row,int col){
         cell.setOnMouseClicked(event -> {
-            if (choosenPlant == null ){
-                System.out.println("No plant selected");
-            }
-            else if(!map.isCellEmpty(row, col)){
+            if(!map.isCellEmpty(row, col) && shovelUsed){
+                shovel(row, col);
                 System.out.println("cell is already not empty");
+            }
+            else if (choosenPlant == null ){
+                System.out.println("No plant selected");
             }
             else{
 
@@ -131,13 +142,27 @@ public class MapController {
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
                 choosenPlant = null;
+                shovelUsed = false;
             }
         });
     }
     public void attackOne(){
-        zombieFactory.createRegularZombie(0);
-        zombieFactory.createRegularZombie(1);
-        zombieFactory.createRegularZombie(2);
+        Random rand  = new Random();
+        int answer;
+        for(int i = 0; i < 5;i++){
+            answer = rand.nextInt(5);
+            zombieFactory.createRegularZombie(answer);
+        }
+        for(int i = 0 ; i < 5;i++){
+            answer = rand.nextInt(5);
+            zombieFactory.createConeHeadZombie(answer);
+        }
+    }
+
+    public void shovel(int row, int col){
+        choosenPlant = null;
+        map.removePlant(row, col);
+        shovelUsed = false;
     }
 
 

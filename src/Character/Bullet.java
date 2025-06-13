@@ -12,7 +12,6 @@ import javafx.util.Duration;
 public abstract class Bullet {
     private double speed;
     private double x,y;
-    private int damage;
     private int row;
     private ImageView imageView;
     private boolean isAlive;
@@ -20,11 +19,10 @@ public abstract class Bullet {
 
     private Timeline timeline;
 
-    public Bullet(double x, double y, int row, int damage, double speed, Image image) {
+    public Bullet(double x, double y, int row, double speed, Image image) {
         this.x = x;
         this.y = y;
         this.row = row;
-        this.damage = damage;
         this.speed = speed;
         this.imageView = new ImageView(image);
         this.isAlive = true;
@@ -72,7 +70,6 @@ public abstract class Bullet {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
-    // از طریق بورد بازی صف اون ردیف را بگیریم و به زامبی های اون دسترسی پیذا کنیم به چپ ترین زامبی رو به عنوان پارامتر
 
     public ImageView getImageView() {
         return imageView;
@@ -103,22 +100,4 @@ public abstract class Bullet {
     }
 
 }
-//other class like peashot and iceshot use this bullets!
 
-
-
-
-
-//enum BulletType {NORMAL, ICE, DOUBLE}
-//switch (type) {
-//        case ICE:
-//slower = true;
-//        case NORMAL:
-//speed = 1;
-//damage = 1;
-//        break;
-//        case DOUBLE: // 0.5 seconds later make a new bullet Normal
-//speed = 1;
-//damage = 1;
-//        break;
-//        }

@@ -26,7 +26,7 @@ public class SnowPea extends PeaPlant {
         final int[] index = {0};
         ImageView SnowPea = getImageView();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), e ->{
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(80), e ->{
 //            this.update(0.1);
             SnowPea.setImage(frames[index[0]]);
             index[0] = (index[0] + 1) % frames.length;
@@ -40,7 +40,7 @@ public class SnowPea extends PeaPlant {
     @Override
     public void shoot(Pane pane) {
         if(!isDead()) {
-            Bullet snowBullet = new SnowBullet(getX(), getY(), getRow());
+            Bullet snowBullet = new SnowBullet(getX() + 5, getY(), getRow());
             snowBullet.addToPane(pane);
             bulletQueue.add(snowBullet);
         }
@@ -49,7 +49,7 @@ public class SnowPea extends PeaPlant {
     @Override
     public void updateImageSituation(Pane pane) {
         playAnimation();
-        timeline = new Timeline(new KeyFrame(Duration.millis(1000), e ->{
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
             if(getCheckShot()){
                 shoot(pane);
             }

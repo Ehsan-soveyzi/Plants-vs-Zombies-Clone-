@@ -18,7 +18,7 @@ public class Regular extends Zombie {
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
 
     public Regular(int row) {
-        super(5,50,1,row,new Image(regularImageAddress));
+        super(5,30,500,row,new Image(regularImageAddress));
     }
 
     @Override

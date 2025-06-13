@@ -39,19 +39,19 @@ public abstract class PeaPlant extends Plant {
         //both these arraylist used to remove elements!
         ArrayList<Bullet> toRemove1 = new ArrayList<>();
         ArrayList<Zombie> toRemove2 = new ArrayList<>();
-        for(Bullet b : bulletQueue) {
-            for (Zombie z : ZombieFactory.zombies) {
+        //
+        for(Zombie z : ZombieFactory.zombies) {
+            for (Bullet b : bulletQueue) {
                 if(z.getRow() != b.getRow())continue;
-                if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 10) {
+                if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 30) {
+                    b.onHit(z);
                     b.die();
                     toRemove1.add(b);
-                    b.onHit(z);
-//                    System.out.println("hiting bullet ");
                     if (z.isDead())toRemove2.add(z);
                 }
             }
+            bulletQueue.removeAll(toRemove1);
         }
-        bulletQueue.removeAll(toRemove1);
         ZombieFactory.zombies.removeAll(toRemove2);
     }
 
