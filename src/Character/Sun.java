@@ -18,7 +18,7 @@ public class Sun {
     ImageView sunImageView;
     private static String sunAddress = "/Images/resources/graphics/Plants/Sun/Sun_0.png";
 
-    Sun(){ // random in map
+    public Sun(){ // random in map
         sunImageView = new ImageView(sunAddress);
         sunMovement();
         sunImageView.setOnMouseClicked(event -> {
@@ -33,6 +33,7 @@ public class Sun {
         sunImageView = new ImageView(sunAddress);
         sunImageView.setX(x);
         sunImageView.setY(y);
+        sunRotation();
         // imageview should add as a child for being watchable
 //        sunCollector();
     }
@@ -75,7 +76,25 @@ public class Sun {
             );
         });
     }
+    private void sunRotation(){
+        Image[] frames = new Image[21];
+        for (int i = 0; i < 21; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/Images/resources/graphics/Plants/Sun/Sun_" + i + ".png"
+            )));
+        }
 
+        ImageView sunImageView = getImageView();
+        final int[] frameIndex = {0};
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            sunImageView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
+        timeline.setCycleCount(75);
+        timeline.play();
+
+    }
     public void addSun(){
         System.out.println("Adding Sun");
 //        map.setSun(map.getSun() + 1);

@@ -18,6 +18,7 @@ public class SunFlower extends Plant{
     public SunFlower(int cost, int hp, int row) {
         super(cost, hp, row, new Image(sunImageAddress + "0.png"));
         playAnimation(17, sunImageAddress);
+        Sun sun = new Sun(getX(), getY());
 
 //        sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
 //            if (!isDead()) {
@@ -35,6 +36,7 @@ public class SunFlower extends Plant{
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        Sun sun = new Sun(getX(), getY());
+        pane.getChildren().add(sun.getImageView());
     }
 }

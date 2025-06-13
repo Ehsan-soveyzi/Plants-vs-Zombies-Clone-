@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import Character.Sun;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,15 @@ public class MapController {
         }));
         waveZombies.setCycleCount(1);
         waveZombies.play();
+        Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.millis(10000), event -> {
+            Sun sun = new Sun();
+//            sun.sunMovement();
+            paneWindow.getChildren().add(sun.getImageView());
+        }));
+        timeBetweenSun.setCycleCount(10);
+        timeBetweenSun.play();
+
+
 
 //        gameLoop = new Timeline(new KeyFrame(Duration.millis(1000),e -> {
 //            map.checkWar();
@@ -67,10 +77,10 @@ public class MapController {
         createGrid();
     }
     public void choosePeaShooter(){
-        choosenPlant = new PeaShooter(100,5);
+        choosenPlant = new PeaShooter(100,5, 0 );
     }
     public void chooseIceShooter(){
-        choosenPlant = new SnowPea(175,5);
+        choosenPlant = new SnowPea(175,5,0);
     }
     public void chooseSunFlower(){
         choosenPlant = new SunFlower(50,5,0);
