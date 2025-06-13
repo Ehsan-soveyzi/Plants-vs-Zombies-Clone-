@@ -34,6 +34,11 @@ public class Sun {
         sunImageView.setX(x);
         sunImageView.setY(y);
         sunRotation();
+        sunImageView.setOnMouseClicked(event -> {
+            clicked = true;
+            removeSun();
+            addSun();
+        });
         // imageview should add as a child for being watchable
 //        sunCollector();
     }
@@ -93,6 +98,11 @@ public class Sun {
         }));
         timeline.setCycleCount(75);
         timeline.play();
+        timeline.setOnFinished(e -> {
+            timeline.stop();
+            sunImageView.setImage(null);
+
+        });
 
     }
     public void addSun(){

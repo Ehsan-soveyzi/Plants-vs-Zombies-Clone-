@@ -20,23 +20,24 @@ public class SunFlower extends Plant{
         playAnimation(17, sunImageAddress);
         Sun sun = new Sun(getX(), getY());
 
-//        sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
-//            if (!isDead()) {
-//                Sun sun = new Sun(super.getX(), super.getY());
-//            }
-//            else {
-//                sunGenerationTime.stop();
-//            }
-//        }));
-//
-//        sunGenerationTime.setCycleCount(Timeline.INDEFINITE);
-//        sunGenerationTime.play();
+
 
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-        Sun sun = new Sun(getX(), getY());
-        pane.getChildren().add(sun.getImageView());
+        sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            if (!isDead()) {
+                Sun sun = new Sun(super.getX(), super.getY());
+                pane.getChildren().add(sun.getImageView());
+            }
+            else {
+                sunGenerationTime.stop();
+            }
+        }));
+
+        sunGenerationTime.setCycleCount(Timeline.INDEFINITE);
+        sunGenerationTime.play();
+
     }
 }
