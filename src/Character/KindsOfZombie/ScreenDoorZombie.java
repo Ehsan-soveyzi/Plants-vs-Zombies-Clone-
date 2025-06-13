@@ -1,65 +1,25 @@
 package Character.KindsOfZombie;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-
-import java.util.Objects;
 
 public class ScreenDoorZombie extends Zombie {
     private final static String screenDoorImageAddress = "/Character/screenDoor.png";
     public ScreenDoorZombie(int row) {
-        super(10, 30, 500, row,  new Image(screenDoorImageAddress));
+        super(10, 1, 1, row,  new Image(screenDoorImageAddress));
+    }
+    @Override
+    public void updateImageSituation(){
+
     }
 
     @Override
     public void playWalkingAnimation(Pane pane) {
-        addToPane(pane);
-        Image[] frames = new Image[21];
-        for (int i = 0; i < 21; i++) {
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombie/ConeheadZombie_" + i + ".png"
-            )));
-        }
 
-        ImageView zombieView = getImageView();
-
-        final int[] frameIndex = {0};
-
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            this.update(0.1);
-            zombieView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-        }));
-
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
     }
 
+    @Override
+    public void playEatingAnimation() {
 
-    public void  playEatingAnimation(){
-        Image[] frames = new Image[21];
-        for(int i = 0;i < 11;i++){
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombieAttack/ConeheadZombieAttack_" + i + ".png"
-            )));
-        }
-        ImageView zombieView = getImageView();
-        final int[] frameIndex = {0};
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            zombieView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-            if(isDead()) {
-                timeline.stop();
-                setDead(true);
-                die();
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.playFromStart();
     }
 }

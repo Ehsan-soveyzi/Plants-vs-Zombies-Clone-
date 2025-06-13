@@ -53,9 +53,15 @@ public class MapController {
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
-        waveZombies = new Timeline(new KeyFrame(Duration.seconds(1),e -> {
+        waveZombies = new Timeline(new KeyFrame(Duration.seconds(240),e -> {
             //wave 1:
-            attackOne();
+            if(waveZombies.getCurrentTime() == Duration.seconds(120)) {
+                attackOne();
+            }
+            else if(waveZombies.getCurrentTime() == Duration.seconds(240)) {
+                attackOne();
+            }
+
         }));
         waveZombies.setCycleCount(1);
         waveZombies.play();
@@ -163,6 +169,11 @@ public class MapController {
         choosenPlant = null;
         map.removePlant(row, col);
         shovelUsed = false;
+    }
+
+    public void chooseRandomZombie(){
+        Random rand = new Random();
+        int number = rand.nextInt(5);
     }
 
 

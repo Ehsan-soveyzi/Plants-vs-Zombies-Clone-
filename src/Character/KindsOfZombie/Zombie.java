@@ -48,7 +48,7 @@ public abstract class Zombie {
         this.isEating = false;
         this.isSlowed = false;
         imageView = new ImageView(image);
-        setY(row * 140 + 80);
+        setY(row * 140 + 60);
         getImageView().setLayoutX(x);
         getImageView().setLayoutY(y);
     }

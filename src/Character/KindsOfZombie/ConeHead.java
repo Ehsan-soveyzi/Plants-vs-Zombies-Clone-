@@ -47,7 +47,7 @@ public class ConeHead extends Zombie {
 
 
     public void  playEatingAnimation(){
-        Image[] frames = new Image[21];
+        Image[] frames = new Image[11];
         for(int i = 0;i < 11;i++){
             frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombieAttack/ConeheadZombieAttack_" + i + ".png"
