@@ -31,12 +31,12 @@ public abstract class Plant {
     }
     public void takeDamage() {
         if (isDead) return;
-        if (hp <= 0){
+        if (hp == 0){
             die();
             return;
         }
         hp--;
-//        updateImageSituation();
+
     }
 
     public void die() {

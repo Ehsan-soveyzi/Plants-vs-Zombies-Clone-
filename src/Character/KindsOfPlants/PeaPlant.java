@@ -41,6 +41,7 @@ public abstract class PeaPlant extends Plant {
         ArrayList<Zombie> toRemove2 = new ArrayList<>();
         for(Bullet b : bulletQueue) {
             for (Zombie z : ZombieFactory.zombies) {
+                if(z.getRow() != b.getRow())continue;
                 if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 10) {
                     b.die();
                     toRemove1.add(b);

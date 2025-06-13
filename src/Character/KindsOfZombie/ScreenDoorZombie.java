@@ -19,7 +19,7 @@ public class ScreenDoorZombie extends Zombie {
     }
 
     @Override
-    protected void playEatingAnimation() {
+    public void playEatingAnimation() {
 
     }
 }

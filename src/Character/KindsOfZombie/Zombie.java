@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.sql.Time;
 import java.util.Objects;
 
 
@@ -33,6 +34,7 @@ public abstract class Zombie {
     protected Timeline timeline;
     private Pane parentPane;
     private PauseTransition slowTimer;
+    private Timeline biteTimeline;
 
 //    protected Image image;
     private ImageView imageView;
@@ -54,8 +56,15 @@ public abstract class Zombie {
     }
 
     public void addToPane(Pane pane) {
-        this.parentPane = pane;
-        pane.getChildren().add(imageView);
+        // اگه imageView قبلاً در یک والد بوده، اول از اون جداش کن
+        if (imageView.getParent() != null && imageView.getParent() != pane) {
+            ((Pane) imageView.getParent()).getChildren().remove(imageView);
+        }
+
+        // فقط اگر هنوز در همین pane نیست، اضافه‌اش کن
+        if (imageView.getParent() == null) {
+            pane.getChildren().add(imageView);
+        }
     }
 
 
@@ -105,7 +114,10 @@ public abstract class Zombie {
         isEating = true;
     } // abstract
 
-    protected void updateImageSituation(){
+    public void updateImageSituation(){
+        if (isSlowed) {
+            playWakingSlowerAnimation();
+        }
         if (isBurn) {
             playBurningAnimation();
             return;
@@ -115,18 +127,15 @@ public abstract class Zombie {
             playDeathAnimation();
             return;
         }
-        if (isSlowed) {
-            playWakingSlowerAnimation();
-        }
-
-        if (isEating) {
+         if (isEating) {
             System.out.println("one zombie eating");
-            timeline.stop();
             playEatingAnimation();
         }
+
+
     }
     public abstract void playWalkingAnimation(Pane pane);//abstract
-    protected abstract void  playEatingAnimation();
+    public abstract void  playEatingAnimation();
     public void playDeathAnimation(){
         Image[] frames = new Image[22];
         for (int i = 0; i < 10; i++) {
@@ -146,9 +155,9 @@ public abstract class Zombie {
         }));
 
         timeline.setCycleCount(frames.length);
-        timeline.play();
         timeline.setOnFinished(e -> {
             if(parentPane != null)parentPane.getChildren().remove(imageView);
+            else System.out.println("realllllllllly");
         });
         timeline.playFromStart();
     }
@@ -187,6 +196,35 @@ public abstract class Zombie {
             });
             slowTimer.playFromStart();
         }
+    }
+
+    public void startBiting(Plant plant, GameMap map) {
+        if (biteTimeline != null) return; // اگر در حال گاز زدن هست، برنگرد
+
+        biteTimeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
+            bite(plant);
+            if(isDead){
+                stopBiting();
+            }
+            if (plant.getHp() <= 0) {
+                plant.setDead(true);
+                map.removePlant(plant.getRow(), plant.getCol());
+                stopBiting();
+            }
+        }));
+        biteTimeline.setCycleCount(Timeline.INDEFINITE);
+        biteTimeline.play();
+    }
+
+    public void stopBiting() {
+        if (biteTimeline != null) {
+            biteTimeline.stop();
+            biteTimeline = null;
+        }
+        setEating(false);
+        timeline.stop();
+        updateImageSituation();
+        if(!isDead)playWalkingAnimation((Pane)this.getImageView().getParent());
     }
 
 
@@ -248,6 +286,10 @@ public abstract class Zombie {
 
     public boolean isSlowed() {
         return isSlowed;
+    }
+
+    public Timeline getTimeline() {
+        return timeline;
     }
 
     public ImageView getImageView() {

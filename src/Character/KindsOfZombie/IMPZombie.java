@@ -15,7 +15,7 @@ public class IMPZombie extends Zombie {
     }
 
     @Override
-    protected void playEatingAnimation() {
+    public void playEatingAnimation() {
 
     }
 }

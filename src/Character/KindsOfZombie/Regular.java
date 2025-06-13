@@ -18,7 +18,7 @@ public class Regular extends Zombie {
     // میتونیم تعریف نکنیم صرفا این فیلد رو همون ادرس رو مستقیم بدیم
 
     public Regular(int row) {
-        super(5,100,1,row,new Image(regularImageAddress));
+        super(5,50,1,row,new Image(regularImageAddress));
     }
 
     @Override
@@ -43,13 +43,12 @@ public class Regular extends Zombie {
 
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
-        }
+    }
 
 
-    protected void  playEatingAnimation(){
-        timeline.stop();
+    public void  playEatingAnimation(){
         Image[] frames = new Image[21];
-        for(int i = 0;i < 22;i++){
+        for(int i = 0;i < 21;i++){
             frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Images/resources/graphics/Zombies/NormalZombie/ZombieAttack/ZombieAttack_" + i + ".png"
             )));
@@ -57,13 +56,16 @@ public class Regular extends Zombie {
         ImageView zombieView = getImageView();
         final int[] frameIndex = {0};
         timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-
             zombieView.setImage(frames[frameIndex[0]]);
             frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+            if(isDead()) {
+                timeline.stop();
+                setDead(true);
+                die();
+            }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.playFromStart();
-
     }
 }
 

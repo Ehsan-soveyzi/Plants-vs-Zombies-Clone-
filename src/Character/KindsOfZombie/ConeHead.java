@@ -15,7 +15,7 @@ public class ConeHead extends Zombie {
     }
 
     @Override
-    protected void playEatingAnimation() {
+    public void playEatingAnimation() {
 
     }
 }

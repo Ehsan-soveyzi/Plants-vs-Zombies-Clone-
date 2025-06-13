@@ -53,21 +53,21 @@ public class MapController {
             //wave 1:
             attackOne();
         }));
-        waveZombies.setCycleCount(1);
+        waveZombies.setCycleCount(4);
         waveZombies.play();
 
-//        gameLoop = new Timeline(new KeyFrame(Duration.millis(1000),e -> {
-//            map.checkWar();
-//        }));
-//        gameLoop.setCycleCount(Timeline.INDEFINITE);
-//        gameLoop.play();
+        gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
+            map.checkWar();
+        }));
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+        gameLoop.play();
 
 
 
         createGrid();
     }
     public void choosePeaShooter(){
-        choosenPlant = new PeaShooter(100,5);
+        choosenPlant = new PeaShooter(100,1);
     }
     public void chooseIceShooter(){
         choosenPlant = new SnowPea(175,5);

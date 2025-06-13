@@ -31,30 +31,20 @@ public class GameMap {
         return grid[row][col] == null && isValidCell(row,col);
     }
 
-    public boolean addPlant(Plant plant, int row, int col) {
-        if(!isCellEmpty(row, col)) return false;
+    public void addPlant(Plant plant, int row, int col) {
+        if(!isCellEmpty(row, col))return;
         grid[row][col] = plant;
         plants.add(plant);
-        return true;
     }
 
-    public void checkWar(){
-        for(Zombie z : ZombieFactory.zombies){
-            for(Plant plant : GameMap.plants){
-                if(z.getX() - plant.getX() >= 100 && z.getRow() == plant.getRow() ){
-//                    System.out.println("zombie eating .........");
+    public void checkWar() {
+        for (Zombie z : ZombieFactory.zombies) {
+            for (Plant plant : GameMap.plants) {
+                if (z.getX() - plant.getX() <= 10 && z.getX() - plant.getX() >= 0 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
                     z.stopWalking();
-                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
-                        z.bite(plant);
-//                        System.out.println("bite....");
-//                        System.out.println(plant.getHp());
-                        if(plant.getHp() == 0){
-                            removePlant(plant.getRow(),plant.getCol());
-//                            System.out.println(grid[plant.getRow()][plant.getCol()]);
-                        }
-                    }));
-                    timeline.setCycleCount(Timeline.INDEFINITE);
-                    timeline.play();
+                    z.getTimeline().stop();
+                    z.updateImageSituation();
+                    z.startBiting(plant, this);
                 }
             }
         }
@@ -62,9 +52,16 @@ public class GameMap {
 
     public void removePlant(int row, int col) {
         if(isValidCell(row, col)){
+            Plant plant = grid[row][col];
+            if (plant != null && plant.getImageView() != null) {
+                Pane parent = (Pane) plant.getImageView().getParent();
+                if (parent != null) parent.getChildren().remove(plant.getImageView());
+            }
+            plants.remove(plant);
             grid[row][col] = null;
         }
     }
+
 
     public Plant getPlant(int row, int col) {
         if(!isValidCell(row, col)) return null;

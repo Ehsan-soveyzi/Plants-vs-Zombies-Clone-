@@ -39,16 +39,17 @@ public class SnowPea extends PeaPlant {
 
     @Override
     public void shoot(Pane pane) {
-        Bullet snowBullet = new SnowBullet(getX(), getY(),getRow());
-        snowBullet.addToPane(pane);
-        bulletQueue.add(snowBullet);
-
+        if(!isDead()) {
+            Bullet snowBullet = new SnowBullet(getX(), getY(), getRow());
+            snowBullet.addToPane(pane);
+            bulletQueue.add(snowBullet);
+        }
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
         playAnimation();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e ->{
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000), e ->{
             if(getCheckShot()){
                 shoot(pane);
             }
