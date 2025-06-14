@@ -6,9 +6,8 @@ import javafx.scene.layout.Pane;
 
 public class Repeater extends PeaPlant {
     private static final String repeaterImageAddress = "/Character/repeater.png";
-    public Repeater(int cost, int hp) {
-        super(cost, hp, new Image(repeaterImageAddress));
-
+    public Repeater() {
+        super(200, 5, new Image(repeaterImageAddress));
     }
 
     // we should check the same row for checking there is a zombie or not .

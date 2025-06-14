@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import Character.KindsOfZombie.Zombie;
@@ -29,9 +30,11 @@ public class MapController {
     @FXML
     private ImageView sunFlower;
     @FXML
-    private ImageView nutFlower;
+    private ImageView walNutFlower;
     @FXML
     private ImageView shovel;
+    @FXML
+    private Label sunPoint;
 
 
     GameMap map = new GameMap();
@@ -40,6 +43,8 @@ public class MapController {
     Timeline waveZombies;
     Timeline gameLoop;
     boolean shovelUsed  = false;
+
+    public static int score = 1000;
 
     ArrayList<Plant> plants = new ArrayList<>();
 
@@ -70,12 +75,13 @@ public class MapController {
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             map.checkWar();
+            sunPoint.setText(Integer.toString(score));
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
 
 
-        Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.millis(10000), event -> {
+        Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
             Sun sun = new Sun();
             paneWindow.getChildren().add(sun.getImageView());
         }));
@@ -87,17 +93,13 @@ public class MapController {
         createGrid();
     }
     public void choosePeaShooter(){
-        choosenPlant = new PeaShooter(100,5);
+        if (score >= 100 && PeaShooter.isReady){
+            choosenPlant = new PeaShooter();
+        }
     }
-    public void chooseIceShooter(){
-        choosenPlant = new SnowPea(175,5);
-    }
-    public void chooseSunFlower(){
-        choosenPlant = new SunFlower(50,5);
-    }
-    public void chooseNutFlower(){
-        choosenPlant = new WallNut(50,10);
-    }
+    public void chooseIceShooter(){if(score >= 175 && SnowPea.isReady)choosenPlant = new SnowPea();}
+    public void chooseSunFlower(){if(score >= 50 && SunFlower.isReady)choosenPlant = new SunFlower();}
+    public void chooseWallNutFlower(){if(score >= 50 && WallNut.isReady)choosenPlant = new WallNut();}
 
     public void mouseEvents(){
         peeShooter.setOnMouseClicked(event -> {
@@ -109,8 +111,8 @@ public class MapController {
         sunFlower.setOnMouseClicked(event -> {
             chooseSunFlower();
         });
-        nutFlower.setOnMouseClicked(event -> {
-            chooseNutFlower();
+        walNutFlower.setOnMouseClicked(event -> {
+            chooseWallNutFlower();
         });
         shovel.setOnMouseClicked(event -> {
             shovelUsed = true;
@@ -159,6 +161,16 @@ public class MapController {
                 choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
+                if (choosenPlant instanceof PeaShooter) {
+                    PeaShooter.startCooldown();
+                } else if (choosenPlant instanceof SnowPea) {
+                    SnowPea.startCooldown();
+                } else if (choosenPlant instanceof SunFlower) {
+                    SunFlower.startCooldown();
+                } else if (choosenPlant instanceof WallNut) {
+                    WallNut.startCooldown();
+                }
+
                 choosenPlant = null;
                 shovelUsed = false;
             }

@@ -10,16 +10,14 @@ public class SunFlower extends Plant{
 
     Timeline sunGenerationTime;
 
+    public static final int cooldown = 7;
+    public static boolean isReady = true;
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower_";
     // static because before making this field the super execute
 
 
-    public SunFlower(int cost, int hp) {
-        super(cost, hp, new Image(sunImageAddress + "0.png"));
-
-
-
-
+    public SunFlower() {
+        super(50, 5, new Image(sunImageAddress + "0.png"));
     }
 
     @Override
@@ -39,4 +37,15 @@ public class SunFlower extends Plant{
         sunGenerationTime.play();
 
     }
+
+    public static void startCooldown() {
+        isReady = false;
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
+            isReady = true;
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
 }

@@ -11,10 +11,12 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class SnowPea extends PeaPlant {
-    private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea_";
-    public SnowPea(int cost, int hp) {
-        super(cost, hp, new Image(snowPeaImageAddress + "0.png"));
 
+    public static final int cooldown = 7;
+    public static boolean isReady = true;
+    private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea_";
+    public SnowPea() {
+        super(175, 5, new Image(snowPeaImageAddress + "0.png"));
     }
 
 //    public void playAnimation() {
@@ -55,6 +57,16 @@ public class SnowPea extends PeaPlant {
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    public static void startCooldown() {
+        isReady = false;
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
+            isReady = true;
+        }));
+        timeline.setCycleCount(1);
         timeline.play();
     }
 

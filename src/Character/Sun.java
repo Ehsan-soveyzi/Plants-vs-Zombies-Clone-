@@ -1,5 +1,6 @@
 package Character;
 
+import Map.MapController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ public class Sun {
         sunMovement();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
+            MapController.score += 25;
             removeSun();
             addSun();
         });
@@ -36,6 +38,7 @@ public class Sun {
         sunRotation();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
+            MapController.score += 25;
             removeSun();
             addSun();
         });

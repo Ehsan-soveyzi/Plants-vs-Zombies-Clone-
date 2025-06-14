@@ -49,7 +49,7 @@
                   <Image url="@../Images/resources/graphics/Cards/card_sunflower.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="nutFlower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="walNutFlower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/resources/graphics/Cards/card_wallnut.png" />
                </image>

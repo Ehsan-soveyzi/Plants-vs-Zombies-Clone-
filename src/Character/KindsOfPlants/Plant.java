@@ -1,6 +1,7 @@
 package Character.KindsOfPlants;
 
 import Map.GameMap;
+import Map.MapController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,7 +17,6 @@ public abstract class Plant {
 
     private int cost;
     private int hp;
-    private double cooldown;
     private double x, y;
     private boolean isDead;
     private int row;
@@ -31,6 +31,7 @@ public abstract class Plant {
         this.hp = hp;
         this.isDead = false;
         imageView = new ImageView(image);
+
     }
     public void takeDamage() {
         if (isDead) return;
@@ -41,6 +42,8 @@ public abstract class Plant {
         hp--;
 //        updateImageSituation();
     }
+
+
 
     public void die() {
         isDead = true;
@@ -82,8 +85,6 @@ public abstract class Plant {
     public void setX(double x) {this.x = x;}
     public double getY() {return y;}
     public void setY(double y) {this.y = y;}
-    public double getCooldown() {return cooldown;}
-    public void setCooldown(double cooldown) {this.cooldown = cooldown;}
     public boolean isDead() {
         return isDead;
     }

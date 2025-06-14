@@ -35,6 +35,7 @@ public class GameMap {
         if(!isCellEmpty(row, col))return;
         grid[row][col] = plant;
         plants.add(plant);
+        MapController.score -= plant.getCost();
     }
 
     public void checkWar() {

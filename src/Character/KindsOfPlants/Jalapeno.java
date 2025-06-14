@@ -6,9 +6,9 @@ import javafx.scene.layout.Pane;
 public class Jalapeno extends BombPlant {
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno_";
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoExplode_";
-    Jalapeno(int cost, int hp) {
-        super(cost, hp, new Image(JalapenoImageAddress +"0.png"));
-
+    Jalapeno() {
+        //dont have idea about the hp!
+        super(125, 100000, new Image(JalapenoImageAddress +"0.png"));
         // امتحان کن اگه ایتچا متود سوختن اجرا بشه یا باید اوراید بشه برای متود burnanimation
     }
 
