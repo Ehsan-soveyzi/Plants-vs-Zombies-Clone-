@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Map.MapController">
+    <children>
+        <GridPane fx:id="gridPane" layoutX="350.0" layoutY="110.0" prefHeight="700.0" prefWidth="1100.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+      <ImageView fx:id="sunView" fitHeight="111.0" fitWidth="281.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/extentions/SunBack.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="sunPoint" layoutX="114.0" layoutY="14.0" prefHeight="78.0" prefWidth="181.0" text="123" textFill="#21ff0a">
+         <font>
+            <Font name="G2 Rubber Stamp LET Plain" size="43.0" />
+         </font>
+      </Label>
+      <VBox layoutX="-5.0" layoutY="191.0" prefHeight="610.0" prefWidth="100.0">
+         <children>
+            <ImageView fx:id="sunFlower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/resources/graphics/Cards/card_sunflower.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="nutFlower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/resources/graphics/Cards/card_wallnut.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="peeShooter" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/resources/graphics/Cards/card_peashooter.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="iceShooter" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/resources/graphics/Cards/card_snowpea.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <ImageView fx:id="shovel" fitHeight="150.0" fitWidth="200.0" layoutX="509.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/extentions/showel.gif" />
+         </image>
+      </ImageView>
+    </children>
+</Pane>
