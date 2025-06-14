@@ -82,5 +82,7 @@ public class PeaShooter extends PeaPlant {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
+        startCooldown();
+
     }
 }

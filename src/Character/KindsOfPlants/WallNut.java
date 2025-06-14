@@ -20,6 +20,7 @@ public class WallNut extends NutPlant {
     @Override
     public void updateImageSituation(Pane pane) {
         playAnimation(15, WallNutImageAddress);
+        startCooldown();
     }
 
     public static void startCooldown() {

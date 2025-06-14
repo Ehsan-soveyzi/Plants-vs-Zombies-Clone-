@@ -36,6 +36,7 @@ public class SunFlower extends Plant{
         sunGenerationTime.setCycleCount(Timeline.INDEFINITE);
         sunGenerationTime.play();
 
+        startCooldown();
     }
 
     public static void startCooldown() {

@@ -58,6 +58,8 @@ public class SnowPea extends PeaPlant {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        startCooldown();
     }
 
     public static void startCooldown() {

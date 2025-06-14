@@ -161,16 +161,6 @@ public class MapController {
                 choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
-                if (choosenPlant instanceof PeaShooter) {
-                    PeaShooter.startCooldown();
-                } else if (choosenPlant instanceof SnowPea) {
-                    SnowPea.startCooldown();
-                } else if (choosenPlant instanceof SunFlower) {
-                    SunFlower.startCooldown();
-                } else if (choosenPlant instanceof WallNut) {
-                    WallNut.startCooldown();
-                }
-
                 choosenPlant = null;
                 shovelUsed = false;
             }
