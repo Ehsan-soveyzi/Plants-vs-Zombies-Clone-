@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public abstract class PeaPlant extends Plant {
     private boolean checkShot;
-    ArrayList<Bullet> bulletQueue = new ArrayList<>();
+    public static ArrayList<Bullet> bulletQueue = new ArrayList<>();
     PeaPlant(int cost, int hp, Image image) {
         super(cost, hp, image);
         this.checkShot = false;
@@ -48,8 +48,6 @@ public abstract class PeaPlant extends Plant {
                 if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 30) {
                     b.onHit(z);
                     b.die();
-                    if (z.isDead()) ZombieFactory.zombies.remove(z);
-                    bulletQueue.remove(b);
                     break;
                 }
             }

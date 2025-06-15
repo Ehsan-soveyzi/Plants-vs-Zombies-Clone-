@@ -1,5 +1,7 @@
 package Character.KindsOfPlants;
 
+import Character.KindsOfZombie.Zombie;
+import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -17,14 +19,13 @@ public class Jalapeno extends BombPlant {
         // امتحان کن اگه ایتچا متود سوختن اجرا بشه یا باید اوراید بشه برای متود burnanimation
     }
 
-    public void burnZombies(){
 
-    }
-    public void burnAnimation(){
-        playAnimation(7, BurnJalapenoImageAddress);
-        // delete background
-        burnZombies();
-    }
+//    public void burnAnimation(){
+//        playAnimation(7, BurnJalapenoImageAddress);
+//        // delete background
+//        burnZombies();
+//    }
+
     public static void startCooldown() {
         isReady = false;
 
@@ -39,5 +40,10 @@ public class Jalapeno extends BombPlant {
     public void updateImageSituation(Pane pane) {
         playAnimation(7, JalapenoImageAddress);
         startCooldown();
+    }
+
+    @Override
+    public void burnZombies() {
+
     }
 }

@@ -1,5 +1,7 @@
 package Character.KindsOfPlants;
 
+import Character.KindsOfZombie.Zombie;
+import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -16,6 +18,14 @@ public  class CherryBomb extends BombPlant {
 
     }
 
+    public void burnZombies(){
+        for(Zombie zombie : ZombieFactory.zombies){
+            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - zombie.getCol()) <= 1){
+                zombie.die();
+            }
+        }
+    }
+
     @Override
     public void updateImageSituation(Pane pane) {
         playAnimation(6, cherryBombImageAddress);
@@ -30,8 +40,5 @@ public  class CherryBomb extends BombPlant {
         }));
         timeline.setCycleCount(1);
         timeline.play();
-    }
-    public void burnZombies(){
-
     }
 }

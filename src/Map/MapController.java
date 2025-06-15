@@ -46,6 +46,7 @@ public class MapController {
     ZombieFactory zombieFactory;
     Timeline waveZombies;
     Timeline gameLoop;
+    static int waveCount = 1;
     boolean shovelUsed  = false;
 
     public static int score = 1000;
@@ -71,7 +72,7 @@ public class MapController {
 //            else if(waveZombies.getCurrentTime() == Duration.seconds(240)) {
 //                attackOne();
 //            }
-            attackOne();
+//            attackOne();
 
         }));
         waveZombies.setCycleCount(1);
@@ -179,18 +180,36 @@ public class MapController {
         });
     }
     
-    public void attackOne(){
+    public void attackOne(int wave){
         Random rand  = new Random();
-        int answer;
-        for(int i = 0; i < 5;i++){
-            answer = rand.nextInt(5);
-            zombieFactory.createRegularZombie(answer);
-        }
-        for(int i = 0 ; i < 5;i++){
-            answer = rand.nextInt(5);
-            zombieFactory.createConeHeadZombie(answer);
+        for (int i = 0; i < waveCount; i++) {
+            int iterate = rand.nextInt(wave);
+            if(waveCount == 1)zombieFactory.createRegularZombie(iterate);
+            else if(waveCount == 2){
+                zombieFactory.createRegularZombie(iterate);
+                zombieFactory.createConeHeadZombie(iterate);
+            }
+            else if(waveCount == 3){
+                zombieFactory.createRegularZombie(iterate);
+                zombieFactory.createConeHeadZombie(iterate);
+                zombieFactory.createScreenDoorZombie(iterate);
+            }
         }
     }
+
+    public void attackTwo(){
+        for(int i = 0;i < 5;i++){
+            zombieFactory.createRegularZombie(i);
+            zombieFactory.createConeHeadZombie(i);
+        }
+    }
+
+    public void attackThree(){
+        for(int i = 0;i < 5;i++){
+
+        }
+    }
+
 
     public void shovel(int row, int col){
         choosenPlant = null;
@@ -200,6 +219,11 @@ public class MapController {
 
     public void chooseRandomZombie(){
         Random rand = new Random();
-        int number = rand.nextInt(5);
+        int randomRow = rand.nextInt(5);
+        double number = Math.random();
+        if(number < 0.35)zombieFactory.createRegularZombie(randomRow);
+        else if(number < 0.60)zombieFactory.createConeHeadZombie(randomRow);
+        else if(number < 0.80)zombieFactory.createScreenDoorZombie(randomRow);
+        else zombieFactory.createIMPZombie(randomRow);
     }
 }

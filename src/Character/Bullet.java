@@ -1,6 +1,7 @@
 package Character;
 
 
+import Character.KindsOfPlants.PeaPlant;
 import Character.KindsOfZombie.Zombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,6 +43,7 @@ public abstract class Bullet {
     public void die() {
         isAlive = false;
         if (timeline != null) timeline.stop();
+        PeaPlant.bulletQueue.remove(this);
         if (parentPane != null) parentPane.getChildren().remove(imageView);
         // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
     }

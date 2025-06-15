@@ -2,6 +2,7 @@ package Character.KindsOfZombie;
 
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
+import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -9,8 +10,8 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.util.Duration;
-
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,7 +24,8 @@ public abstract class Zombie {
     private double eatingSpeed;
     private final int row;
     private int col;
-    private double x = 1500, y = 0.0;
+    private double x = Screen.getPrimary().getBounds().getWidth();
+    private double y = 0.0;
 
 
     private boolean isDead;
@@ -48,6 +50,7 @@ public abstract class Zombie {
         this.isDead = false;
         this.isEating = false;
         this.isSlowed = false;
+        this.isBurn = false;
         imageView = new ImageView(image);
         setY(row * 140 + 60);
         getImageView().setLayoutX(x);
@@ -73,6 +76,7 @@ public abstract class Zombie {
             x -= speed * deltaTime;
             imageView.setLayoutX(x);
             updateImageSituation();
+            this.setCol(getCol());
         }
     }
 
@@ -82,15 +86,14 @@ public abstract class Zombie {
         hp -= damage;
         if (hp <= 0){
             die();
-
         }
     }
 
     public void die() {
         isDead = true;
         if(timeline != null)timeline.stop();
+        ZombieFactory.zombies.remove(this);
         updateImageSituation();
-//        if(parentPane != null)parentPane.getChildren().remove(imageView);
     }
 
     public void startEating() {
@@ -114,6 +117,9 @@ public abstract class Zombie {
     } // abstract
 
     public void updateImageSituation(){
+        if(isBurn){
+            playDeathAnimation();
+        }
         if (isSlowed) {
             playWakingSlowerAnimation();
         }
@@ -151,8 +157,8 @@ public abstract class Zombie {
 
         timeline.setCycleCount(frames.length);
         timeline.setOnFinished(e -> {
-            if(parentPane != null)parentPane.getChildren().remove(imageView);
-            else System.out.println("realllllllllly");
+//            if(parentPane != null)parentPane.getChildren().remove(imageView);
+//            else System.out.println("realllllllllly");
         });
         timeline.playFromStart();
     }
@@ -193,6 +199,10 @@ public abstract class Zombie {
             slowTimer.playFromStart();
         }
     }
+
+//    public int getCol(){
+////        return imageView.getLayoutX() -
+//    }
 
     public void startBiting(Plant plant, GameMap map) {
         if (biteTimeline != null) return; // اگر در حال گاز زدن هست، برنگرد
@@ -260,6 +270,14 @@ public abstract class Zombie {
 
     public int getRow() {
         return row;
+    }
+
+    public int getCol() {
+        return (int)((this.getX() - 260)/122);
+    }
+
+    public void setCol(int col){
+        this.col = col;
     }
 
     public double getX() {
