@@ -5,9 +5,9 @@ import javafx.scene.layout.Pane;
 
 public  class CherryBomb extends BombPlant {
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb_";
-    CherryBomb(int cost, int hp) {
-        super(cost, hp, new Image(cherryBombImageAddress + "0.png"));
-
+    CherryBomb() {
+        //dont have idea about the hp!
+        super(150, 100000, new Image(cherryBombImageAddress + "0.png"));
 
     }
 

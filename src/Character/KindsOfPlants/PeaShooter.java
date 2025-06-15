@@ -19,9 +19,11 @@ import java.util.Objects;
 public class PeaShooter extends PeaPlant {
 
     private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter_";
+    public static final int cooldown = 7;
+    public static boolean isReady = true;
 
-    public PeaShooter(int cost, int hp) {
-        super(cost, hp, new Image(peaShooterImageAddress + "0.png"));
+    public PeaShooter() {
+        super(100,5, new Image(peaShooterImageAddress + "0.png"));
     }
 
     @Override
@@ -37,6 +39,15 @@ public class PeaShooter extends PeaPlant {
             }
     }
 
+    public static void startCooldown() {
+        isReady = false;
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
+            isReady = true;
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
 
 //    public void playAnimation() {
 //        Image[] frames = new Image[12];
@@ -59,6 +70,7 @@ public class PeaShooter extends PeaPlant {
 
 
 
+
     @Override
     public void updateImageSituation(Pane pane) {
         playAnimation(12,peaShooterImageAddress);
@@ -69,6 +81,8 @@ public class PeaShooter extends PeaPlant {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        startCooldown();
 
     }
 }

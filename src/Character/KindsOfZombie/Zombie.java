@@ -21,7 +21,8 @@ public abstract class Zombie {
     private int hp;
     private double speed;
     private double eatingSpeed;
-    private int row;
+    private final int row;
+    private int col;
     private double x = 1500, y = 0.0;
 
 
@@ -116,10 +117,6 @@ public abstract class Zombie {
         if (isSlowed) {
             playWakingSlowerAnimation();
         }
-        if (isBurn) {
-            playBurningAnimation();
-            return;
-        }
         if (isDead){
             System.out.println("one zombie die");
             playDeathAnimation();
@@ -191,6 +188,7 @@ public abstract class Zombie {
                 //if after 5 seconds ice shoot did not applied remove the slow.
                 isSlowed = false;
                 setSpeed(speed * 2.0);
+                imageView.setEffect(null);
             });
             slowTimer.playFromStart();
         }
@@ -243,9 +241,6 @@ public abstract class Zombie {
         this.x = x;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
 
     public void setEatingSpeed(double eatingSpeed) {
         this.eatingSpeed = eatingSpeed;

@@ -11,6 +11,7 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class Regular extends Zombie {
+    static Image[] images = new Image[22];
     private final static String regularImageAddress =
             "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_0.png";
     // or have a image field in parent class and
