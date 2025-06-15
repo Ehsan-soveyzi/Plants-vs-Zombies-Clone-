@@ -12,14 +12,11 @@ public class ScreenDoorZombie extends Zombie {
     public void updateImageSituation(){
 
     }
-
-    @Override
-    public void playWalkingAnimation(Pane pane) {
-
-    }
-
     @Override
     public void playEatingAnimation() {
 
+    }
+    public void playWalkingAnimation(Pane pane){
+        super.playWalkingAnimation(pane, 22, screenDoorImageAddress);
     }
 }

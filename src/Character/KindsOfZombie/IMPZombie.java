@@ -9,13 +9,13 @@ public class IMPZombie extends Zombie {
         super(3, 2, 1, row,new Image(IMPZombieImageAddress));
     }
 
-    @Override
-    public void playWalkingAnimation(Pane pane) {
 
-    }
 
     @Override
     public void playEatingAnimation() {
 
+    }
+    public void playWalkingAnimation(Pane pane){
+        super.playWalkingAnimation(pane, 22, IMPZombieImageAddress);
     }
 }
