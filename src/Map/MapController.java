@@ -104,6 +104,8 @@ public class MapController {
     public void chooseIceShooter(){if(score >= 175 && SnowPea.isReady)choosenPlant = new SnowPea();}
     public void chooseSunFlower(){if(score >= 50 && SunFlower.isReady)choosenPlant = new SunFlower();}
     public void chooseWallNutFlower(){if(score >= 50 && WallNut.isReady)choosenPlant = new WallNut();}
+    public void chooseJalapenoFlower(){if(score >= 125 && Jalapeno.isReady)choosenPlant = new Jalapeno();}
+    public void chooseCherryBomb(){if(score >= 150 && CherryBomb.isReady)choosenPlant = new CherryBomb();}
 
     public void mouseEvents(){
         peeShooter.setOnMouseClicked(event -> {
@@ -117,6 +119,12 @@ public class MapController {
         });
         walNutFlower.setOnMouseClicked(event -> {
             chooseWallNutFlower();
+        });
+        jalapeno.setOnMouseClicked(event -> {
+            chooseJalapenoFlower();
+        });
+        cherryBomb.setOnMouseClicked(event -> {
+            chooseCherryBomb();
         });
         shovel.setOnMouseClicked(event -> {
             shovelUsed = true;
