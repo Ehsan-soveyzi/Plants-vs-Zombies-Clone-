@@ -116,10 +116,6 @@ public abstract class Zombie {
         if (isSlowed) {
             playWakingSlowerAnimation();
         }
-        if (isBurn) {
-            playBurningAnimation();
-            return;
-        }
         if (isDead){
             System.out.println("one zombie die");
             playDeathAnimation();
@@ -191,6 +187,7 @@ public abstract class Zombie {
                 //if after 5 seconds ice shoot did not applied remove the slow.
                 isSlowed = false;
                 setSpeed(speed * 2.0);
+                imageView.setEffect(null);
             });
             slowTimer.playFromStart();
         }

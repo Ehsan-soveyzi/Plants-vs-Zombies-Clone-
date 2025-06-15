@@ -12,7 +12,7 @@
 
 <Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Map.MapController">
     <children>
-        <GridPane fx:id="gridPane" layoutX="350.0" layoutY="110.0" prefHeight="700.0" prefWidth="1100.0">
+        <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="349.0" layoutY="119.0" prefHeight="700.0" prefWidth="1100.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -32,7 +32,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-      <ImageView fx:id="sunView" fitHeight="111.0" fitWidth="281.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="sunView" fitHeight="111.0" fitWidth="281.0" layoutX="3.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/resources/graphics/extentions/SunBack.png" />
          </image>
@@ -42,24 +42,34 @@
             <Font name="G2 Rubber Stamp LET Plain" size="43.0" />
          </font>
       </Label>
-      <VBox layoutX="-5.0" layoutY="191.0" prefHeight="610.0" prefWidth="100.0">
+      <VBox layoutY="94.0" prefHeight="807.0" prefWidth="109.0">
          <children>
-            <ImageView fx:id="sunFlower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="sunFlower" fitHeight="93.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/resources/graphics/Cards/card_sunflower.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="walNutFlower" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="cherryBomb" fitHeight="95.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/resources/graphics/Cards/card_cherrybomb.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="jalapeno" fitHeight="91.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/resources/graphics/Cards/card_jalapeno.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="walNutFlower" fitHeight="96.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/resources/graphics/Cards/card_wallnut.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="peeShooter" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="peeShooter" fitHeight="100.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/resources/graphics/Cards/card_peashooter.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="iceShooter" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="iceShooter" fitHeight="96.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/resources/graphics/Cards/card_snowpea.png" />
                </image>

@@ -35,6 +35,10 @@ public class MapController {
     private ImageView shovel;
     @FXML
     private Label sunPoint;
+    @FXML
+    private ImageView jalapeno;
+    @FXML
+    private ImageView cherryBomb;
 
 
     GameMap map = new GameMap();
@@ -166,6 +170,7 @@ public class MapController {
             }
         });
     }
+    
     public void attackOne(){
         Random rand  = new Random();
         int answer;
@@ -189,6 +194,4 @@ public class MapController {
         Random rand = new Random();
         int number = rand.nextInt(5);
     }
-
-
 }

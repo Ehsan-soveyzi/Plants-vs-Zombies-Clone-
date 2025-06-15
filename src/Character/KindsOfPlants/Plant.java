@@ -31,7 +31,8 @@ public abstract class Plant {
         this.hp = hp;
         this.isDead = false;
         imageView = new ImageView(image);
-
+        imageView.setLayoutX(imageView.getX() + 20);
+        imageView.setLayoutY(imageView.getY() + 20);
     }
     public void takeDamage() {
         if (isDead) return;
@@ -42,7 +43,6 @@ public abstract class Plant {
         hp--;
 //        updateImageSituation();
     }
-
 
 
     public void die() {
