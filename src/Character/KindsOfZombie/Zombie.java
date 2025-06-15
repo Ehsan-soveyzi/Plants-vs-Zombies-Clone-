@@ -21,7 +21,8 @@ public abstract class Zombie {
     private int hp;
     private double speed;
     private double eatingSpeed;
-    private int row;
+    private final int row;
+    private int col;
     private double x = 1500, y = 0.0;
 
 
@@ -240,9 +241,6 @@ public abstract class Zombie {
         this.x = x;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
 
     public void setEatingSpeed(double eatingSpeed) {
         this.eatingSpeed = eatingSpeed;
