@@ -43,7 +43,6 @@ public abstract class Bullet {
     public void die() {
         isAlive = false;
         if (timeline != null) timeline.stop();
-        PeaPlant.bulletQueue.remove(this);
         if (parentPane != null) parentPane.getChildren().remove(imageView);
         // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
     }

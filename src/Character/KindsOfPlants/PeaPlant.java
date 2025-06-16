@@ -32,47 +32,36 @@ public abstract class PeaPlant extends Plant {
         boolean zombieInRow = false;
 
         for (Zombie z : ZombieFactory.zombies) {
-            if (z.getRow() == getRow() && z.getX() + 10 >= getX()) {
+            if (z.getRow() == getRow() && z.getX() - 10 >= getX()) {
                 zombieInRow = true;
             }
         }
-
         setCheckShot(zombieInRow);
     }
 
 
     public void sameRowBullet() {
+        ArrayList<Bullet> removeBullets = new ArrayList<>();
         for (Bullet b : bulletQueue) {
             for (Zombie z : ZombieFactory.zombies) {
                 if (z.getRow() != b.getRow()) continue;
                 if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 30) {
                     b.onHit(z);
                     b.die();
+                    removeBullets.add(b);
                     break;
                 }
             }
         }
+        bulletQueue.removeAll(removeBullets);
     }
 
-    @Override
-    public void playAnimation(int number, String address) {
-        Image[] frames = new Image[number];
-        for (int i = 0; i < number; i++) {
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    address + i + ".png"
-            )));
-        }
-        ImageView imageView = getImageView();
 
-        final int[] frameIndex = {0};
-
+    public void checkBullet() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            imageView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-            sameRowBullet();
             sameRowZombies();
+            sameRowBullet();
         }));
-
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }

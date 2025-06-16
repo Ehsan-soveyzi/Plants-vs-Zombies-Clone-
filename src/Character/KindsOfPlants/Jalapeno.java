@@ -2,29 +2,36 @@ package Character.KindsOfPlants;
 
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public class Jalapeno extends BombPlant {
-    public static final int cooldown = 7;
+    public static final int cooldown = 1;
     public static boolean isReady = true;
-    private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno_";
-    private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoExplode_";
+    private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";
+    private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
+
     public Jalapeno() {
         //dont have idea about the hp!
-        super(125, 100000, new Image(JalapenoImageAddress +"0.png"));
-        // امتحان کن اگه ایتچا متود سوختن اجرا بشه یا باید اوراید بشه برای متود burnanimation
+        super(125, 100000, new Image(JalapenoImageAddress));
     }
 
-
-//    public void burnAnimation(){
-//        playAnimation(7, BurnJalapenoImageAddress);
-//        // delete background
-//        burnZombies();
-//    }
+    @Override
+    public void burnZombies(){
+        for(Zombie x : ZombieFactory.zombies){
+            if(x.getRow() == getRow()){
+                x.burn();
+            }
+        }
+    }
 
     public static void startCooldown() {
         isReady = false;
@@ -38,12 +45,7 @@ public class Jalapeno extends BombPlant {
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation(7, JalapenoImageAddress);
+        burnAnimation(BurnJalapenoImageAddress);
         startCooldown();
-    }
-
-    @Override
-    public void burnZombies() {
-
     }
 }

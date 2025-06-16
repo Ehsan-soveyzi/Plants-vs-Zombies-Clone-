@@ -9,26 +9,28 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public  class CherryBomb extends BombPlant {
-    public static final int cooldown = 7;
+    public static final int cooldown = 1;
     public static boolean isReady = true;
-    private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb_";
+    private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
+    private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
     public CherryBomb() {
         //dont have idea about the hp!
-        super(150, 100000, new Image(cherryBombImageAddress + "0.png"));
+        super(150, 100000, new Image(cherryBombImageAddress));
 
     }
 
+    @Override
     public void burnZombies(){
         for(Zombie zombie : ZombieFactory.zombies){
             if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - zombie.getCol()) <= 1){
-                zombie.die();
+                zombie.burn();
             }
         }
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation(6, cherryBombImageAddress);
+        burnAnimation(ExplodeCherryBombImageAddress);
         startCooldown();
     }
 

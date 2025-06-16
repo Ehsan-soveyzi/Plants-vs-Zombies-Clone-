@@ -1,15 +1,12 @@
 package Map;
 
 import Character.KindsOfPlants.*;
-import Character.KindsOfZombie.Regular;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import Character.Sun;
@@ -39,6 +36,10 @@ public class MapController {
     private ImageView jalapeno;
     @FXML
     private ImageView cherryBomb;
+    @FXML
+    private ImageView tallNut;
+    @FXML
+    private ImageView rePeater;
 
 
     GameMap map = new GameMap();
@@ -46,6 +47,7 @@ public class MapController {
     ZombieFactory zombieFactory;
     Timeline waveZombies;
     Timeline gameLoop;
+    long time;
     static int waveCount = 1;
     boolean shovelUsed  = false;
 
@@ -64,23 +66,13 @@ public class MapController {
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
-        waveZombies = new Timeline(new KeyFrame(Duration.seconds(1),e -> {
-            //wave 1:
-//            if(waveZombies.getCurrentTime() == Duration.seconds(120)) {
-//                attackOne();
-//            }
-//            else if(waveZombies.getCurrentTime() == Duration.seconds(240)) {
-//                attackOne();
-//            }
-//            attackOne();
-
-        }));
-        waveZombies.setCycleCount(1);
-        waveZombies.play();
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
+            time += 100;
             map.checkWar();
             sunPoint.setText(Integer.toString(score));
+            if(time % 10000 == 0)attackOne();
+            if(time % 20000 == 0)waveCount++;
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
@@ -107,6 +99,9 @@ public class MapController {
     public void chooseWallNutFlower(){if(score >= 50 && WallNut.isReady)choosenPlant = new WallNut();}
     public void chooseJalapenoFlower(){if(score >= 125 && Jalapeno.isReady)choosenPlant = new Jalapeno();}
     public void chooseCherryBomb(){if(score >= 150 && CherryBomb.isReady)choosenPlant = new CherryBomb();}
+    public void chooseTallNut(){if(score >= 125 && TallNut.isReady)choosenPlant = new TallNut();}
+    public void chooseRePeater(){if(score >= 200 && Repeater.isReady)choosenPlant = new Repeater();}
+
 
     public void mouseEvents(){
         peeShooter.setOnMouseClicked(event -> {
@@ -127,10 +122,17 @@ public class MapController {
         cherryBomb.setOnMouseClicked(event -> {
             chooseCherryBomb();
         });
+        tallNut.setOnMouseClicked(event -> {
+            chooseTallNut();
+        });
+        rePeater.setOnMouseClicked(event -> {
+            chooseRePeater();
+        });
         shovel.setOnMouseClicked(event -> {
             shovelUsed = true;
             choosenPlant = null;
         });
+
     }
 
     public void createGrid(){
@@ -180,20 +182,10 @@ public class MapController {
         });
     }
     
-    public void attackOne(int wave){
+    public void attackOne(){
         Random rand  = new Random();
-        for (int i = 0; i < waveCount; i++) {
-            int iterate = rand.nextInt(wave);
-            if(waveCount == 1)zombieFactory.createRegularZombie(iterate);
-            else if(waveCount == 2){
-                zombieFactory.createRegularZombie(iterate);
-                zombieFactory.createConeHeadZombie(iterate);
-            }
-            else if(waveCount == 3){
-                zombieFactory.createRegularZombie(iterate);
-                zombieFactory.createConeHeadZombie(iterate);
-                zombieFactory.createScreenDoorZombie(iterate);
-            }
+        for (int i = 1; i <= waveCount; i++) {
+            chooseRandomZombie(i);
         }
     }
 
@@ -217,13 +209,13 @@ public class MapController {
         shovelUsed = false;
     }
 
-    public void chooseRandomZombie(){
+    public void chooseRandomZombie(int wave){
         Random rand = new Random();
         int randomRow = rand.nextInt(5);
-        double number = Math.random();
-        if(number < 0.35)zombieFactory.createRegularZombie(randomRow);
-        else if(number < 0.60)zombieFactory.createConeHeadZombie(randomRow);
-        else if(number < 0.80)zombieFactory.createScreenDoorZombie(randomRow);
+        int number = rand.nextInt(wave);
+        if(number <= 4)zombieFactory.createRegularZombie(randomRow);
+        else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow);
+        else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow);
         else zombieFactory.createIMPZombie(randomRow);
     }
 }

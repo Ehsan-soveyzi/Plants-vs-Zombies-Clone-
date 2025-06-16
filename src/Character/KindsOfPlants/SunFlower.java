@@ -12,17 +12,17 @@ public class SunFlower extends Plant{
 
     public static final int cooldown = 7;
     public static boolean isReady = true;
-    private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower_";
+    private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower.gif";
     // static because before making this field the super execute
 
 
     public SunFlower() {
-        super(50, 5, new Image(sunImageAddress + "0.png"));
+        super(50, 5, new Image(sunImageAddress));
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation(17, sunImageAddress);
+//        playAnimation(17, sunImageAddress);
         sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             if (!isDead()) {
                 Sun sun = new Sun(super.getX(), super.getY());
