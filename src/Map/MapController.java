@@ -63,9 +63,6 @@ public class MapController {
     ArrayList<Plant> plants = new ArrayList<>();
 
 
-
-
-
     @FXML
     public void initialize() {
 
