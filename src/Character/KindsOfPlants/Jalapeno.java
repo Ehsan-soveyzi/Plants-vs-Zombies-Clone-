@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Jalapeno extends BombPlant {
@@ -26,11 +27,13 @@ public class Jalapeno extends BombPlant {
 
     @Override
     public void burnZombies(){
-        for(Zombie x : ZombieFactory.zombies){
-            if(x.getRow() == getRow()){
-                x.burn();
+        ArrayList<Zombie> removeZombies = new ArrayList<>();
+        for(Zombie zombie : ZombieFactory.zombies){
+            if(zombie.getRow() == getRow()){
+                removeZombies.add(zombie);
             }
         }
+        for(Zombie zombie : removeZombies)zombie.burn();
     }
 
     public static void startCooldown() {

@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public  class CherryBomb extends BombPlant {
     public static final int cooldown = 1;
     public static boolean isReady = true;
@@ -21,11 +23,13 @@ public  class CherryBomb extends BombPlant {
 
     @Override
     public void burnZombies(){
+        ArrayList<Zombie> removeZombie = new ArrayList<>();
         for(Zombie zombie : ZombieFactory.zombies){
             if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - zombie.getCol()) <= 1){
-                zombie.burn();
+                removeZombie.add(zombie);
             }
         }
+        for(Zombie zombie : removeZombie)zombie.burn();
     }
 
     @Override
