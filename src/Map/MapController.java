@@ -4,6 +4,8 @@ import Character.KindsOfPlants.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -52,6 +54,7 @@ public class MapController {
     Timeline waveZombies;
     Timeline gameLoop;
     long time;
+    ImageCursor cursor;
     static int waveCount = 1;
     boolean shovelUsed  = false;
 
@@ -72,6 +75,8 @@ public class MapController {
 
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
+            if (choosenPlant != null)setCursorImage(choosenPlant);
+            else paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
             time += 100;
             if(time % 10000 == 0)Sun.addToPane(paneWindow);
@@ -134,6 +139,13 @@ public class MapController {
             choosenPlant = null;
         });
 
+
+
+    }
+
+    public void setCursorImage(Plant plant) {
+         cursor = new ImageCursor(plant.getImageView().getImage());
+        paneWindow.setCursor(cursor);
     }
 
     public void setOnMouseEntered(){
@@ -208,6 +220,7 @@ public class MapController {
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
                 choosenPlant = null;
+
                 shovelUsed = false;
             }
         });
