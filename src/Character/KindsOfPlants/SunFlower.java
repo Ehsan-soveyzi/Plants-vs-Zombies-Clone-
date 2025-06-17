@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.Random;
+
 public class SunFlower extends Plant{
 
     Timeline sunGenerationTime;
@@ -22,10 +24,12 @@ public class SunFlower extends Plant{
 
     @Override
     public void updateImageSituation(Pane pane) {
-//        playAnimation(17, sunImageAddress);
-        sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+        Random rand = new Random();
+        sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
             if (!isDead()) {
-                Sun sun = new Sun(super.getX(), super.getY());
+                int difX = rand.nextInt(40) - 20;
+                int difY = rand.nextInt(40) - 20;
+                Sun sun = new Sun(super.getX() + difX, super.getY() + difY);
                 pane.getChildren().add(sun.getImageView());
             }
             else {

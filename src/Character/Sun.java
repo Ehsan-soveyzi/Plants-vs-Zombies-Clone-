@@ -2,6 +2,7 @@ package Character;
 
 import Map.MapController;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -17,7 +18,7 @@ public class Sun {
     double y;
     boolean clicked = false;
     ImageView sunImageView;
-    private static String sunAddress = "/Images/resources/graphics/Plants/Sun/Sun_0.png";
+    private static final String sunAddress = "/Images/resources/graphics/Plants/Sun/sun.png";
 
     public Sun(){ // random in map
         sunImageView = new ImageView(sunAddress);
@@ -29,13 +30,14 @@ public class Sun {
             addSun();
         });
     }
+
     public Sun(double x, double y) {
         this.x = x;
         this.y = y;
         sunImageView = new ImageView(sunAddress);
         sunImageView.setX(x);
         sunImageView.setY(y);
-        sunRotation();
+        sunCollector();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
             removeSun();
@@ -47,80 +49,45 @@ public class Sun {
         Sun sun = new Sun();
         pane.getChildren().add(sun.getImageView());
     }
-    public void sunCollector(){
 
+    public void sunCollector(){
+        PauseTransition pause = new PauseTransition(Duration.seconds(6));
+        pause.setOnFinished(event -> {
+            sunImageView.setImage(null);
+        });
+        pause.play();
     }
+
     private void sunMovement(){
         Random rand = new Random();
-        int x = rand.nextInt(1400);
+        int x = rand.nextInt(1030) + 370;
+        int y = rand.nextInt(180) + 20;
         sunImageView.setX(x);
 
-
-        Image[] frames = new Image[21];
-        for (int i = 0; i < 21; i++) {
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Plants/Sun/Sun_" + i + ".png"
-            )));
-        }
-
-        ImageView sunImageView = getImageView();
-        final int[] frameIndex = {0};
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            sunImageView.setY(sunImageView.getY() + 10);
-            sunImageView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+            sunImageView.setY(sunImageView.getY() + 4);
         }));
-        timeline.setCycleCount(75);
+        timeline.setCycleCount(y);
         timeline.play();
         timeline.setOnFinished(e -> {
-            timeline.stop();
-            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(100), a -> {
-                sunImageView.setImage(frames[frameIndex[0]]);
-                frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-            }));
-            timeline1.setCycleCount(80);
-            timeline1.play();
-            timeline1.setOnFinished(actionEvent ->
-                    sunImageView.setImage(null)
-            );
+            sunCollector();
         });
     }
-    private void sunRotation(){
-        Image[] frames = new Image[21];
-        for (int i = 0; i < 21; i++) {
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Plants/Sun/Sun_" + i + ".png"
-            )));
-        }
 
-        ImageView sunImageView = getImageView();
-        final int[] frameIndex = {0};
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            sunImageView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-        }));
-        timeline.setCycleCount(75);
-        timeline.play();
-        timeline.setOnFinished(e -> {
-            timeline.stop();
-            sunImageView.setImage(null);
-
-        });
-
-    }
     public void addSun(){
         MapController.score += 25;
     }
+
     public void removeSun(){
         if (sunImageView.getParent() != null) {
             ((Pane) sunImageView.getParent()).getChildren().remove(sunImageView);
         }
     }
+
     public ImageView getImageView(){
         return sunImageView;
     }
+
     public void setImageView(ImageView imageView){
         this.sunImageView = imageView;
     }
