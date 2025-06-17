@@ -41,11 +41,18 @@ public class GameMap {
     public void checkWar() {
         for (Zombie z : ZombieFactory.zombies) {
             for (Plant plant : GameMap.plants) {
-                    if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
+                if(plant.isDead()){
+                    plants.remove(plant);
+                    removePlant(plant.getRow(), plant.getCol());
+//                    System.out.println("123");
+                    break;
+                }
+                else if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
                     z.stopWalking();
                     z.getTimeline().stop();
                     z.updateImageSituation();
                     z.startBiting(plant, this);
+//                    break;
                 }
             }
         }
@@ -77,15 +84,6 @@ public class GameMap {
     public double getYForRow(int row){
         return row*CELL_HEIGHT + OFFSET_Y;
     }
-
-    //no need
-//    public int getColForX(double x){
-//        return (int)(x/CELL_WIDTH);
-//    }
-
-//    public int getRowForY(double y){
-//        return (int)((y - OFFSET_Y) / CELL_HEIGHT);
-//    }
 
     public int getRows(){
         return ROWS;

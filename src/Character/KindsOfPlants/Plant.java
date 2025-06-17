@@ -47,30 +47,9 @@ public abstract class Plant {
 
     public void die() {
         isDead = true;
-        System.out.println("this die..");
         if(timeline != null) timeline.stop();
-        GameMap.plants.remove(this);
     }
-    public void playAnimation(int number, String address) {
-        Image[] frames = new Image[number];
-        for (int i = 0; i < number; i++) {
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    address + i + ".png"
-            )));
-        }
-        ImageView imageView = getImageView();
 
-        final int[] frameIndex = {0};
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            imageView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-
-        }));
-
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-    }
 
 
     public abstract void updateImageSituation(Pane pane); // abstract

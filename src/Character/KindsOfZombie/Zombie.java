@@ -2,6 +2,8 @@ package Character.KindsOfZombie;
 
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
+import Map.ZombieFactory;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -35,7 +37,7 @@ public abstract class Zombie {
     private PauseTransition slowTimer;
     private Timeline biteTimeline;
 
-//    protected Image image;
+    //    protected Image image;
     private ImageView imageView;
 
 
@@ -85,12 +87,17 @@ public abstract class Zombie {
 
         }
     }
+    public void burn(){
+        isBurn = true;
+        isDead = true;
+        die();
+    }
 
     public void die() {
         isDead = true;
         if(timeline != null)timeline.stop();
+        ZombieFactory.zombies.remove(this);
         updateImageSituation();
-//        if(parentPane != null)parentPane.getChildren().remove(imageView);
     }
 
     public void startEating() {
@@ -117,25 +124,30 @@ public abstract class Zombie {
         if (isSlowed) {
             playWakingSlowerAnimation();
         }
-        if (isDead){
-            System.out.println("one zombie die");
-            playDeathAnimation();
+        if (isBurn){
+            System.out.println("one zombie burn");
+            playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
             return;
         }
-         if (isEating) {
+        if (isDead){
+            System.out.println("one zombie die");
+            playDeathAnimation(10 ,"/Images/resources/graphics/Zombies/NormalZombie/ZombieDie/ZombieDie_");
+            return;
+        }
+        if (isEating) {
             System.out.println("one zombie eating");
             playEatingAnimation();
         }
 
 
     }
-    public abstract void playWalkingAnimation(Pane pane);//abstract
-    public abstract void  playEatingAnimation();
-    public void playDeathAnimation(){
-        Image[] frames = new Image[22];
-        for (int i = 0; i < 10; i++) {
+    public abstract void playWalkingAnimation(Pane pane);
+    public void playWalkingAnimation(Pane pane, int number, String path) {
+        addToPane(pane);
+        Image[] frames = new Image[number];
+        for (int i = 0; i < number; i++) {
             frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Zombies/NormalZombie/ZombieDie/ZombieDie_" + i + ".png"
+                    path + i + ".png"
             )));
         }
 
@@ -143,20 +155,41 @@ public abstract class Zombie {
 
         final int[] frameIndex = {0};
 
-         timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-//            this.update(0.1);
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            this.update(0.1);
             zombieView.setImage(frames[frameIndex[0]]);
             frameIndex[0] = (frameIndex[0] + 1) % frames.length;
         }));
 
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+    public abstract void  playEatingAnimation();
+    public void playDeathAnimation(int number, String path) {
+        Image[] frames = new Image[number];
+        for (int i = 0; i < number; i++) {
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    path + i + ".png"
+            )));
+        }
+        ImageView zombieView = getImageView();
+        final int[] frameIndex = {0};
+
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            zombieView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+        }));
         timeline.setCycleCount(frames.length);
         timeline.setOnFinished(e -> {
+            imageView.setImage(null);
+            imageView.setOnMouseClicked(mouseEvent -> {
+                System.out.println(mouseEvent.getSceneX());
+            });
             if(parentPane != null)parentPane.getChildren().remove(imageView);
             else System.out.println("realllllllllly");
         });
         timeline.playFromStart();
     }
-    private void playBurningAnimation(){};
 
     private void playWakingSlowerAnimation(){
         ColorAdjust colorAdjust = new ColorAdjust();
@@ -165,9 +198,6 @@ public abstract class Zombie {
         colorAdjust.setBrightness(-0.19);
         imageView.setEffect(colorAdjust);
     }
-
-
-
     //this method will call after the ice bullet damage.
     public void setSlowed(boolean slowed) {
         if (slowed) {
@@ -205,6 +235,7 @@ public abstract class Zombie {
             }
             if (plant.getHp() <= 0) {
                 plant.setDead(true);
+                GameMap.plants.remove(plant);
                 map.removePlant(plant.getRow(), plant.getCol());
                 stopBiting();
             }
@@ -250,6 +281,13 @@ public abstract class Zombie {
         this.speed = speed;
     }
 
+    public int getCol() {
+        return (int)((this.getX() - 260)/122);
+    }
+
+    public void setCol(int col){
+        this.col = col;
+    }
 
     public double getEatingSpeed() {
         return eatingSpeed;

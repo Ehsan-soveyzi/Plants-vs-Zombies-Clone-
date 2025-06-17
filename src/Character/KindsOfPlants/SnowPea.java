@@ -14,30 +14,10 @@ public class SnowPea extends PeaPlant {
 
     public static final int cooldown = 7;
     public static boolean isReady = true;
-    private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea_";
+    private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea.gif";
     public SnowPea() {
-        super(175, 5, new Image(snowPeaImageAddress + "0.png"));
+        super(175, 5, new Image(snowPeaImageAddress));
     }
-
-//    public void playAnimation() {
-//        boolean check = false;
-//        Image[] frames = new Image[14];
-//        for(int i = 0;i < 14;i++){
-//            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/resources/graphics/Plants/SnowPea/SnowPea_" + i + ".png")));
-//        }
-//        final int[] index = {0};
-//        ImageView SnowPea = getImageView();
-//
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(80), e ->{
-////            this.update(0.1);
-//            SnowPea.setImage(frames[index[0]]);
-//            index[0] = (index[0] + 1) % frames.length;
-//            sameRowZombies();
-//            sameRowBullet();
-//        }));
-//        timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.play();
-//    }
 
     @Override
     public void shoot(Pane pane) {
@@ -50,7 +30,7 @@ public class SnowPea extends PeaPlant {
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation(14,snowPeaImageAddress);
+        checkBullet();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
             if(getCheckShot()){
                 shoot(pane);

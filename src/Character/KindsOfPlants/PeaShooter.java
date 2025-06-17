@@ -18,24 +18,20 @@ import java.util.Objects;
 
 public class PeaShooter extends PeaPlant {
 
-    private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter_";
+    private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
     public static final int cooldown = 7;
     public static boolean isReady = true;
 
     public PeaShooter() {
-        super(100,5, new Image(peaShooterImageAddress + "0.png"));
+        super(100,5, new Image(peaShooterImageAddress));
     }
 
     @Override
     public void shoot(Pane pane) {
             if(!isDead()) {
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
                 Bullet normalBullet = new NormalBullet(getX() + 10, getY(), getRow());
                 normalBullet.addToPane(pane);
                 bulletQueue.add(normalBullet);
-//        }));
-//        timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.play();
             }
     }
 
@@ -49,31 +45,13 @@ public class PeaShooter extends PeaPlant {
         timeline.play();
     }
 
-//    public void playAnimation() {
-//        Image[] frames = new Image[12];
-//        for(int i = 0;i < 12;i++){
-//            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/resources/graphics/Plants/Peashooter/Peashooter_" + i + ".png")));
-//        }
-//        final int[] index = {0};
-//        ImageView peaShooter = getImageView();
-//
-//         timeline = new Timeline(new KeyFrame(Duration.millis(80), e ->{
-////            this.update(0.1);
-//            peaShooter.setImage(frames[index[0]]);
-//            index[0] = (index[0] + 1) % frames.length;
-//            sameRowZombies();
-//            sameRowBullet();
-//        }));
-//        timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.play();
-//    }
 
 
 
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation(12,peaShooterImageAddress);
+        checkBullet();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
             if(getCheckShot()){
                 shoot(pane);

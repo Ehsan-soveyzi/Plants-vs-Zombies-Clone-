@@ -1,28 +1,54 @@
 package Character.KindsOfPlants;
 
+import Character.KindsOfZombie.Zombie;
+import Map.ZombieFactory;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Jalapeno extends BombPlant {
-    private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno_";
-    private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoExplode_";
-    Jalapeno() {
+    public static final int cooldown = 1;
+    public static boolean isReady = true;
+    private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";
+    private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
+
+    public Jalapeno() {
         //dont have idea about the hp!
-        super(125, 100000, new Image(JalapenoImageAddress +"0.png"));
-        // امتحان کن اگه ایتچا متود سوختن اجرا بشه یا باید اوراید بشه برای متود burnanimation
+        super(125, 100000, new Image(JalapenoImageAddress));
     }
 
+    @Override
     public void burnZombies(){
-
+        ArrayList<Zombie> removeZombies = new ArrayList<>();
+        for(Zombie zombie : ZombieFactory.zombies){
+            if(zombie.getRow() == getRow()){
+                removeZombies.add(zombie);
+            }
+        }
+        for(Zombie zombie : removeZombies)zombie.burn();
     }
-    public void burnAnimation(){
-        playAnimation(7, BurnJalapenoImageAddress);
-        // delete background
-        burnZombies();
+
+    public static void startCooldown() {
+        isReady = false;
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
+            isReady = true;
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-        playAnimation(7, JalapenoImageAddress);
+        burnAnimation(BurnJalapenoImageAddress);
+        startCooldown();
     }
 }
