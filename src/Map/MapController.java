@@ -74,7 +74,7 @@ public class MapController {
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             setOnMouseEntered();
             time += 100;
-            if(time % 10000 == 0)Sun.sunCollector(paneWindow);
+            if(time % 10000 == 0)Sun.addToPane(paneWindow);
             map.checkWar();
             sunPoint.setText(Integer.toString(score));
             if(time % 10000 == 0)attackOne();
@@ -249,4 +249,5 @@ public class MapController {
         else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow);
         else zombieFactory.createIMPZombie(randomRow);
     }
+
 }

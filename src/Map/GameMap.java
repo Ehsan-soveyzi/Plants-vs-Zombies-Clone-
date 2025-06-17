@@ -85,15 +85,6 @@ public class GameMap {
         return row*CELL_HEIGHT + OFFSET_Y;
     }
 
-    //no need
-//    public int getColForX(double x){
-//        return (int)(x/CELL_WIDTH);
-//    }
-
-//    public int getRowForY(double y){
-//        return (int)((y - OFFSET_Y) / CELL_HEIGHT);
-//    }
-
     public int getRows(){
         return ROWS;
     }

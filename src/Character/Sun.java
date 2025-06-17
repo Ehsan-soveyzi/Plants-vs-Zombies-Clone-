@@ -38,16 +38,17 @@ public class Sun {
         sunRotation();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
-            MapController.score += 25;
             removeSun();
             addSun();
         });
-        // imageview should add as a child for being watchable
-//        sunCollector();
     }
-    public static void sunCollector(Pane pane){
-            Sun sun = new Sun();
-            pane.getChildren().add(sun.getImageView());
+
+    public static void addToPane(Pane pane){
+        Sun sun = new Sun();
+        pane.getChildren().add(sun.getImageView());
+    }
+    public void sunCollector(){
+
     }
     private void sunMovement(){
         Random rand = new Random();
@@ -110,8 +111,7 @@ public class Sun {
 
     }
     public void addSun(){
-        System.out.println("Adding Sun");
-//        map.setSun(map.getSun() + 1);
+        MapController.score += 25;
     }
     public void removeSun(){
         if (sunImageView.getParent() != null) {

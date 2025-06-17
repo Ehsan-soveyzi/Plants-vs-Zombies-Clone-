@@ -1,7 +1,6 @@
 package Character;
 
 
-import Character.KindsOfPlants.PeaPlant;
 import Character.KindsOfZombie.Zombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
