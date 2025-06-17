@@ -90,8 +90,7 @@ public abstract class Zombie {
     public void burn(){
         isBurn = true;
         isDead = true;
-        if(timeline != null)timeline.stop();
-        updateImageSituation();
+        die();
     }
 
     public void die() {
@@ -126,6 +125,7 @@ public abstract class Zombie {
             playWakingSlowerAnimation();
         }
         if (isBurn){
+            System.out.println("one zombie burn");
             playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
             return;
         }

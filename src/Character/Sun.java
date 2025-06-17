@@ -45,8 +45,9 @@ public class Sun {
         // imageview should add as a child for being watchable
 //        sunCollector();
     }
-    public void sunCollector(){
-
+    public static void sunCollector(Pane pane){
+            Sun sun = new Sun();
+            pane.getChildren().add(sun.getImageView());
     }
     private void sunMovement(){
         Random rand = new Random();

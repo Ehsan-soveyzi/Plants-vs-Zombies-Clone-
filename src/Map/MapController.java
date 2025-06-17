@@ -4,10 +4,14 @@ import Character.KindsOfPlants.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import Character.Sun;
 
@@ -68,7 +72,9 @@ public class MapController {
 
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
+            setOnMouseEntered();
             time += 100;
+            if(time % 10000 == 0)Sun.sunCollector(paneWindow);
             map.checkWar();
             sunPoint.setText(Integer.toString(score));
             if(time % 10000 == 0)attackOne();
@@ -78,12 +84,7 @@ public class MapController {
         gameLoop.play();
 
 
-        Timeline timeBetweenSun = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
-            Sun sun = new Sun();
-            paneWindow.getChildren().add(sun.getImageView());
-        }));
-        timeBetweenSun.setCycleCount(10);
-        timeBetweenSun.play();
+
 
 
 
@@ -132,6 +133,36 @@ public class MapController {
             shovelUsed = true;
             choosenPlant = null;
         });
+
+    }
+
+    public void setOnMouseEntered(){
+
+        for (Node node : gridPane.getChildren()) {
+            node.setOnMouseEntered(event -> {
+                if (choosenPlant != null) {
+                    Pane cell = (Pane) node;
+
+                    boolean hasImageView = false;
+                    for (Node child : cell.getChildren()) {
+                        if (child instanceof ImageView) {
+                            hasImageView = true;
+                            break;
+                        }
+                    }
+
+                    if (hasImageView) {
+                        cell.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+                    } else {
+                        cell.setStyle("-fx-background-color: rgba(255, 255, 100, 0.5);");
+                    }
+                }
+            });
+
+            node.setOnMouseExited(event -> {
+                ((Pane) node).setStyle("");
+            });
+        }
 
     }
 
