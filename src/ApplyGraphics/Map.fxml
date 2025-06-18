@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ApplyGraphics.MainMenuController">
+<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ApplyGraphics.MapController">
     <children>
         <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="349.0" layoutY="119.0" prefHeight="700.0" prefWidth="1100.0">
             <columnConstraints>
@@ -42,50 +42,7 @@
                 <Font name="G2 Rubber Stamp LET Plain" size="43.0" />
             </font>
         </Label>
-        <VBox layoutX="2.0" layoutY="85.0" prefHeight="807.0" prefWidth="109.0">
-            <children>
-                <ImageView fx:id="sunFlower" fitHeight="93.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_sunflower.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="cherryBomb" fitHeight="95.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_cherrybomb.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="jalapeno" fitHeight="91.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_jalapeno.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="walNutFlower" fitHeight="96.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_wallnut.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="peeShooter" fitHeight="100.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_peashooter.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="rePeater" fitHeight="113.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_repeaterpea.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="tallNut" fitHeight="128.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/Tall-nutSeedPacket.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="iceShooter" fitHeight="96.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/resources/graphics/Cards/card_snowpea.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </VBox>
+        <VBox fx:id="playerCard" layoutX="35.0" layoutY="98.0" prefHeight="694.0" prefWidth="109.0" />
         <ImageView fx:id="shovel" fitHeight="60.0" fitWidth="69.0" layoutX="300.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Images/resources/graphics/extentions/shovel.jpg" />

@@ -1,5 +1,6 @@
 package Map;
 
+import ApplyGraphics.MapController;
 import Character.KindsOfPlants.Plant;
 import Character.KindsOfZombie.Regular;
 import Character.KindsOfZombie.Zombie;
@@ -35,7 +36,7 @@ public class GameMap {
         if(!isCellEmpty(row, col))return;
         grid[row][col] = plant;
         plants.add(plant);
-        Map.MapController.score -= plant.getCost();
+        MapController.score -= plant.getCost();
     }
 
     public void checkWar() {

@@ -27,44 +27,44 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="SunFlower" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Flower1.png" />
+                  <Image url="@../Images/resources/graphics/Cards/SunFlower.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="Peashooter" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Flower2.png" />
+                  <Image url="@../Images/resources/graphics/Cards/Peashooter.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <ImageView fx:id="Repeater" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Flower3.png" />
+                  <Image url="@../Images/resources/graphics/Cards/Repeater.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+            <ImageView fx:id="Snowpea" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Flower4.png" />
+                  <Image url="@../Images/resources/graphics/Cards/Snowpea.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="WallNut" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Flower5.png" />
+                  <Image url="@../Images/resources/graphics/Cards/WallNut.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="TallNut" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Flower6.png" />
+                  <Image url="@../Images/resources/graphics/Cards/TallNut.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <ImageView fx:id="CherryBomb" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/card_wallnut.png" />
+                  <Image url="@../Images/resources/graphics/Cards/CherryBomb.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <ImageView fx:id="Jalapeno" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../Images/resources/graphics/Cards/Tall-nutSeedPacket.png" />
+                  <Image url="@../Images/resources/graphics/Cards/Jalapeno.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
@@ -104,7 +104,7 @@
             <Image url="@../Images/New-Plants-vs-Zombies-JavaScript-master%20(1)/New-Plants-vs-Zombies-JavaScript-master/images/interface/Button.png" />
          </image>
       </ImageView>
-      <Label layoutX="506.0" layoutY="526.0" prefHeight="48.0" prefWidth="150.0" text="PLAY">
+      <Label layoutX="502.0" layoutY="528.0" prefHeight="48.0" prefWidth="150.0" text="PLAY">
          <font>
             <Font size="43.0" />
          </font>

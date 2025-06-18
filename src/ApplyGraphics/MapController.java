@@ -1,6 +1,8 @@
-package Map;
+package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Map.GameMap;
+import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import Character.Sun;
@@ -46,6 +49,8 @@ public class MapController {
     private ImageView tallNut;
     @FXML
     private ImageView rePeater;
+    @FXML
+    private VBox playerCards;
 
 
     GameMap map = new GameMap();
@@ -65,8 +70,11 @@ public class MapController {
 
     @FXML
     public void initialize() {
-
-        mouseEvents();
+        Image image = new Image("/Images/resources/graphics/Cards/Jalapeno.png");
+        ImageView imageView = new ImageView(image);
+        playerCards = ChooseCardController.getVBox();
+        System.out.println(playerCards);
+//        mouseEvents();
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
@@ -84,9 +92,6 @@ public class MapController {
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
-
-
-
 
 
 
@@ -135,8 +140,6 @@ public class MapController {
             shovelUsed = true;
             choosenPlant = null;
         });
-
-
 
     }
 

@@ -1,6 +1,6 @@
 package Character;
 
-import Map.MapController;
+import ApplyGraphics.MapController;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;

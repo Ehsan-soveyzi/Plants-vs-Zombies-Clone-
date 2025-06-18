@@ -10,8 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
-
-import java.awt.*;
 import java.io.IOException;
 
 public class ChooseCardController {
@@ -25,10 +23,16 @@ public class ChooseCardController {
     @FXML
     private ImageView playButton;
 
+    public static VBox cards;
+
+
     @FXML
     public void initialize() {
         createGridPane();
+        cards = playerCards;
+
     }
+
 
     private void createGridPane() {
         for (Node node : cardList.getChildren()) {
@@ -54,6 +58,9 @@ public class ChooseCardController {
                     enterGame(event);
             });
         }
+    }
+    public static VBox getVBox() {
+        return cards;
     }
 
     public void enterGame(MouseEvent mouseEvent) {
