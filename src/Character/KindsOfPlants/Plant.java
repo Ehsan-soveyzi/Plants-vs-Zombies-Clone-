@@ -1,16 +1,9 @@
 package Character.KindsOfPlants;
 
-import Map.GameMap;
-import Map.MapController;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-
-import java.util.Objects;
 
 public abstract class Plant {
 

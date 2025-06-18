@@ -1,0 +1,62 @@
+package ApplyGraphics;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+
+import java.io.IOException;
+
+public class ModeController {
+
+    //we need call this enum from this class to apply the changes between day and night!
+    public enum Mode{
+        DAY,NIGHT
+    }
+
+    private static Mode selectedMode;
+
+
+    @FXML
+    private ImageView dayMode;
+    @FXML
+    private ImageView nightMode;
+
+    @FXML
+    public void initialize() {
+        MainMenuController.animateImage(dayMode);
+        MainMenuController.animateImage(nightMode);
+
+        dayMode.setOnMouseClicked(event -> {
+            modeSelected();
+            selectedMode = Mode.DAY;
+        });
+
+        nightMode.setOnMouseClicked(event -> {
+            modeSelected();
+            selectedMode = Mode.NIGHT;
+        });
+    }
+
+    public void modeSelected(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ChooseCard.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            MainMenuController.stage.setScene(scene);
+            MainMenuController.stage.setFullScreen(true);
+            MainMenuController.stage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static Mode getSelectedMode(){
+        return selectedMode;
+    }
+    //idk it will use or not!
+    public static void setSelectedMode(Mode mode){
+        selectedMode = mode;
+    }
+}

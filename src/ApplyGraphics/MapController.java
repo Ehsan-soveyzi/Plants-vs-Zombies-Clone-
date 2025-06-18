@@ -141,7 +141,7 @@ public class MapController {
     }
 
     public void setCursorImage(Plant plant) {
-         cursor = new ImageCursor(plant.getImageView().getImage());
+        cursor = new ImageCursor(plant.getImageView().getImage());
         paneWindow.setCursor(cursor);
     }
 
@@ -222,7 +222,7 @@ public class MapController {
             }
         });
     }
-    
+
     public void attackOne(){
         Random rand  = new Random();
         for (int i = 1; i <= waveCount; i++) {

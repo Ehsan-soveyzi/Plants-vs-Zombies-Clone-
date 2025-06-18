@@ -40,12 +40,11 @@ public class MainMenuController {
 
     public void playButton(MouseEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Mode.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setFullScreen(true);
-            stage.setFullScreenExitHint("");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +78,7 @@ public class MainMenuController {
         }
     }
 
-    public void animateImage(ImageView imageView){
+    public static void animateImage(ImageView imageView){
         DropShadow dropShadow = new DropShadow(100, Color.web("#4B0000"));
         dropShadow.setSpread(0.3);
         ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), imageView);
