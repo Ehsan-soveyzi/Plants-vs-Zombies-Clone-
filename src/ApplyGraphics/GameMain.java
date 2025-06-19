@@ -27,11 +27,14 @@ public class GameMain extends Application {
         primaryStage.setTitle("Map");
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
+        setFaceTransition(root);
+        primaryStage.show();
+    }
+    public static void setFaceTransition(Parent root){
         //apply fadeTransition!
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), root);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
-        primaryStage.show();
     }
 }

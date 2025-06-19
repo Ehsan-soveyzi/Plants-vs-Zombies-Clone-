@@ -43,6 +43,7 @@ public class MainMenuController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Mode.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
+            GameMain.setFaceTransition(root);
             stage.setScene(scene);
             stage.setFullScreen(true);
             stage.show();
@@ -56,6 +57,7 @@ public class MainMenuController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OptionScene.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
+            GameMain.setFaceTransition(root);
             stage.setScene(scene);
             stage.setFullScreen(true);
             stage.setFullScreenExitHint("");

@@ -10,13 +10,11 @@ import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import Character.Sun;
 
@@ -30,25 +28,9 @@ public class MapController {
     @FXML
     private GridPane gridPane;
     @FXML
-    private ImageView peeShooter;
-    @FXML
-    private ImageView iceShooter;
-    @FXML
-    private ImageView sunFlower;
-    @FXML
-    private ImageView walNutFlower;
-    @FXML
     private ImageView shovel;
     @FXML
     private Label sunPoint;
-    @FXML
-    private ImageView jalapeno;
-    @FXML
-    private ImageView cherryBomb;
-    @FXML
-    private ImageView tallNut;
-    @FXML
-    private ImageView rePeater;
 
 
 
@@ -78,8 +60,7 @@ public class MapController {
 
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
-            if (choosenPlant != null)setCursorImage(choosenPlant);
-            else paneWindow.setCursor(Cursor.DEFAULT);
+            if(choosenPlant == null && !shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
             time += 100;
             if(time % 10000 == 0)Sun.addToPane(paneWindow);
@@ -91,22 +72,8 @@ public class MapController {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
 
-
-
         createGrid();
     }
-//    public void choosePeaShooter(){
-//        if (score >= 100 && PeaShooter.isReady){
-//            choosenPlant = new PeaShooter();
-//        }
-//    }
-//    public void chooseIceShooter(){if(score >= 175 && SnowPea.isReady)choosenPlant = new SnowPea();}
-//    public void chooseSunFlower(){if(score >= 50 && SunFlower.isReady)choosenPlant = new SunFlower();}
-//    public void chooseWallNutFlower(){if(score >= 50 && WallNut.isReady)choosenPlant = new WallNut();}
-//    public void chooseJalapenoFlower(){if(score >= 125 && Jalapeno.isReady)choosenPlant = new Jalapeno();}
-//    public void chooseCherryBomb(){if(score >= 150 && CherryBomb.isReady)choosenPlant = new CherryBomb();}
-//    public void chooseTallNut(){if(score >= 125 && TallNut.isReady)choosenPlant = new TallNut();}
-//    public void chooseRePeater(){if(score >= 200 && Repeater.isReady)choosenPlant = new Repeater();}
 
     public Plant checkChosenCard(Plant plant){
         if(plant instanceof PeaShooter && PeaShooter.isReady)return new PeaShooter();
@@ -127,11 +94,14 @@ public class MapController {
             imageView.setOnMouseClicked(e -> {
                 if(score >= cardPlants.get(finalI).getCost() &&  checkChosenCard(cardPlants.get(finalI)) != null){
                     choosenPlant = checkChosenCard(cardPlants.get(finalI));
+                    if (choosenPlant != null)setCursorImage(choosenPlant);
                 }
             });
         }
         shovel.setOnMouseClicked(event -> {
             shovelUsed = true;
+            cursor = new ImageCursor(new Image("/Images/resources/graphics/extentions/showel.gif"));
+            paneWindow.setCursor(cursor);
             choosenPlant = null;
         });
 

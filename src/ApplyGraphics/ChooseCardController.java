@@ -122,6 +122,7 @@ public class ChooseCardController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
+            GameMain.setFaceTransition(root);
             MainMenuController.stage.setScene(scene);
             MainMenuController.stage.setFullScreen(true);
             MainMenuController.stage.show();

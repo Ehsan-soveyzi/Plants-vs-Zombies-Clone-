@@ -44,6 +44,7 @@ public class ModeController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ChooseCard.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
+            GameMain.setFaceTransition(root);
             MainMenuController.stage.setScene(scene);
             MainMenuController.stage.setFullScreen(true);
             MainMenuController.stage.show();

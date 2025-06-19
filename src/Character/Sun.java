@@ -22,9 +22,8 @@ public class Sun {
         sunMovement();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
-            MapController.score += 25;
-            removeSun();
             addSun();
+            removeSun();
         });
     }
 
