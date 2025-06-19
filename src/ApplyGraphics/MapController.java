@@ -49,8 +49,8 @@ public class MapController {
     private ImageView tallNut;
     @FXML
     private ImageView rePeater;
-    @FXML
-    private VBox playerCards;
+
+
 
 
     GameMap map = new GameMap();
@@ -60,21 +60,18 @@ public class MapController {
     Timeline gameLoop;
     long time;
     ImageCursor cursor;
+    private VBox playerCards = ChooseCardController.getVBox();
     static int waveCount = 1;
     boolean shovelUsed  = false;
 
     public static int score = 1000;
 
-    ArrayList<Plant> plants = new ArrayList<>();
-
+    ArrayList<Plant> cardPlants = ChooseCardController.cardPlants;
 
     @FXML
     public void initialize() {
-        Image image = new Image("/Images/resources/graphics/Cards/Jalapeno.png");
-        ImageView imageView = new ImageView(image);
-        playerCards = ChooseCardController.getVBox();
-        System.out.println(playerCards);
-//        mouseEvents();
+        paneWindow.getChildren().add(playerCards);
+        mouseEvents();
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
@@ -97,45 +94,41 @@ public class MapController {
 
         createGrid();
     }
-    public void choosePeaShooter(){
-        if (score >= 100 && PeaShooter.isReady){
-            choosenPlant = new PeaShooter();
-        }
-    }
-    public void chooseIceShooter(){if(score >= 175 && SnowPea.isReady)choosenPlant = new SnowPea();}
-    public void chooseSunFlower(){if(score >= 50 && SunFlower.isReady)choosenPlant = new SunFlower();}
-    public void chooseWallNutFlower(){if(score >= 50 && WallNut.isReady)choosenPlant = new WallNut();}
-    public void chooseJalapenoFlower(){if(score >= 125 && Jalapeno.isReady)choosenPlant = new Jalapeno();}
-    public void chooseCherryBomb(){if(score >= 150 && CherryBomb.isReady)choosenPlant = new CherryBomb();}
-    public void chooseTallNut(){if(score >= 125 && TallNut.isReady)choosenPlant = new TallNut();}
-    public void chooseRePeater(){if(score >= 200 && Repeater.isReady)choosenPlant = new Repeater();}
+//    public void choosePeaShooter(){
+//        if (score >= 100 && PeaShooter.isReady){
+//            choosenPlant = new PeaShooter();
+//        }
+//    }
+//    public void chooseIceShooter(){if(score >= 175 && SnowPea.isReady)choosenPlant = new SnowPea();}
+//    public void chooseSunFlower(){if(score >= 50 && SunFlower.isReady)choosenPlant = new SunFlower();}
+//    public void chooseWallNutFlower(){if(score >= 50 && WallNut.isReady)choosenPlant = new WallNut();}
+//    public void chooseJalapenoFlower(){if(score >= 125 && Jalapeno.isReady)choosenPlant = new Jalapeno();}
+//    public void chooseCherryBomb(){if(score >= 150 && CherryBomb.isReady)choosenPlant = new CherryBomb();}
+//    public void chooseTallNut(){if(score >= 125 && TallNut.isReady)choosenPlant = new TallNut();}
+//    public void chooseRePeater(){if(score >= 200 && Repeater.isReady)choosenPlant = new Repeater();}
 
+    public Plant checkChosenCard(Plant plant){
+        if(plant instanceof PeaShooter && PeaShooter.isReady)return new PeaShooter();
+        else if(plant instanceof SnowPea && SnowPea.isReady)return new SnowPea();
+        else if(plant instanceof SunFlower && SunFlower.isReady)return new SunFlower();
+        else if(plant instanceof WallNut && WallNut.isReady)return new WallNut();
+        else if(plant instanceof Jalapeno && Jalapeno.isReady)return new Jalapeno();
+        else if(plant instanceof CherryBomb && CherryBomb.isReady)return new CherryBomb();
+        else if(plant instanceof TallNut && TallNut.isReady)return new TallNut();
+        else if (plant instanceof Repeater && Repeater.isReady)return new Repeater();
+        return null;
+    }
 
     public void mouseEvents(){
-        peeShooter.setOnMouseClicked(event -> {
-            choosePeaShooter();
-        });
-        iceShooter.setOnMouseClicked(event -> {
-            chooseIceShooter();
-        });
-        sunFlower.setOnMouseClicked(event -> {
-            chooseSunFlower();
-        });
-        walNutFlower.setOnMouseClicked(event -> {
-            chooseWallNutFlower();
-        });
-        jalapeno.setOnMouseClicked(event -> {
-            chooseJalapenoFlower();
-        });
-        cherryBomb.setOnMouseClicked(event -> {
-            chooseCherryBomb();
-        });
-        tallNut.setOnMouseClicked(event -> {
-            chooseTallNut();
-        });
-        rePeater.setOnMouseClicked(event -> {
-            chooseRePeater();
-        });
+        for(int i = 0; i < playerCards.getChildren().size(); i++){
+            ImageView imageView = (ImageView) playerCards.getChildren().get(i);
+            int finalI = i;
+            imageView.setOnMouseClicked(e -> {
+                if(score >= cardPlants.get(finalI).getCost() &&  checkChosenCard(cardPlants.get(finalI)) != null){
+                    choosenPlant = checkChosenCard(cardPlants.get(finalI));
+                }
+            });
+        }
         shovel.setOnMouseClicked(event -> {
             shovelUsed = true;
             choosenPlant = null;

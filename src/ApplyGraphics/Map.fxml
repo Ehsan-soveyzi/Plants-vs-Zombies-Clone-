@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ApplyGraphics.MapController">
@@ -42,7 +41,6 @@
                 <Font name="G2 Rubber Stamp LET Plain" size="43.0" />
             </font>
         </Label>
-        <VBox fx:id="playerCard" layoutX="35.0" layoutY="98.0" prefHeight="694.0" prefWidth="109.0" />
         <ImageView fx:id="shovel" fitHeight="60.0" fitWidth="69.0" layoutX="300.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Images/resources/graphics/extentions/shovel.jpg" />
