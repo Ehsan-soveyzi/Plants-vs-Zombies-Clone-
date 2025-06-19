@@ -71,6 +71,7 @@ public class MapController {
     @FXML
     public void initialize() {
         paneWindow.getChildren().add(playerCards);
+        playerCards.setLayoutX(50);
         mouseEvents();
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
