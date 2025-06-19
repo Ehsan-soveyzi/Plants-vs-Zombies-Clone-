@@ -54,7 +54,7 @@ public class MainMenuController {
 
     public void optionButton(MouseEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OptionScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Option.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             GameMain.setFaceTransition(root);

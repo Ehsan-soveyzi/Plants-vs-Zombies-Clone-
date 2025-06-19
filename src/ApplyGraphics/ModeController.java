@@ -30,6 +30,7 @@ public class ModeController {
     public void initialize() {
         MainMenuController.animateImage(dayMode);
         MainMenuController.animateImage(nightMode);
+        MainMenuController.animateImage(BackButton);
 
         dayMode.setOnMouseClicked(event -> {
             modeSelected();

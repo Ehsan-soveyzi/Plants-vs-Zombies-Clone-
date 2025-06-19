@@ -32,7 +32,7 @@ public class GameMain extends Application {
     }
     public static void setFaceTransition(Parent root){
         //apply fadeTransition!
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), root);
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), root);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
