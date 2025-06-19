@@ -69,6 +69,7 @@ public class MapController {
             if(time % 10000 == 0)attackOne();
             if(time % 20000 == 0)waveCount++;
         }));
+
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
 

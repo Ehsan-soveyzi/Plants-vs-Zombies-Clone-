@@ -21,5 +21,10 @@
             <Font name="Segoe Script Bold" size="50.0" />
          </font>
       </Label>
+      <ImageView fx:id="BackButton" fitHeight="150.0" fitWidth="200.0" layoutX="11.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/Background/BackButton.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
