@@ -6,18 +6,19 @@ import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import Character.Sun;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.locks.Condition;
@@ -32,6 +33,8 @@ public class MapController {
     private ImageView shovel;
     @FXML
     private Label sunPoint;
+    @FXML
+    private ImageView menu;
 
 
 
@@ -46,13 +49,19 @@ public class MapController {
     private VBox playerCards = ChooseCardController.getVBox();
     static int waveCount = 1;
     boolean shovelUsed  = false;
+    public static Stage menuStage;
 
-    public static int score = 1000;
+    public static int score;
 
     ArrayList<Plant> cardPlants = ChooseCardController.cardPlants;
 
     @FXML
     public void initialize() {
+        score = 1000;
+        MainMenuController.animateImage(menu);
+        menu.setOnMouseClicked(event -> {
+            pause();
+        });
         paneWindow.getChildren().add(playerCards);
         playerCards.setLayoutX(50);
         mouseEvents();
@@ -107,6 +116,24 @@ public class MapController {
             choosenPlant = null;
         });
 
+    }
+
+    public void pause(){
+        try{
+            menuStage = new Stage();
+//            MainMenuController.stage.wait();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Pause.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            menuStage.setScene(scene);
+//            System.out.println(MainMenuController.stage.isShowing());
+            menuStage.setResizable(false);
+            menuStage.initOwner(MainMenuController.stage);
+            menuStage.show();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void setCursorImage(Plant plant) {

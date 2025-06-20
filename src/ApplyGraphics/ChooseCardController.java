@@ -50,6 +50,7 @@ public class ChooseCardController {
 
     @FXML
     public void initialize() {
+        cardPlants.clear();
         chooseCard();
         cards = playerCards;
         MainMenuController.animateImage(BackButton);
@@ -68,7 +69,6 @@ public class ChooseCardController {
             MainMenuController.stage.setScene(scene);
             MainMenuController.stage.setFullScreen(true);
             MainMenuController.stage.show();
-            cardPlants.clear();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -109,17 +109,6 @@ public class ChooseCardController {
         });
     }
 
-
-//    private void createGridPane() {
-//        for (Node node : cardList.getChildren()) {
-//            if (node instanceof ImageView) {
-//                ImageView iv = (ImageView) node;
-//                iv.setOnMouseClicked(event -> {
-//                    selectCard(iv);
-//                });
-//            }
-//        }
-//    }
 
     public void selectCard(ImageView imageView) {
         if (!playerCards.getChildren().contains(imageView) && playerCards.getChildren().size() <= 5) {

@@ -200,16 +200,17 @@ public abstract class Zombie {
     }
     //this method will call after the ice bullet damage.
     public void setSlowed(boolean slowed) {
-        if (!isSlowed) {
-            // فقط اگر سرعت فعلی هنوز زیاد بود، کندش کن
-            setSpeed(speed / 2.0);
-            setEatingSpeed(eatingSpeed * 2.0);
+        // فقط اگر سرعت فعلی هنوز زیاد بود، کندش کن
+        if (slowed) {
+            if (!isSlowed) {
+                setSpeed(speed / 2.0);
+                setEatingSpeed(eatingSpeed * 2.0);
+            }
 
             isSlowed = true;
 
-            if (slowTimer != null) {
-                slowTimer.stop();
-            }
+            if (slowTimer != null) slowTimer.stop();
+
 
             //new timer for affect slowing for 5 sec!
             slowTimer = new PauseTransition(Duration.seconds(5));

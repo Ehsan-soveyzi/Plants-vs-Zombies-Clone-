@@ -27,7 +27,6 @@ public class GameMain extends Application {
         primaryStage.setTitle("Map");
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
-        setFaceTransition(root);
         primaryStage.show();
     }
     public static void setFaceTransition(Parent root){

@@ -36,7 +36,7 @@
                 <Image url="@../Images/resources/graphics/extentions/SunBack.png" />
             </image>
         </ImageView>
-        <Label fx:id="sunPoint" layoutX="106.0" layoutY="5.0" prefHeight="78.0" prefWidth="181.0" text="123" textFill="#21ff0a">
+        <Label fx:id="sunPoint" layoutX="129.0" layoutY="6.0" prefHeight="78.0" prefWidth="181.0" text="123">
             <font>
                 <Font name="G2 Rubber Stamp LET Plain" size="43.0" />
             </font>
@@ -46,5 +46,10 @@
                 <Image url="@../Images/resources/graphics/extentions/shovel.jpg" />
             </image>
         </ImageView>
+      <ImageView fx:id="menu" fitHeight="114.0" fitWidth="153.0" layoutX="1116.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/Background/MenuIcon.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>

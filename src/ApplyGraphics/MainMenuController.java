@@ -46,6 +46,7 @@ public class MainMenuController {
             GameMain.setFaceTransition(root);
             stage.setScene(scene);
             stage.setFullScreen(true);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
