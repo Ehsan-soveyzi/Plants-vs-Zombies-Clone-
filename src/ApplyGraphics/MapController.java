@@ -20,6 +20,7 @@ import Character.Sun;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.locks.Condition;
 
 public class MapController {
 
