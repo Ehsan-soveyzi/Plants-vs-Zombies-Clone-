@@ -27,6 +27,7 @@ public abstract class Plant {
         imageView.setLayoutX(imageView.getX() + 20);
         imageView.setLayoutY(imageView.getY() + 20);
     }
+
     public void takeDamage() {
         if (isDead) return;
         if (hp <= 0){
@@ -34,7 +35,6 @@ public abstract class Plant {
             return;
         }
         hp--;
-//        updateImageSituation();
     }
 
 
@@ -50,7 +50,6 @@ public abstract class Plant {
     public int getRow(){return row;};
     public void setRow(int row){this.row = row;};
     public int getCost() {return cost;}
-    public void setCost(int cost) {this.cost = cost;}
     public int getHp() {return hp;}
     public void setHp(int hp) {this.hp = hp;}
     public double getX() {return x;}
@@ -62,6 +61,7 @@ public abstract class Plant {
     }
     public void setCol(int col) {this.col = col;}
     public int getCol() {return col;}
+    public Timeline getTimeline() {return timeline;}
 
     public ImageView getImageView() {
         return imageView;

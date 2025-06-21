@@ -7,11 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.sql.Time;
+
 public class PeaShooter extends PeaPlant {
 
     private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
     public static final int cooldown = 7;
     public static boolean isReady = true;
+    public static Timeline cooldownTimeline;
 
     public PeaShooter() {
         super(100,5, new Image(peaShooterImageAddress));
@@ -22,18 +25,18 @@ public class PeaShooter extends PeaPlant {
             if(!isDead()) {
                 Bullet normalBullet = new NormalBullet(getX() + 10, getY(), getRow());
                 normalBullet.addToPane(pane);
-                bulletQueue.add(normalBullet);
+                bulletList.add(normalBullet);
             }
     }
 
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
+         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
 

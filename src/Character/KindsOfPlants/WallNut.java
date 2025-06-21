@@ -13,6 +13,7 @@ public class WallNut extends NutPlant {
     private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut.gif";
     private static final String WallNutImageAddress1 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut1.gif";
     private static final String WallNutImageAddress2 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut2.gif";
+    public static Timeline cooldownTimeline;
 
     public WallNut() {
         super(50, 10, new Image(WallNutImageAddress));
@@ -27,11 +28,11 @@ public class WallNut extends NutPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
 

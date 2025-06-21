@@ -19,6 +19,7 @@ public class Jalapeno extends BombPlant {
     public static boolean isReady = true;
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
+    public static Timeline cooldownTimeline;
 
     public Jalapeno() {
         //dont have idea about the hp!
@@ -39,11 +40,11 @@ public class Jalapeno extends BombPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
     @Override

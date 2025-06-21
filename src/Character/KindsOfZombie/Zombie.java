@@ -1,5 +1,6 @@
 package Character.KindsOfZombie;
 
+import ApplyGraphics.MapController;
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
 import Map.ZombieFactory;
@@ -24,7 +25,7 @@ public abstract class Zombie {
     private double speed;
     private double eatingSpeed;
     private final int row;
-    private int col;
+    private double col;
     private double x = 1500, y = 0.0;
 
 
@@ -75,6 +76,8 @@ public abstract class Zombie {
             x -= speed * deltaTime;
             imageView.setLayoutX(x);
             updateImageSituation();
+            setCol(getCol());
+            if(col <= 0) MapController.pause();
         }
     }
 
@@ -122,7 +125,7 @@ public abstract class Zombie {
 
     public void updateImageSituation(){
         if (isSlowed) {
-            playWakingSlowerAnimation();
+            setSlowedEffect();
         }
         if (isBurn){
             System.out.println("one zombie burn");
@@ -191,13 +194,14 @@ public abstract class Zombie {
         timeline.playFromStart();
     }
 
-    private void playWakingSlowerAnimation(){
+    private void setSlowedEffect(){
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setHue(-1);
         colorAdjust.setContrast(-0.07);
         colorAdjust.setBrightness(-0.19);
         imageView.setEffect(colorAdjust);
     }
+
     //this method will call after the ice bullet damage.
     public void setSlowed(boolean slowed) {
         // فقط اگر سرعت فعلی هنوز زیاد بود، کندش کن
@@ -208,7 +212,7 @@ public abstract class Zombie {
             }
 
             isSlowed = true;
-
+            setSlowedEffect();
             if (slowTimer != null) slowTimer.stop();
 
 
@@ -282,11 +286,11 @@ public abstract class Zombie {
         this.speed = speed;
     }
 
-    public int getCol() {
-        return (int)((this.getX() - 260)/122);
+    public double getCol() {
+        return (this.getX() - 260)/122;
     }
 
-    public void setCol(int col){
+    public void setCol(double col){
         this.col = col;
     }
 
@@ -297,6 +301,13 @@ public abstract class Zombie {
         return speed;
     }
 
+    public Timeline getBiteTimeline(){
+        return biteTimeline;
+    }
+
+    public PauseTransition getSlowTimer(){
+        return slowTimer;
+    }
     public int getRow() {
         return row;
     }

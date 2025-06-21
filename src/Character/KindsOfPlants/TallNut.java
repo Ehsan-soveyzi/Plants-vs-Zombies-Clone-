@@ -13,6 +13,7 @@ public class TallNut extends NutPlant {
     private static final String TallNutImageAddress = "/Images/resources/graphics/Plants/TallNut/TallNut.gif";
     private static final String TallNutImageAddress1 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked1.gif";
     private static final String TallNutImageAddress2 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked2.gif";
+    public static Timeline cooldownTimeline;
 
     public TallNut() {
         super(125, 20, new Image(TallNutImageAddress));
@@ -22,11 +23,11 @@ public class TallNut extends NutPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
     @Override

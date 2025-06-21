@@ -12,6 +12,7 @@ public class Repeater extends PeaPlant {
     public static final int cooldown = 7;
     public static boolean isReady = true;
     private static final String repeaterImageAddress = "/Images/resources/graphics/Plants/RepeaterPea/Repeater.gif";
+    public static Timeline cooldownTimeline;
 
     public Repeater() {
         super(200, 5, new Image(repeaterImageAddress));
@@ -23,18 +24,18 @@ public class Repeater extends PeaPlant {
         if(!isDead()) {
             Bullet normalBullet = new NormalBullet(getX() + 10, getY(), getRow());
             normalBullet.addToPane(pane);
-            bulletQueue.add(normalBullet);
+            bulletList.add(normalBullet);
         }
     }
 
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
     @Override

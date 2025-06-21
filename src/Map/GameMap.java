@@ -72,6 +72,14 @@ public class GameMap {
         }
     }
 
+    public void refreshPlants() {
+        for(int i = 0;i < ROWS;i++){
+            for(int j = 0;j < COLS;j++){
+                grid[i][j] = null;
+            }
+        }
+    }
+
 
     public Plant getPlant(int row, int col) {
         if(!isValidCell(row, col)) return null;

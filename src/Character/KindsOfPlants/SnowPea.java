@@ -15,6 +15,8 @@ public class SnowPea extends PeaPlant {
     public static final int cooldown = 7;
     public static boolean isReady = true;
     private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea.gif";
+    public static Timeline cooldownTimeline;
+
     public SnowPea() {
         super(175, 5, new Image(snowPeaImageAddress));
     }
@@ -24,7 +26,7 @@ public class SnowPea extends PeaPlant {
         if(!isDead()) {
             Bullet snowBullet = new SnowBullet(getX() + 5, getY(), getRow());
             snowBullet.addToPane(pane);
-            bulletQueue.add(snowBullet);
+            bulletList.add(snowBullet);
         }
     }
 
@@ -45,11 +47,11 @@ public class SnowPea extends PeaPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
 

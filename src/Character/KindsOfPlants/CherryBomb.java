@@ -15,6 +15,8 @@ public  class CherryBomb extends BombPlant {
     public static boolean isReady = true;
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
     private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
+    public static Timeline cooldownTimeline;
+
     public CherryBomb() {
         //dont have idea about the hp!
         super(150, 100000, new Image(cherryBombImageAddress));
@@ -25,7 +27,7 @@ public  class CherryBomb extends BombPlant {
     public void burnZombies(){
         ArrayList<Zombie> removeZombie = new ArrayList<>();
         for(Zombie zombie : ZombieFactory.zombies){
-            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - zombie.getCol()) <= 1){
+            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 1){
                 removeZombie.add(zombie);
             }
         }
@@ -41,10 +43,10 @@ public  class CherryBomb extends BombPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 }

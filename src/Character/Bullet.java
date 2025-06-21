@@ -36,7 +36,6 @@ public abstract class Bullet {
     public void addToPane(Pane pane) {
         this.parentPane = pane;
         pane.getChildren().add(imageView);
-        update();
     }
 
     public void die() {

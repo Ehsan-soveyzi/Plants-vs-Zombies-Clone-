@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Sun {
@@ -15,6 +17,9 @@ public class Sun {
     double y;
     boolean clicked = false;
     ImageView sunImageView;
+    private Timeline timeline;
+    private PauseTransition pause;
+    public static ArrayList<Sun> sunList = new ArrayList<>();
     private static final String sunAddress = "/Images/resources/graphics/Plants/Sun/sun.png";
 
     public Sun(){ // random in map
@@ -25,6 +30,7 @@ public class Sun {
             addSun();
             removeSun();
         });
+        sunList.add(this);
     }
 
     public Sun(double x, double y) {
@@ -39,6 +45,7 @@ public class Sun {
             removeSun();
             addSun();
         });
+        sunList.add(this);
     }
 
     public static void addToPane(Pane pane){
@@ -47,7 +54,7 @@ public class Sun {
     }
 
     public void sunCollector(){
-        PauseTransition pause = new PauseTransition(Duration.seconds(6));
+        pause = new PauseTransition(Duration.seconds(6));
         pause.setOnFinished(event -> {
             sunImageView.setImage(null);
         });
@@ -60,7 +67,7 @@ public class Sun {
         int y = rand.nextInt(180) + 20;
         sunImageView.setX(x);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
             sunImageView.setY(sunImageView.getY() + 4);
         }));
         timeline.setCycleCount(y);
@@ -84,9 +91,11 @@ public class Sun {
         return sunImageView;
     }
 
-    public void setImageView(ImageView imageView){
-        this.sunImageView = imageView;
+    public Timeline getTimeline(){
+        return timeline;
     }
-
+    public PauseTransition getPause(){
+        return pause;
+    }
 
 }

@@ -1,6 +1,7 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import Character.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import Character.Sun;
@@ -39,11 +41,10 @@ public class MapController {
 
 
 
-    GameMap map = new GameMap();
+    static GameMap map = new GameMap();
     Plant choosenPlant;
     ZombieFactory zombieFactory;
-    Timeline waveZombies;
-    Timeline gameLoop;
+    static Timeline gameLoop;
     long time;
     ImageCursor cursor;
     private VBox playerCards = ChooseCardController.getVBox();
@@ -58,6 +59,9 @@ public class MapController {
     @FXML
     public void initialize() {
         score = 1000;
+        waveCount = 1;
+        menuStage = new Stage();
+        time = 0;
         MainMenuController.animateImage(menu);
         menu.setOnMouseClicked(event -> {
             pause();
@@ -81,7 +85,7 @@ public class MapController {
         }));
 
         gameLoop.setCycleCount(Timeline.INDEFINITE);
-        gameLoop.play();
+        gameLoop.playFromStart();
 
         createGrid();
     }
@@ -104,6 +108,7 @@ public class MapController {
             int finalI = i;
             imageView.setOnMouseClicked(e -> {
                 if(score >= cardPlants.get(finalI).getCost() &&  checkChosenCard(cardPlants.get(finalI)) != null){
+                    shovelUsed = false;
                     choosenPlant = checkChosenCard(cardPlants.get(finalI));
                     if (choosenPlant != null)setCursorImage(choosenPlant);
                 }
@@ -118,15 +123,15 @@ public class MapController {
 
     }
 
-    public void pause(){
+    public static void pause(){
         try{
+            stopTheGame();
+            gameLoop.stop();
             menuStage = new Stage();
-//            MainMenuController.stage.wait();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Pause.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             menuStage.setScene(scene);
-//            System.out.println(MainMenuController.stage.isShowing());
             menuStage.setResizable(false);
             menuStage.initOwner(MainMenuController.stage);
             menuStage.show();
@@ -142,7 +147,6 @@ public class MapController {
     }
 
     public void setOnMouseEntered(){
-
         for (Node node : gridPane.getChildren()) {
             node.setOnMouseEntered(event -> {
                 if (choosenPlant != null) {
@@ -201,7 +205,6 @@ public class MapController {
                 System.out.println("No plant selected");
             }
             else{
-
                 cell.getChildren().add(choosenPlant.getImageView());
                 map.addPlant(choosenPlant, row, col);
                 choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
@@ -220,22 +223,8 @@ public class MapController {
     }
 
     public void attackOne(){
-        Random rand  = new Random();
         for (int i = 1; i <= waveCount; i++) {
             chooseRandomZombie(i);
-        }
-    }
-
-    public void attackTwo(){
-        for(int i = 0;i < 5;i++){
-            zombieFactory.createRegularZombie(i);
-            zombieFactory.createConeHeadZombie(i);
-        }
-    }
-
-    public void attackThree(){
-        for(int i = 0;i < 5;i++){
-
         }
     }
 
@@ -254,6 +243,34 @@ public class MapController {
         else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow);
         else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow);
         else zombieFactory.createIMPZombie(randomRow);
+    }
+
+    public static void stopTheGame(){
+        for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
+            bullet.getTimeline().stop();
+        }
+        for(Sun sun : Sun.sunList){
+            if(sun.getTimeline() != null)sun.getTimeline().stop();
+            if(sun.getPause() != null)sun.getPause().stop();
+        }
+        for(Zombie zombie : ZombieFactory.zombies){
+            if(zombie.getTimeline() != null)zombie.getTimeline().stop();
+            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().stop();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().stop();
+        }
+        for(Plant plant : GameMap.plants){
+            if(plant.getTimeline() != null){
+                plant.getTimeline().stop();
+            }
+        }
+        if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.stop();
+        if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.stop();
+        if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.stop();
+        if(SunFlower.cooldownTimeline != null) SunFlower.cooldownTimeline.stop();
+        if(TallNut.cooldownTimeline != null) TallNut.cooldownTimeline.stop();
+        if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.stop();
+        if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.stop();
+        if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.stop();
     }
 
 }

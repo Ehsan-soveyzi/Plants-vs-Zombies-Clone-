@@ -10,11 +10,11 @@ import java.util.Random;
 
 public class SunFlower extends Plant{
 
-    Timeline sunGenerationTime;
 
     public static final int cooldown = 7;
     public static boolean isReady = true;
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower.gif";
+    public static Timeline cooldownTimeline;
     // static because before making this field the super execute
 
 
@@ -25,7 +25,7 @@ public class SunFlower extends Plant{
     @Override
     public void updateImageSituation(Pane pane) {
         Random rand = new Random();
-        sunGenerationTime = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
             if (!isDead()) {
                 int difX = rand.nextInt(40) - 20;
                 int difY = rand.nextInt(40) - 20;
@@ -33,12 +33,12 @@ public class SunFlower extends Plant{
                 pane.getChildren().add(sun.getImageView());
             }
             else {
-                sunGenerationTime.stop();
+                timeline.stop();
             }
         }));
 
-        sunGenerationTime.setCycleCount(Timeline.INDEFINITE);
-        sunGenerationTime.play();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
         startCooldown();
     }
@@ -46,11 +46,11 @@ public class SunFlower extends Plant{
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
             isReady = true;
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.play();
     }
 
 }
