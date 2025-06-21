@@ -68,15 +68,15 @@ public class MapController {
 
         zombieFactory = new ZombieFactory(160,160,paneWindow);
 
-
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             setOnMouseEntered();
+            if(time % 1000 == 0)handleZombiesWave();
             time += 100;
             if(time % 10000 == 0)Sun.sunCollector(paneWindow);
             map.checkWar();
             sunPoint.setText(Integer.toString(score));
-            if(time % 10000 == 0)attackOne();
-            if(time % 20000 == 0)waveCount++;
+//            if(time % 10000 == 0)attackOne();
+//            if(time % 20000 == 0)waveCount++;
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
@@ -249,21 +249,21 @@ public class MapController {
     }
 
     private int timeSeconds = 0;
-    private void beginAttack(){
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            handleZombiesWave();
-        }));
-        timeline.setCycleCount(60);
-        timeline.play();
-    }
+//    private void beginAttack(){
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+//            handleZombiesWave();
+//        }));
+//        timeline.setCycleCount(60);
+//        timeline.play();
+//    }
     private void handleZombiesWave(){
-        timeSeconds++;
+
         ArrayList<Zombie> types;
         Random rand = new Random();
-        if(timeSeconds > 60){
+        if(time/1000 > 60){
             return;
         }
-        else if (timeSeconds >= 47) {
+        else if (time/1000>= 47) {
             types = randomZombie(true, true, true, true);
             for(int i = 0;i < 5;i++){ // 3 zombies per second
                 for(int j = 0;j < 3;j++){
@@ -271,18 +271,18 @@ public class MapController {
                     zombieFactory.createZombie(types.get(index), i);
                 }
             }
-        } else if (timeSeconds >= 45) {
-            if (timeSeconds % 2 == 1){
+        } else if (time/1000 >= 45) {
+            if (time/1000 % 2 == 1){
                 types = randomZombie(true, true, true, true);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
-        }else if (timeSeconds > 33) {
-            if (timeSeconds % 2 == 0){
+        }else if (time/1000 > 33) {
+            if (time/1000 % 2 == 0){
                 types = randomZombie(true, true, true, false);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
-        }else if (timeSeconds >= 26) {
+        }else if (time/1000 >= 26) {
             types = randomZombie(true, true, false, false);
             for(int i = 0;i < 5;i++){ // 3 zombies per second
                 for(int j = 0;j < 2;j++){
@@ -290,14 +290,14 @@ public class MapController {
                     zombieFactory.createZombie(types.get(index), i);
                 }
             }
-        } else if (timeSeconds >= 15) {
-            if (timeSeconds % 2 == 0){
+        } else if (time/1000>= 15) {
+            if (time/1000 % 2 == 0){
                 types = randomZombie(true, true, false, false);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
 
-        }else if (timeSeconds >= 0) {
-            if (timeSeconds % 3 == 1){
+        }else if (time/1000 >= 0) {
+            if (time/1000 % 3 == 1){
                 types = randomZombie(true, false, false, false);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
