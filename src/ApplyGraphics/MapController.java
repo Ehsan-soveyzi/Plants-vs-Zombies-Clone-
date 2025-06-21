@@ -19,11 +19,8 @@ import Character.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import Character.Sun;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.locks.Condition;
 
 public class MapController {
 
@@ -58,6 +55,8 @@ public class MapController {
 
     @FXML
     public void initialize() {
+        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Items/Background/Night.jpg'); -fx-background-size: 1550px 865px;");
+        else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
         score = 1000;
         waveCount = 1;
         menuStage = new Stage();
@@ -77,7 +76,7 @@ public class MapController {
             if(choosenPlant == null && !shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
             time += 100;
-            if(time % 10000 == 0)Sun.addToPane(paneWindow);
+            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY)Sun.addToPane(paneWindow);
             map.checkWar();
             sunPoint.setText(Integer.toString(score));
             if(time % 10000 == 0)attackOne();
@@ -90,6 +89,7 @@ public class MapController {
         createGrid();
     }
 
+    //check what the card chosen from the user
     public Plant checkChosenCard(Plant plant){
         if(plant instanceof PeaShooter && PeaShooter.isReady)return new PeaShooter();
         else if(plant instanceof SnowPea && SnowPea.isReady)return new SnowPea();
@@ -122,6 +122,7 @@ public class MapController {
         });
 
     }
+
 
     public static void pause(){
         try{
@@ -159,7 +160,7 @@ public class MapController {
                             break;
                         }
                     }
-
+                    //css styles
                     if (hasImageView) {
                         cell.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
                     } else {
@@ -174,6 +175,7 @@ public class MapController {
         }
 
     }
+
 
     public void createGrid(){
         final int rows = gridPane.getRowCount();
@@ -245,6 +247,7 @@ public class MapController {
         else zombieFactory.createIMPZombie(randomRow);
     }
 
+    //apply when pausing the game fot stop the timelines!
     public static void stopTheGame(){
         for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
             bullet.getTimeline().stop();
