@@ -47,4 +47,18 @@ public class ZombieFactory {
         zombie.playWalkingAnimation(pane);
         zombies.add(zombie);
     }
+    public void createZombie(Zombie zombie, int row){
+        if (zombie instanceof Regular){
+            createRegularZombie(row);
+        }
+        else if (zombie instanceof ConeHead){
+            createConeHeadZombie(row);
+        }
+        else if (zombie instanceof ScreenDoorZombie){
+            createScreenDoorZombie(row);
+        }
+        else if (zombie instanceof IMPZombie){
+            createIMPZombie(row);
+        }
+    }
 }

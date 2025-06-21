@@ -1,17 +1,15 @@
 package Map;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfZombie.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import Character.Sun;
 
@@ -214,7 +212,7 @@ public class MapController {
     }
     
     public void attackOne(){
-        Random rand  = new Random();
+        Random rand = new Random();
         for (int i = 1; i <= waveCount; i++) {
             chooseRandomZombie(i);
         }
@@ -248,5 +246,79 @@ public class MapController {
         else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow);
         else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow);
         else zombieFactory.createIMPZombie(randomRow);
+    }
+
+    private int timeSeconds = 0;
+    private void beginAttack(){
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            handleZombiesWave();
+        }));
+        timeline.setCycleCount(60);
+        timeline.play();
+    }
+    private void handleZombiesWave(){
+        timeSeconds++;
+        ArrayList<Zombie> types;
+        Random rand = new Random();
+        if(timeSeconds > 60){
+            return;
+        }
+        else if (timeSeconds >= 47) {
+            types = randomZombie(true, true, true, true);
+            for(int i = 0;i < 5;i++){ // 3 zombies per second
+                for(int j = 0;j < 3;j++){
+                    int index = rand.nextInt(types.size());
+                    zombieFactory.createZombie(types.get(index), i);
+                }
+            }
+        } else if (timeSeconds >= 45) {
+            if (timeSeconds % 2 == 1){
+                types = randomZombie(true, true, true, true);
+                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+            }
+        }else if (timeSeconds > 33) {
+            if (timeSeconds % 2 == 0){
+                types = randomZombie(true, true, true, false);
+                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+            }
+        }else if (timeSeconds >= 26) {
+            types = randomZombie(true, true, false, false);
+            for(int i = 0;i < 5;i++){ // 3 zombies per second
+                for(int j = 0;j < 2;j++){
+                    int index = rand.nextInt(types.size());
+                    zombieFactory.createZombie(types.get(index), i);
+                }
+            }
+        } else if (timeSeconds >= 15) {
+            if (timeSeconds % 2 == 0){
+                types = randomZombie(true, true, false, false);
+                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+            }
+
+        }else if (timeSeconds >= 0) {
+            if (timeSeconds % 3 == 1){
+                types = randomZombie(true, false, false, false);
+                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+            }
+        }
+
+
+    }
+    private ArrayList<Zombie> randomZombie(boolean regular, boolean coneHead, boolean screenDoor, boolean imp){
+        ArrayList<Zombie> zombies = new ArrayList<>();
+        if(regular){
+            zombies.add(new Regular(0));
+        }
+        if(coneHead){
+            zombies.add(new ConeHead(0));
+        }
+        if(screenDoor){
+            zombies.add(new ScreenDoorZombie(0));
+        }
+        if(imp){
+            zombies.add(new IMPZombie(0));
+        }
+        return zombies;
     }
 }
