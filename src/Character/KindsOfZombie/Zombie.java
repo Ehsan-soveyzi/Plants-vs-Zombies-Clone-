@@ -23,7 +23,7 @@ public abstract class Zombie {
     private int hp;
     private double speed;
     private double eatingSpeed;
-    private final int row;
+    private int row;
     private int col;
     private double x = 1500, y = 0.0;
 
@@ -41,7 +41,7 @@ public abstract class Zombie {
     private ImageView imageView;
 
 
-
+    public Zombie() {}
     public Zombie(int hp, double speed, double eatingSpeed, int row, Image image) {
         this.hp = hp;
         this.speed = speed;
