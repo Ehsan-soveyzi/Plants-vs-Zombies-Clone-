@@ -26,10 +26,10 @@ public class OptionController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            GameMain.setFaceTransition(root);
-            MainMenuController.stage.setScene(scene);
-            MainMenuController.stage.setFullScreen(true);
-            MainMenuController.stage.show();
+            GameMain.setFadeTransition(root);
+            GameMain.mainStage.setScene(scene);
+            GameMain.mainStage.setFullScreen(true);
+            GameMain.mainStage.show();
         }catch (IOException e){
             e.printStackTrace();
         }

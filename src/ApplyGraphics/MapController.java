@@ -44,10 +44,9 @@ public class MapController {
     static Timeline gameLoop;
     long time;
     ImageCursor cursor;
-    private VBox playerCards = ChooseCardController.getVBox();
+    private final VBox playerCards = ChooseCardController.cards;
     static int waveCount = 1;
     boolean shovelUsed  = false;
-    public static Stage menuStage;
 
     public static int score;
 
@@ -59,7 +58,6 @@ public class MapController {
         else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
         score = 1000;
         waveCount = 1;
-        menuStage = new Stage();
         time = 0;
         MainMenuController.animateImage(menu);
         menu.setOnMouseClicked(event -> {
@@ -128,15 +126,14 @@ public class MapController {
         try{
             stopTheGame();
             gameLoop.stop();
-            menuStage = new Stage();
+            PauseGameController.pauseStage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            menuStage.setScene(scene);
-            menuStage.setResizable(false);
-            menuStage.initOwner(MainMenuController.stage);
-            menuStage.show();
-
+            PauseGameController.pauseStage.setScene(scene);
+            PauseGameController.pauseStage.setResizable(false);
+            PauseGameController.pauseStage.initOwner(GameMain.mainStage);
+            PauseGameController.pauseStage.show();
         }catch(Exception e){
             e.printStackTrace();
         }

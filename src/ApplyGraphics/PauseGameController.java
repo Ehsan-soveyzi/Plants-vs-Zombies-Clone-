@@ -14,13 +14,14 @@ import java.io.IOException;
 import Character.*;
 
 public class PauseGameController {
-    Stage stage;
     @FXML
     private ImageView home;
     @FXML
     private ImageView refresh;
     @FXML
     private ImageView resume;
+
+    public static Stage pauseStage;
 
     @FXML
     private void initialize(){
@@ -44,10 +45,10 @@ public class PauseGameController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            MainMenuController.stage.setScene(scene);
-            MainMenuController.stage.setFullScreen(true);
-            MainMenuController.stage.show();
-            MapController.menuStage.close();
+            GameMain.mainStage.setScene(scene);
+            GameMain.mainStage.setFullScreen(true);
+            GameMain.mainStage.show();
+            pauseStage.close();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -59,10 +60,10 @@ public class PauseGameController {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Map.fxml"));
             Parent root = fxmlloader.load();
             Scene scene = new Scene(root);
-            MainMenuController.stage.setScene(scene);
-            MainMenuController.stage.setFullScreen(true);
-            MainMenuController.stage.show();
-            MapController.menuStage.close();
+            GameMain.mainStage.setScene(scene);
+            GameMain.mainStage.setFullScreen(true);
+            GameMain.mainStage.show();
+            pauseStage.close();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -70,7 +71,7 @@ public class PauseGameController {
 
     public void resumeButtonClicked(){
         startTimelines();
-        MapController.menuStage.close();
+        pauseStage.close();
         MapController.gameLoop.play();
     }
 

@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class GameMain extends Application {
+    public static Stage mainStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -19,17 +20,18 @@ public class GameMain extends Application {
 
     @Override
     public  void start(Stage primaryStage) throws IOException {
+        mainStage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        MainMenuController.stage = primaryStage;
+        mainStage = primaryStage;
         primaryStage.setScene(scene);
         primaryStage.setTitle("Map");
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
         primaryStage.show();
     }
-    public static void setFaceTransition(Parent root){
+    public static void setFadeTransition(Parent root){
         //apply fadeTransition!
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), root);
         fadeIn.setFromValue(0.0);

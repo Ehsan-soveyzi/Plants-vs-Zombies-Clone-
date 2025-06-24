@@ -101,7 +101,7 @@
       </Label>
       <ImageView fx:id="playButton" fitHeight="148.0" fitWidth="301.0" layoutX="416.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/New-Plants-vs-Zombies-JavaScript-master%20(1)/New-Plants-vs-Zombies-JavaScript-master/images/interface/Button.png" />
+            <Image url="@../Images/resources/graphics/extentions/Button.png" />
          </image>
       </ImageView>
       <Label layoutX="502.0" layoutY="528.0" prefHeight="48.0" prefWidth="150.0" text="PLAY">

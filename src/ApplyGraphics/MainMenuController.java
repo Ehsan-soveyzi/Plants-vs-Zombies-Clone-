@@ -19,7 +19,6 @@ import java.io.IOException;
 
 public class MainMenuController {
 
-    public static Stage stage;
 
     @FXML
     private ImageView playButton;
@@ -43,11 +42,10 @@ public class MainMenuController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Mode.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            GameMain.setFaceTransition(root);
-            stage.setScene(scene);
-            stage.setFullScreen(true);
-            stage.setResizable(false);
-            stage.show();
+            GameMain.setFadeTransition(root);
+            GameMain.mainStage.setScene(scene);
+            GameMain.mainStage.setFullScreen(true);
+            GameMain.mainStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,11 +56,11 @@ public class MainMenuController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Option.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            GameMain.setFaceTransition(root);
-            stage.setScene(scene);
-            stage.setFullScreen(true);
-            stage.setFullScreenExitHint("");
-            stage.show();
+            GameMain.setFadeTransition(root);
+            GameMain.mainStage.setScene(scene);
+            GameMain.mainStage.setFullScreen(true);
+            GameMain.mainStage.setFullScreenExitHint("");
+            GameMain.mainStage.show();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -74,7 +72,7 @@ public class MainMenuController {
         alert.setHeaderText("Loging Out!");
         alert.setContentText("Are you sure you want to logout?");
 
-        alert.initOwner(stage);
+        alert.initOwner(GameMain.mainStage);
 
         if(alert.showAndWait().get() == ButtonType.OK){
             System.exit(0);
