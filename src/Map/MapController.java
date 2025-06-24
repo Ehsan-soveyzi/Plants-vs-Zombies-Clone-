@@ -71,10 +71,10 @@ public class MapController {
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             setOnMouseEntered();
-            if(time > 60000) gameLoop.stop();
+            if(time > 120000) gameLoop.stop();
             if(time % 1000 == 0){
                 System.out.println("in seconds : "+time);
-                handleZombiesWave();
+                handleZombiesWave1();
             }
             time += 100;
             if(time % 10000 == 0)Sun.sunCollector(paneWindow);
@@ -222,15 +222,6 @@ public class MapController {
         shovelUsed = false;
     }
 
-    public void chooseRandomZombie(int wave){
-        Random rand = new Random();
-        int randomRow = rand.nextInt(5);
-        int number = rand.nextInt(wave);
-        if(number <= 4)zombieFactory.createRegularZombie(randomRow);
-        else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow);
-        else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow);
-        else zombieFactory.createIMPZombie(randomRow);
-    }
         private void handleZombiesWave(){
         long current = time/1000;
         ArrayList<Zombie> types;
@@ -239,7 +230,7 @@ public class MapController {
             return;
         }
         else if (current>= 47) {
-            types = randomZombie(true, true, true, true);
+            types = possibleZombie(true, true, true, true);
             for(int i = 0;i < 5;i++){ // 3 zombies per second
                 for(int j = 0;j < 3;j++){
                     int index = rand.nextInt(types.size());
@@ -248,17 +239,17 @@ public class MapController {
             }
         } else if (current >= 45) {
             if (current % 2 == 1){
-                types = randomZombie(true, true, true, true);
+                types = possibleZombie(true, true, true, true);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
         }else if (current > 33) {
             if (current % 2 == 0){
-                types = randomZombie(true, true, true, false);
+                types = possibleZombie(true, true, true, false);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
         }else if (current >= 26) {
-            types = randomZombie(true, true, false, false);
+            types = possibleZombie(true, true, false, false);
             for(int i = 0;i < 5;i++){ // 3 zombies per second
                 for(int j = 0;j < 2;j++){
                     int index = rand.nextInt(types.size());
@@ -267,20 +258,65 @@ public class MapController {
             }
         } else if (current>= 15) {
             if (current % 2 == 0){
-                types = randomZombie(true, true, false, false);
+                types = possibleZombie(true, true, false, false);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
 
         }else if (current >= 0) {
             if (current % 3 == 0){
-                types = randomZombie(true, false, false, false);
+                types = possibleZombie(true, false, false, false);
                 zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
             }
         }
 
 
     }
-    private ArrayList<Zombie> randomZombie(boolean regular, boolean coneHead, boolean screenDoor, boolean imp) {
+    private void handleZombiesWave1() {
+        long current = time / 1000;
+        ArrayList<Zombie> types;
+        Random rand = new Random();
+
+        // choose zombies depending on the time
+        boolean normal = true;
+        boolean conehead = current >= 20;
+        boolean screendoor = current >= 60;
+        boolean imp = current >= 80;
+        // make an array for possible zombies
+        types = possibleZombie(normal, conehead, screendoor, imp);
+
+        boolean isBreakTime = (current >= 45 && current < 50) || (current >= 90 && current < 95);
+        boolean isStrongAttack = (current >= 50 && current < 60) || (current >= 100 && current < 120);
+
+        if (isBreakTime) {
+            return;
+        }
+        int numberOfZombies;
+
+        if (isStrongAttack) {
+            if (current % 2 != 0) return;
+            numberOfZombies = 2 + (int)(current / 60);
+        }
+        else {
+            if (current % 4 != 0) return;
+            numberOfZombies = 1 + (int)(current / 60);
+
+        }
+
+        for (int i = 0; i < numberOfZombies; i++) {
+            int index = rand.nextInt(types.size());
+            int lane = rand.nextInt(5);
+            zombieFactory.createZombie(types.get(index), lane);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+
+    private ArrayList<Zombie> possibleZombie(boolean regular, boolean coneHead, boolean screenDoor, boolean imp) {
         ArrayList<Zombie> zombies = new ArrayList<>();
         if (regular) zombies.add(new Regular());
         if (coneHead) zombies.add(new ConeHead());

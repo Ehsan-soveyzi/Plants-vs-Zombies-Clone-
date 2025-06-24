@@ -141,6 +141,28 @@ public abstract class Zombie {
 
 
     }
+    public void playAnimation(int number, String path) {
+        Image[] frames = new Image[number];
+        for(int i = 0; i < number; i++){
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    path + i + ".png"
+            )));
+        }
+        ImageView zombieView = getImageView();
+        final int[] frameIndex = {0};
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            zombieView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+            if(isDead()) {
+                timeline.stop();
+                setDead(true);
+                die();
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
+    }
+    public abstract void playEatingAnimation();
     public abstract void playWalkingAnimation(Pane pane);
     public void playWalkingAnimation(Pane pane, int number, String path) {
         addToPane(pane);
@@ -164,7 +186,6 @@ public abstract class Zombie {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-    public abstract void  playEatingAnimation();
     public void playDeathAnimation(int number, String path) {
         Image[] frames = new Image[number];
         for (int i = 0; i < number; i++) {

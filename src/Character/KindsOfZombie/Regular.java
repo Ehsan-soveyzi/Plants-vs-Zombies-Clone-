@@ -24,25 +24,8 @@ public class Regular extends Zombie {
     }
 
     public void  playEatingAnimation(){
-        Image[] frames = new Image[21];
-        for(int i = 0;i < 21;i++){
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Zombies/NormalZombie/ZombieAttack/ZombieAttack_" + i + ".png"
-            )));
-        }
-        ImageView zombieView = getImageView();
-        final int[] frameIndex = {0};
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            zombieView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-            if(isDead()) {
-                timeline.stop();
-                setDead(true);
-                die();
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.playFromStart();
+        super.playAnimation(21,
+                "/Images/resources/graphics/Zombies/NormalZombie/ZombieAttack/ZombieAttack_");
     }
     public void playWalkingAnimation(Pane pane){
         super.playWalkingAnimation(pane, 21, regularImageAddress);

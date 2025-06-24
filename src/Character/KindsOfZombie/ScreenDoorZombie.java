@@ -19,30 +19,9 @@ public class ScreenDoorZombie extends Zombie {
         System.out.println("SCREEN " + (count++) + " " + row);
     }
     @Override
-    public void updateImageSituation(){
-
-    }
-    @Override
     public void playEatingAnimation() {
-        Image[] frames = new Image[11];
-        for(int i = 0;i <= 10;i++){
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Zombies/BucketheadZombie/BucketheadZombieAttack/BucketheadZombieAttack_" + i + ".png"
-            )));
-        }
-        ImageView zombieView = getImageView();
-        final int[] frameIndex = {0};
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            zombieView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-            if(isDead()) {
-                timeline.stop();
-                setDead(true);
-                die();
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.playFromStart();
+        super.playAnimation(10,
+                "/Images/resources/graphics/Zombies/BucketheadZombie/BucketheadZombieAttack/BucketheadZombieAttack_");
     }
     public void playWalkingAnimation(Pane pane){
         super.playWalkingAnimation(pane, 14, screenDoorImageAddress);
