@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url('/Images/resources/graphics/Background/BackgroundMode.jpg'); -fx-background-size: 1550px 865px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ApplyGraphics.OptionController">
    <children>
@@ -13,10 +11,10 @@
             <Image url="@../Images/resources/graphics/Background/BackButton.png" />
          </image>
       </ImageView>
-      <Label layoutX="398.0" layoutY="333.0" prefHeight="130.0" prefWidth="698.0" text="not created yet!" textFill="#ff08ac">
-         <font>
-            <Font name="Segoe Script Bold" size="64.0" />
-         </font>
-      </Label>
+      <ImageView fx:id="loadButton" fitHeight="373.0" fitWidth="676.0" layoutX="298.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/Background/loadButton.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

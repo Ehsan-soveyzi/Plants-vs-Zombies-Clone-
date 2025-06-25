@@ -8,9 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class SnowPea extends PeaPlant {
+public class SnowPea extends PeaPlant implements Serializable {
 
     public static final int cooldown = 7;
     public static boolean isReady = true;

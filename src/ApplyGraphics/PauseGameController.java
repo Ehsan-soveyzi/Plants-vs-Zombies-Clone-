@@ -4,30 +4,40 @@ import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
+import Save_Logic.SaveGame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.io.Serializable;
+
 import Character.*;
 
-public class PauseGameController {
+public class PauseGameController implements Serializable {
     @FXML
     private ImageView home;
     @FXML
     private ImageView refresh;
     @FXML
     private ImageView resume;
+    @FXML
+    private ImageView saveButton;
+    @FXML
+    private Label infoLabel;
 
     public static Stage pauseStage;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         MainMenuController.animateImage(home);
         MainMenuController.animateImage(refresh);
         MainMenuController.animateImage(resume);
+        MainMenuController.animateImage(saveButton);
+        mouseEnteredAction();
         home.setOnMouseClicked(event -> {
             homeButtonClicked();
         });
@@ -36,6 +46,9 @@ public class PauseGameController {
         });
         resume.setOnMouseClicked(event -> {
            resumeButtonClicked();
+        });
+        saveButton.setOnMouseClicked(event -> {
+            SaveGame.saveGame();
         });
     }
 
@@ -52,6 +65,33 @@ public class PauseGameController {
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void mouseEnteredAction(){
+        home.setOnMouseEntered(event -> {
+            infoLabel.setText("home Screen");
+        });
+        home.setOnMouseExited(event -> {
+            infoLabel.setText("");
+        });
+        refresh.setOnMouseEntered(event -> {
+            infoLabel.setText("refresh Screen");
+        });
+        refresh.setOnMouseExited(event -> {
+            infoLabel.setText("");
+        });
+        resume.setOnMouseEntered(event -> {
+            infoLabel.setText("resume to the game");
+        });
+        refresh.setOnMouseExited(event -> {
+            infoLabel.setText("");
+        });
+        saveButton.setOnMouseEntered(event -> {
+            infoLabel.setText("Save Game");
+        });
+        saveButton.setOnMouseExited(event -> {
+            infoLabel.setText("");
+        });
     }
 
     public void refreshButtonClicked(){

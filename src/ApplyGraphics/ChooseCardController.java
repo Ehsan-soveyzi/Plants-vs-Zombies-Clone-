@@ -60,6 +60,7 @@ public class ChooseCardController {
             backButton();
         });
     }
+
     public void backButton(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Mode.fxml"));
@@ -93,7 +94,6 @@ public class ChooseCardController {
                 cardPlants.remove(sunFlower);
                 removeCard(SunFlower);
             }
-
         });
         Peashooter.setOnMouseClicked(e -> {
             if(!playerCards.getChildren().contains(Peashooter)){

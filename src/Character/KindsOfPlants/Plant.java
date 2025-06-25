@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public abstract class Plant {
+import java.io.Serializable;
+
+public abstract class Plant implements Serializable {
 
 
     private int cost;
@@ -14,10 +16,10 @@ public abstract class Plant {
     private boolean isDead;
     private int row;
     private int col;
-    protected Timeline timeline;
+    protected transient Timeline timeline;
 
 
-    private ImageView imageView; // pay attention when the plant dies should set another image
+    private transient ImageView imageView; // pay attention when the plant dies should set another image
 
     Plant(int cost, int hp, Image image) {
         this.cost = cost;

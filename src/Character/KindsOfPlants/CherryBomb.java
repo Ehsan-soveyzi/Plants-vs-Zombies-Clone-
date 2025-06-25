@@ -8,9 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public  class CherryBomb extends BombPlant {
+public  class CherryBomb extends BombPlant implements Serializable {
     public static final int cooldown = 1;
     public static boolean isReady = true;
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";

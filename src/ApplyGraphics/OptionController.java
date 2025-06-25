@@ -1,5 +1,6 @@
 package ApplyGraphics;
 
+import Save_Logic.SaveGame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,12 +13,19 @@ public class OptionController {
 
     @FXML
     private ImageView BackButton;
+    @FXML
+    private ImageView loadButton;
 
     @FXML
     public void initialize() {
         MainMenuController.animateImage(BackButton);
+        MainMenuController.animateImage(loadButton);
         BackButton.setOnMouseClicked(event -> {
             backButton();
+        });
+        loadButton.setOnMouseClicked(event -> {
+            SaveGame.loadGame();
+            loadButton();
         });
     }
 
@@ -27,6 +35,18 @@ public class OptionController {
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             GameMain.setFadeTransition(root);
+            GameMain.mainStage.setScene(scene);
+            GameMain.mainStage.setFullScreen(true);
+            GameMain.mainStage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public void loadButton(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
             GameMain.mainStage.setScene(scene);
             GameMain.mainStage.setFullScreen(true);
             GameMain.mainStage.show();

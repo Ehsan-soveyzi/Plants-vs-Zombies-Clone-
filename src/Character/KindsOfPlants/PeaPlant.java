@@ -9,9 +9,11 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class PeaPlant extends Plant {
+public abstract class PeaPlant extends Plant implements Serializable {
 
     private boolean checkShot;
     public static ArrayList<Bullet> bulletList = new ArrayList<>();

@@ -8,9 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Regular extends Zombie {
+public class Regular extends Zombie implements Serializable {
     public final static String regularImageAddress =
             "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_";
     // or have a image field in parent class and

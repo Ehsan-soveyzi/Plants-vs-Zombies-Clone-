@@ -3,8 +3,10 @@ package Character;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.image.Image;
 
+import java.io.Serializable;
 
-public class NormalBullet extends Bullet {
+
+public class NormalBullet extends Bullet implements Serializable {
     private static final String normalBulletImageAddress = "/Images/resources/graphics/Bullets/PeaNormal/PeaNormal_0.png";
     public NormalBullet(double x,double y,int row) {
         super(x,y,row,30,new Image(normalBulletImageAddress));

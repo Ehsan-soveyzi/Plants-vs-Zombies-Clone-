@@ -14,11 +14,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public abstract class Zombie {
+public abstract class Zombie implements Serializable {
 
 
     private int hp;
@@ -26,20 +27,20 @@ public abstract class Zombie {
     private double eatingSpeed;
     private final int row;
     private double col;
-    private double x = 1500, y = 0.0;
+    private double x , y = 0.0;
 
 
     private boolean isDead;
     private boolean isEating;
     private boolean isSlowed;
     private boolean isBurn;
-    protected Timeline timeline;
-    private Pane parentPane;
-    private PauseTransition slowTimer;
-    private Timeline biteTimeline;
+    protected transient Timeline timeline;
+    private transient Pane parentPane;
+    private transient PauseTransition slowTimer;
+    private transient Timeline biteTimeline;
 
     //    protected Image image;
-    private ImageView imageView;
+    private transient ImageView imageView;
 
 
 
@@ -346,4 +347,5 @@ public abstract class Zombie {
     public void setHp(int hp) {
         this.hp = hp;
     }
+    public int getHp(){return hp;}
 }

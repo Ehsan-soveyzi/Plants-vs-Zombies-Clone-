@@ -9,15 +9,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public abstract class Bullet {
+import java.io.Serializable;
+
+public abstract class Bullet implements Serializable {
     private double speed;
     private double x,y;
     private int row;
-    private ImageView imageView;
+    private transient ImageView imageView;
     private boolean isAlive;
-    private Pane parentPane;
+    private transient Pane parentPane;
 
-    private Timeline timeline;
+    private transient Timeline timeline;
 
     public Bullet(double x, double y, int row, double speed, Image image) {
         this.x = x;

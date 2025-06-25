@@ -11,10 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Jalapeno extends BombPlant {
+public class Jalapeno extends BombPlant implements Serializable {
     public static final int cooldown = 1;
     public static boolean isReady = true;
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";

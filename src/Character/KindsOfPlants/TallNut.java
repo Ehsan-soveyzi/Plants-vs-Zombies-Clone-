@@ -6,7 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class TallNut extends NutPlant {
+import java.io.Serializable;
+
+public class TallNut extends NutPlant implements Serializable {
 
     public static final int cooldown = 2;
     public static boolean isReady = true;

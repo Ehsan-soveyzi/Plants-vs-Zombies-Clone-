@@ -4,7 +4,9 @@ import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
-public abstract class BombPlant extends Plant {
+import java.io.Serializable;
+
+public abstract class BombPlant extends Plant implements Serializable {
     BombPlant(int cost, int hp, Image image) {
         super(cost,hp, image);
     }

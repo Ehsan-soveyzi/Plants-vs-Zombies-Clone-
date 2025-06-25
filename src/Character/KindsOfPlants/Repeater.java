@@ -7,7 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class Repeater extends PeaPlant {
+import java.io.Serializable;
+
+public class Repeater extends PeaPlant implements Serializable {
 
     public static final int cooldown = 7;
     public static boolean isReady = true;

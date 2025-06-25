@@ -6,9 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class SunFlower extends Plant{
+public class SunFlower extends Plant implements Serializable {
 
 
     public static final int cooldown = 7;

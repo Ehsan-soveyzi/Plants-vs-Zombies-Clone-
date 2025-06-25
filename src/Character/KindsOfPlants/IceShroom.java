@@ -1,4 +1,6 @@
 package Character.KindsOfPlants;
 
-public class IceShroom extends Shroom{
+import java.io.Serializable;
+
+public class IceShroom extends Shroom implements Serializable {
 }

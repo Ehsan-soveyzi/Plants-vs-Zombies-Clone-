@@ -7,9 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.sql.Time;
 
-public class PeaShooter extends PeaPlant {
+public class PeaShooter extends PeaPlant implements Serializable {
 
     private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
     public static final int cooldown = 7;

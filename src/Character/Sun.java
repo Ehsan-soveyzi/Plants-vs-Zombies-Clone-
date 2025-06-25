@@ -8,17 +8,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Sun {
+public class Sun implements Serializable {
     double x;
     double y;
     boolean clicked = false;
-    ImageView sunImageView;
-    private Timeline timeline;
-    private PauseTransition pause;
+    transient ImageView sunImageView;
+    private transient Timeline timeline;
+    private transient PauseTransition pause;
     public static ArrayList<Sun> sunList = new ArrayList<>();
     private static final String sunAddress = "/Images/resources/graphics/Plants/Sun/sun.png";
 

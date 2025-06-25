@@ -8,9 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ConeHead extends Zombie {
+public class ConeHead extends Zombie implements Serializable {
     private final static String coneHeadImageAddress =
             "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombie/ConeheadZombie_";
 

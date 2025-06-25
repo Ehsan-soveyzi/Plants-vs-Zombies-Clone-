@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import Character.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import Character.Sun;
 import java.util.ArrayList;
@@ -38,14 +39,14 @@ public class MapController {
 
 
 
-    static GameMap map = new GameMap();
-    Plant choosenPlant;
-    ZombieFactory zombieFactory;
+    public static GameMap map = new GameMap();
+    public static ZombieFactory zombieFactory;
+    static int waveCount = 1;
     static Timeline gameLoop;
     long time;
     ImageCursor cursor;
+    Plant choosenPlant;
     private final VBox playerCards = ChooseCardController.cards;
-    static int waveCount = 1;
     boolean shovelUsed  = false;
 
     public static int score;
@@ -61,13 +62,32 @@ public class MapController {
         time = 0;
         MainMenuController.animateImage(menu);
         menu.setOnMouseClicked(event -> {
-            pause();
+            if(PauseGameController.pauseStage == null ) {
+                pause();
+            }
+            else{
+                if(!PauseGameController.pauseStage.isShowing())pause();
+            }
         });
         paneWindow.getChildren().add(playerCards);
         playerCards.setLayoutX(50);
         mouseEvents();
 
-        zombieFactory = new ZombieFactory(160,160,paneWindow);
+        zombieFactory = new ZombieFactory(paneWindow);
+
+        for(Plant plant : GameMap.plants) {
+            map.addPlant(plant, plant.getRow(), plant.getCol());
+            plant.updateImageSituation(paneWindow);
+            if(!paneWindow.getChildren().contains(plant.getImageView())) {
+                for(int i = 0;i < gridPane.getRowCount();i++){
+                    for(int j = 0;j < gridPane.getColumnCount();j++){
+                        if(plant.getRow() == i && plant.getCol() == j) {
+                            gridPane.getChildren().add(plant.getImageView());
+                        }
+                    }
+                }
+            }
+        }
 
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
@@ -133,6 +153,7 @@ public class MapController {
             PauseGameController.pauseStage.setScene(scene);
             PauseGameController.pauseStage.setResizable(false);
             PauseGameController.pauseStage.initOwner(GameMain.mainStage);
+            PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
             PauseGameController.pauseStage.show();
         }catch(Exception e){
             e.printStackTrace();
@@ -214,6 +235,7 @@ public class MapController {
                 choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
+                score += choosenPlant.getCost();
                 choosenPlant = null;
 
                 shovelUsed = false;
@@ -238,10 +260,10 @@ public class MapController {
         Random rand = new Random();
         int randomRow = rand.nextInt(5);
         int number = rand.nextInt(wave);
-        if(number <= 4)zombieFactory.createRegularZombie(randomRow);
-        else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow);
-        else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow);
-        else zombieFactory.createIMPZombie(randomRow);
+        if(number <= 4)zombieFactory.createRegularZombie(randomRow,1500);
+        else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow,1500);
+        else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow,1500);
+        else zombieFactory.createIMPZombie(randomRow,1500);
     }
 
     //apply when pausing the game fot stop the timelines!
