@@ -4,12 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.io.IOException;
 import java.io.Serializable;
 
+//set serialize for using the enum
 public class ModeController implements Serializable {
 
     //we need call this enum from this class to apply the changes between day and night!
@@ -78,7 +77,6 @@ public class ModeController implements Serializable {
     public static Mode getSelectedMode(){
         return selectedMode;
     }
-    //idk it will use or not!
     public static void setSelectedMode(Mode mode){
         selectedMode = mode;
     }

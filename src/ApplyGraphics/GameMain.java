@@ -6,13 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 
 public class GameMain extends Application {
+    //all the scene must set to this stage!
     public static Stage mainStage;
 
     public static void main(String[] args) {
@@ -20,7 +19,7 @@ public class GameMain extends Application {
     }
 
     @Override
-    public  void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
         mainStage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = fxmlLoader.load();
@@ -33,6 +32,7 @@ public class GameMain extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.show();
     }
+    //use this effect for set fade effect to transferring cross the stages
     public static void setFadeTransition(Parent root){
         //apply fadeTransition!
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), root);

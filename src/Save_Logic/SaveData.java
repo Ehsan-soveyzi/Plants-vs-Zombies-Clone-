@@ -9,11 +9,10 @@ import Character.Sun;
 import Character.Bullet;
 import Map.GameMap;
 import Map.ZombieFactory;
-import javafx.scene.layout.VBox;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
+//this class just create for saving data.
 public class SaveData implements Serializable {
     ModeController.Mode mode;
     int score;
@@ -51,5 +50,4 @@ public class SaveData implements Serializable {
             this.playerCard = ChooseCardController.cardPlants;
             this.bullets = PeaPlant.bulletList;
     }
-
 }

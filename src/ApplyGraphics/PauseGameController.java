@@ -11,11 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.Serializable;
-
 import Character.*;
 
 public class PauseGameController implements Serializable {
@@ -50,6 +48,7 @@ public class PauseGameController implements Serializable {
         });
         saveButton.setOnMouseClicked(event -> {
             SaveGame.saveGame();
+            infoLabel.setText("Game saved!");
         });
     }
 
@@ -122,6 +121,7 @@ public class PauseGameController implements Serializable {
         MapController.time = 0;
         ZombieFactory.zombies.clear();
         PeaShooter.bulletList.clear();
+        ChooseCardController.cardPlants.clear();
         GameMap.plants.clear();
         MapController.map.refreshPlants();
         Sun.sunList.clear();

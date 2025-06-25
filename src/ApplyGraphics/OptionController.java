@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-
 import java.io.IOException;
 
 public class OptionController {
@@ -19,15 +18,18 @@ public class OptionController {
     @FXML
     private Label infoLabel;
 
+    //check if loadButton clicked or not.
     public static int clicked = -1;
 
     @FXML
     public void initialize() {
         MainMenuController.animateImage(BackButton);
         MainMenuController.animateImage(loadButton);
+
         BackButton.setOnMouseClicked(event -> {
             backButton();
         });
+
         loadButton.setOnMouseClicked(event -> {
             if(SaveGame.load)loadButton();
             else infoLabel.setText("no saved game!");
@@ -47,6 +49,7 @@ public class OptionController {
             e.printStackTrace();
         }
     }
+
     public void loadButton(){
         try{
             clicked = 1;
@@ -56,7 +59,8 @@ public class OptionController {
             GameMain.mainStage.setScene(scene);
             GameMain.mainStage.setFullScreen(true);
             GameMain.mainStage.show();
-        }catch (IOException e){
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
     }

@@ -1,15 +1,8 @@
 package Map;
 
-import ApplyGraphics.MapController;
 import Character.KindsOfPlants.Plant;
-import Character.KindsOfZombie.Regular;
 import Character.KindsOfZombie.Zombie;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-
-import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
 
 public class GameMap {
@@ -37,13 +30,13 @@ public class GameMap {
         grid[row][col] = plant;
     }
 
+
     public void checkWar() {
         for (Zombie z : ZombieFactory.zombies) {
             for (Plant plant : GameMap.plants) {
                 if(plant.isDead()){
                     plants.remove(plant);
                     removePlant(plant.getRow(), plant.getCol());
-//                    System.out.println("123");
                     break;
                 }
                 else if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
@@ -51,7 +44,7 @@ public class GameMap {
                     z.getTimeline().stop();
                     z.updateImageSituation();
                     z.startBiting(plant, this);
-//                    break;
+                    break;
                 }
             }
         }
@@ -78,6 +71,9 @@ public class GameMap {
         }
     }
 
+    public boolean isValidCell(int row, int col) {
+        return row >= 0 && row < ROWS && col >= 0 && col < COLS;
+    }
 
     public Plant getPlant(int row, int col) {
         if(!isValidCell(row, col)) return null;
@@ -87,27 +83,17 @@ public class GameMap {
     public double getXForCol(int col){
         return col*CELL_WIDTH;
     }
-
     public double getYForRow(int row){
         return row*CELL_HEIGHT + OFFSET_Y;
     }
-
     public int getRows(){
         return ROWS;
     }
-
     public int getCols(){
         return COLS;
     }
-
     public Plant[][] getGrid() {
         return grid;
     }
-
-    public boolean isValidCell(int row, int col) {
-        return row >= 0 && row < ROWS && col >= 0 && col < COLS;
-    }
-
-
 }
 

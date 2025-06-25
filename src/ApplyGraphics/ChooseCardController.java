@@ -1,18 +1,14 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
-import javafx.application.Platform;
-import Character.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -29,25 +25,31 @@ public class ChooseCardController {
     @FXML
     private ImageView BackButton;
 
+    //the reason for using these static vbox and gridPane fields for transferring data to another class.
     public static VBox cards = new VBox();
     public static GridPane cardList = new GridPane();
+
     public static ArrayList<Plant> cardPlants = new ArrayList<>();
+    //this use to get the cardView images for each plant.
     public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb(),new Jalapeno(),new TallNut(),new WallNut()};
 
 
     @FXML
     public void initialize() {
         cardList = gridPane;
-        createGrid();
-        cardPlants.clear();
-        chooseCard();
         cards = playerCards;
+
+        createGrid();
+
+        chooseCard();
+
         MainMenuController.animateImage(BackButton);
 
         BackButton.setOnMouseClicked(event -> {
             backButton();
         });
     }
+    //adding imageViews to the grid
     public void createGrid(){
         int counter = 0;
             for (int i = 0; i < cardList.getRowCount(); i++) {
@@ -77,6 +79,7 @@ public class ChooseCardController {
     }
 
     public void chooseCard(){
+        //define these objects for use their images and ...
         SunFlower sunFlower = (SunFlower) plants[0];
         PeaShooter peaShooter = (PeaShooter) plants[1];
         Repeater repeater = (Repeater) plants[2];
@@ -170,21 +173,21 @@ public class ChooseCardController {
 
 
     public void selectCard(ImageView imageView) {
-        System.out.println(playerCards.getChildren().size());
         if (!playerCards.getChildren().contains(imageView) && playerCards.getChildren().size() <= 5) {
             playerCards.getChildren().add(imageView);
-//            cardList.getChildren().remove(imageView);
             cardLabel.setText(playerCards.getChildren().size() + " card chosen!");
         }
         if(playerCards.getChildren().size() == 6) {
             cardLabel.setText("you at most can choose 6 card! let's play ...");
             MainMenuController.animateImage(playButton);
+            //set the button clickable.
             playButton.setOnMouseClicked(event -> {
                 if(playerCards.getChildren().size() == 6)
                     enterGame();
             });
         }
     }
+
     public void removeCard(ImageView imageView) {
         System.out.println(playerCards.getChildren().size());
         playerCards.getChildren().remove(imageView);

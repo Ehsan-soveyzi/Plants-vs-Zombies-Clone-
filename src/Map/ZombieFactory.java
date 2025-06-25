@@ -55,6 +55,4 @@ public class ZombieFactory {
         zombies.add(zombie);
         return zombie;
     }
-    //overLoading method for creating zombies in every coordination
-
 }

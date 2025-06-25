@@ -9,12 +9,11 @@ import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.*;
 import Map.GameMap;
 import Character.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.io.*;
 
+//no need to create any object from this class!
 public abstract class SaveGame implements Serializable {
+    //check file exist.
     public static boolean load = new File("saveGame.dat").exists();
 
     public static Zombie identifyKindsOfZombie(Zombie zombie){
@@ -53,6 +52,7 @@ public abstract class SaveGame implements Serializable {
             e.printStackTrace();
         }
     }
+
     public static void loadGame(){
         try(ObjectInputStream loadGame = new ObjectInputStream(new FileInputStream("saveGame.dat"))){
 

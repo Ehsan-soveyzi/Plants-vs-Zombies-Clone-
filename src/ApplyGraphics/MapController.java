@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import Character.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,7 +26,7 @@ import java.util.Random;
 public class MapController {
 
     @FXML
-    public Pane paneWindow;
+    private Pane paneWindow;
     @FXML
     private GridPane gridPane;
     @FXML
@@ -38,31 +37,35 @@ public class MapController {
     private ImageView menu;
 
 
-
-
+    //static fields used between ui and backend.
     public static GameMap map = new GameMap();
     public static ZombieFactory zombieFactory;
     public static int waveCount = 1;
-    static Timeline gameLoop;
+    public static Timeline gameLoop;
     public static long time = 0;
+    public static int score = 1000;
+
+
     ImageCursor cursor;
     Plant choosenPlant;
     boolean shovelUsed  = false;
-
-    public static int score = 1000;
-
     ArrayList<Plant> cardPlants;
 
     @FXML
     public void initialize() {
-        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Night.jpg'); -fx-background-size: 1550px 865px;");
-        else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
         zombieFactory = new ZombieFactory(paneWindow);
+
+        //check if user inter to this part by loading or playButton.
         if(SaveGame.load && OptionController.clicked == 1) {
             SaveGame.loadGame();
             for(Bullet bullet:PeaPlant.bulletList)bullet.addToPane(paneWindow);
+            OptionController.clicked = -1;
         }
-        OptionController.clicked = -1;
+
+        //set the night or day.
+        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Night.jpg'); -fx-background-size: 1550px 865px;");
+        else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
+
         paneWindow.getChildren().add(ChooseCardController.cards);
         ChooseCardController.cards.setLayoutX(50);
         cardPlants = ChooseCardController.cardPlants;
@@ -70,7 +73,7 @@ public class MapController {
         mouseEvents();
 
 
-
+        //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             if(choosenPlant == null && !shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
@@ -81,11 +84,12 @@ public class MapController {
             if(time % 10000 == 0)attackOne();
             if(time % 20000 == 0)waveCount++;
         }));
-
+        //play until losing or winning
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.playFromStart();
 
         createGrid();
+
         MainMenuController.animateImage(menu);
         menu.setOnMouseClicked(event -> {
             if(PauseGameController.pauseStage == null ) {
@@ -134,8 +138,10 @@ public class MapController {
 
     public static void pause(){
         try{
+            //stop timelines
             stopTheGame();
             gameLoop.stop();
+
             PauseGameController.pauseStage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
             Parent root = fxmlLoader.load();
@@ -196,6 +202,8 @@ public class MapController {
                 cell.setPrefSize(80, 80);
 
                 setOnCell(cell, i, j);
+
+                //this added when loading action
                 for(Plant plant : GameMap.plants){
                     if(plant.getRow() == i && plant.getCol() == j){
                         cell.getChildren().add(plant.getImageView());
@@ -203,6 +211,7 @@ public class MapController {
                         plant.updateImageSituation(paneWindow);
                     }
                 }
+
                 gridPane.add(cell, j, i);
             }
         }
@@ -234,7 +243,6 @@ public class MapController {
                 choosenPlant.setCol(col);
                 score -= choosenPlant.getCost();
                 choosenPlant = null;
-
                 shovelUsed = false;
             }
         });
@@ -263,7 +271,7 @@ public class MapController {
         else zombieFactory.createIMPZombie(randomRow,1500);
     }
 
-    //apply when pausing the game fot stop the timelines!
+    //apply when pausing the game for stop the timelines!
     public static void stopTheGame(){
         for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
             bullet.getTimeline().stop();
@@ -282,6 +290,7 @@ public class MapController {
                 plant.getTimeline().stop();
             }
         }
+        //stop the cooldowns of each plant
         if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.stop();
         if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.stop();
         if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.stop();

@@ -7,15 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
+
 
 public class MainMenuController {
 
@@ -69,16 +67,19 @@ public class MainMenuController {
     public void ExitButton(MouseEvent event){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Log out");
-        alert.setHeaderText("Loging Out!");
+        alert.setHeaderText("Logging Out!");
         alert.setContentText("Are you sure you want to logout?");
 
         alert.initOwner(GameMain.mainStage);
 
         if(alert.showAndWait().get() == ButtonType.OK){
+            //terminating the program
             System.exit(0);
         }
     }
 
+
+    //set effect on the buttons
     public static void animateImage(ImageView imageView){
         DropShadow dropShadow = new DropShadow(100, Color.web("#4B0000"));
         dropShadow.setSpread(0.3);
