@@ -28,4 +28,5 @@ public class IceShroom extends Shroom{
         timeline.setCycleCount(1);
         timeline.play();
     }
+    public void freeze(){}
 }

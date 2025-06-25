@@ -21,8 +21,7 @@ public class Jalapeno extends BombPlant {
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
 
     public Jalapeno() {
-        //dont have idea about the hp!
-        super(125, 100000, new Image(JalapenoImageAddress));
+        super(125, 0, new Image(JalapenoImageAddress));
     }
 
     @Override

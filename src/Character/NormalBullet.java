@@ -8,8 +8,9 @@ import javafx.util.Duration;
 
 public class NormalBullet extends Bullet {
     private static final String normalBulletImageAddress = "/Images/resources/graphics/Bullets/PeaNormal/PeaNormal_0.png";
+    private static final String normalBulletHit =  "/new_resources/images/Plants/PeaBulletHit.gif";
     public NormalBullet(double x,double y,int row) {
-        super(x,y,row,20,new Image(normalBulletImageAddress));
+        super(x,y,row,20,new Image(normalBulletImageAddress), new Image(normalBulletHit));
 
     }
 

@@ -16,8 +16,7 @@ public  class CherryBomb extends BombPlant {
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
     private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
     public CherryBomb() {
-        //dont have idea about the hp!
-        super(150, 100000, new Image(cherryBombImageAddress));
+        super(150, 0, new Image(cherryBombImageAddress));
 
     }
 

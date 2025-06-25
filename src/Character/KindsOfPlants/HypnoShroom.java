@@ -1,5 +1,6 @@
 package Character.KindsOfPlants;
 
+import Character.KindsOfZombie.Zombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -27,5 +28,8 @@ public class HypnoShroom extends Shroom{
         }));
         timeline.setCycleCount(1);
         timeline.play();
+    }
+    public void hypnotizedZombie(Zombie zombie) {
+
     }
 }

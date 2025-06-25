@@ -131,6 +131,10 @@ public abstract class Zombie {
         }
         if (isDead){
             System.out.println("one zombie die");
+            if (this instanceof IMPZombie){
+                playDeathAnimation(21, "/Images/resources/graphics/Zombies/Imp/ZombieDie/");
+                return;
+            }
             playDeathAnimation(10 ,"/Images/resources/graphics/Zombies/NormalZombie/ZombieDie/ZombieDie_");
             return;
         }

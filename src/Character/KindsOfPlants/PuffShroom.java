@@ -1,5 +1,6 @@
 package Character.KindsOfPlants;
-
+import Character.ShroomBullet;
+import Character.Bullet;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -28,6 +29,10 @@ public class PuffShroom extends Shroom{
         timeline.play();
     }
     public void shoot(Pane pane) {
+        if(!isDead()) {
+            Bullet normalBullet = new ShroomBullet(getX() + 10, getY(), getRow());
+            normalBullet.addToPane(pane);
 
+        }
     }
 }

@@ -29,4 +29,7 @@ public class ScaredyShroom extends Shroom{
         timeline.setCycleCount(1);
         timeline.play();
     }
+    public void shoot(){
+
+    }
 }

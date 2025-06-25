@@ -17,15 +17,17 @@ public abstract class Bullet {
     private ImageView imageView;
     private boolean isAlive;
     private Pane parentPane;
+    private Image bulletHitImage;
 
     private Timeline timeline;
 
-    public Bullet(double x, double y, int row, double speed, Image image) {
+    public Bullet(double x, double y, int row, double speed, Image image, Image bulletHitImage) {
         this.x = x;
         this.y = y;
         this.row = row;
         this.speed = speed;
         this.imageView = new ImageView(image);
+        this.bulletHitImage = bulletHitImage;
         this.isAlive = true;
         imageView.setLayoutY(y);
         imageView.setLayoutX(x);
@@ -43,8 +45,11 @@ public abstract class Bullet {
     public void die() {
         isAlive = false;
         if (timeline != null) timeline.stop();
-        if (parentPane != null) parentPane.getChildren().remove(imageView);
-        // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
+        if (parentPane != null){
+            parentPane.getChildren().remove(imageView);
+
+        }
+
     }
 
     public abstract void onHit(Zombie z);

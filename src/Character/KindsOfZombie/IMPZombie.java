@@ -29,4 +29,5 @@ public class IMPZombie extends Zombie {
     public void playWalkingAnimation(Pane pane){
         super.playWalkingAnimation(pane, 32, IMPZombieImageAddress);
     }
+
 }

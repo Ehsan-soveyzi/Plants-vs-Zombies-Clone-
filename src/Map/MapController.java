@@ -284,7 +284,7 @@ public class MapController {
         // make an array for possible zombies
         types = possibleZombie(normal, conehead, screendoor, imp);
 
-        boolean isBreakTime = (current >= 45 && current < 50) || (current >= 90 && current < 95);
+        boolean isBreakTime = (current >= 45 && current < 50) || (current >= 90 && current < 100);
         boolean isStrongAttack = (current >= 50 && current < 60) || (current >= 100 && current < 120);
 
         if (isBreakTime) {
@@ -293,11 +293,11 @@ public class MapController {
         int numberOfZombies;
 
         if (isStrongAttack) {
-            if (current % 2 != 0) return;
-            numberOfZombies = 2 + (int)(current / 60);
+            if (current % 3 != 0) return;
+            numberOfZombies = 2 + (int)(current / 35);
         }
         else {
-            if (current % 4 != 0) return;
+            if (current % 6 != 0) return;
             numberOfZombies = 1 + (int)(current / 60);
 
         }
