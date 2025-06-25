@@ -7,8 +7,8 @@ import javafx.util.Duration;
 import java.io.Serializable;
 
 public abstract class BombPlant extends Plant implements Serializable {
-    BombPlant(int cost, int hp, Image image) {
-        super(cost,hp, image);
+    BombPlant(int cost, int hp, Image image,Image cardImage) {
+        super(cost,hp, image,cardImage);
     }
     public abstract void burnZombies();
 

@@ -1,5 +1,6 @@
 package Save_Logic;
 
+import ApplyGraphics.ChooseCardController;
 import ApplyGraphics.MapController;
 import Character.KindsOfPlants.PeaShooter;
 import Character.KindsOfPlants.Plant;
@@ -7,6 +8,7 @@ import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.*;
 import Map.GameMap;
 import Map.ZombieFactory;
+import javafx.scene.layout.VBox;
 
 import javax.smartcardio.Card;
 import java.io.*;
@@ -26,6 +28,8 @@ public abstract class SaveGame implements Serializable {
         if(plant instanceof SnowPea)return new SnowPea();
         if(plant instanceof TallNut)return new TallNut();
         if(plant instanceof WallNut)return new WallNut();
+        if(plant instanceof Jalapeno)return new Jalapeno();
+        if(plant instanceof CherryBomb)return new CherryBomb()  ;
         return null;
     }
     public static void saveGame(){
@@ -37,7 +41,7 @@ public abstract class SaveGame implements Serializable {
             e.printStackTrace();
         }
     }
-    public static void loadGame(){
+    public static boolean loadGame(){
         try(ObjectInputStream loadGame = new ObjectInputStream(new FileInputStream("saveGame.dat"))){
             SaveData data = (SaveData) loadGame.readObject();
             MapController.score = data.score;
@@ -55,12 +59,17 @@ public abstract class SaveGame implements Serializable {
                 loadPlant.setCol(plant.getCol());
                 GameMap.plants.add(loadPlant);
             }
+            ChooseCardController.cards = new VBox();
+            ChooseCardController.cards.setLayoutY(150);
             for(Plant plant : data.playerCard){
                 Plant loadCard = identifyKindsOfPlant(plant);
-
+                ChooseCardController.cardPlants.add(loadCard);
+                ChooseCardController.cards.getChildren().add(loadCard.getCardView());
             }
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            return false;
         }
     }
 }

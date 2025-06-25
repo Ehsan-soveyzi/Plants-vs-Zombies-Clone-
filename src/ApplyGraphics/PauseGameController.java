@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.Serializable;
@@ -116,10 +117,14 @@ public class PauseGameController implements Serializable {
     }
 
     public void clearData(){
+        MapController.score = 1000;
+        MapController.waveCount = 1;
+        MapController.time = 0;
         ZombieFactory.zombies.clear();
         PeaShooter.bulletList.clear();
         GameMap.plants.clear();
         MapController.map.refreshPlants();
+        startTimelines();
     }
 
     public void startTimelines(){

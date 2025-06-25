@@ -14,10 +14,11 @@ public class Repeater extends PeaPlant implements Serializable {
     public static final int cooldown = 7;
     public static boolean isReady = true;
     private static final String repeaterImageAddress = "/Images/resources/graphics/Plants/RepeaterPea/Repeater.gif";
+    private static final String repeaterCardImageAddress = "/Images/resources/graphics/Cards/Repeater.png";
     public static Timeline cooldownTimeline;
 
     public Repeater() {
-        super(200, 5, new Image(repeaterImageAddress));
+        super(200, 5, new Image(repeaterImageAddress),new Image(repeaterCardImageAddress));
     }
 
     // we should check the same row for checking there is a zombie or not .

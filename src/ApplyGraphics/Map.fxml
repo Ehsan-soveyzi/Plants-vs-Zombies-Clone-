@@ -48,7 +48,7 @@
         </ImageView>
       <ImageView fx:id="menu" fitHeight="114.0" fitWidth="153.0" layoutX="1116.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/MenuIcon.png" />
+            <Image url="@../Images/resources/graphics/extentions/MenuIcon.png" />
          </image>
       </ImageView>
     </children>

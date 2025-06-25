@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ChooseCardController {
 
     @FXML
-    private GridPane cardList;
+    private GridPane gridPane;
     @FXML
     private VBox playerCards;
     @FXML
@@ -27,30 +27,18 @@ public class ChooseCardController {
     @FXML
     private ImageView playButton;
     @FXML
-    private ImageView SunFlower;
-    @FXML
-    private ImageView Peashooter;
-    @FXML
-    private ImageView Repeater;
-    @FXML
-    private ImageView Snowpea;
-    @FXML
-    private ImageView WallNut;
-    @FXML
-    private ImageView TallNut;
-    @FXML
-    private ImageView CherryBomb;
-    @FXML
-    private ImageView Jalapeno;
-    @FXML
     private ImageView BackButton;
 
-    public static VBox cards;
+    public static VBox cards = new VBox();
+    public static GridPane cardList = new GridPane();
     public static ArrayList<Plant> cardPlants = new ArrayList<>();
+    public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb(),new Jalapeno(),new TallNut(),new WallNut()};
 
 
     @FXML
     public void initialize() {
+        cardList = gridPane;
+        createGrid();
         cardPlants.clear();
         chooseCard();
         cards = playerCards;
@@ -59,6 +47,19 @@ public class ChooseCardController {
         BackButton.setOnMouseClicked(event -> {
             backButton();
         });
+    }
+    public void createGrid(){
+        int counter = 0;
+            for (int i = 0; i < cardList.getRowCount(); i++) {
+                for (int j = 0; j < cardList.getColumnCount() && plants.length > counter; j++) {
+                    double width = cardList.getWidth();
+                    double height = cardList.getHeight();
+                    plants[counter].getCardView().setFitWidth(width);
+                    plants[counter].getCardView().setFitHeight(height);
+                    cardList.add(plants[counter].getCardView(), i, j);
+                    counter++;
+                }
+            }
     }
 
     public void backButton(){
@@ -76,93 +77,93 @@ public class ChooseCardController {
     }
 
     public void chooseCard(){
-        SunFlower sunFlower = new SunFlower();
-        PeaShooter peaShooter = new PeaShooter();
-        Repeater repeater = new Repeater();
-        SnowPea snowPea = new SnowPea();
-        WallNut wallNut = new WallNut();
-        TallNut tallNut = new TallNut();
-        CherryBomb cherryBomb = new CherryBomb();
-        Jalapeno jalapeno = new Jalapeno();
+        SunFlower sunFlower = (SunFlower) plants[0];
+        PeaShooter peaShooter = (PeaShooter) plants[1];
+        Repeater repeater = (Repeater) plants[2];
+        SnowPea snowPea = (SnowPea) plants[3];
+        WallNut wallNut = (WallNut) plants[7];
+        TallNut tallNut = (TallNut) plants[6];
+        CherryBomb cherryBomb = (CherryBomb) plants[4];
+        Jalapeno jalapeno = (Jalapeno) plants[5];
 
-        SunFlower.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(SunFlower)){
+        sunFlower.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(sunFlower.getCardView())){
                 cardPlants.add(sunFlower);
-                selectCard(SunFlower);
+                selectCard(sunFlower.getCardView());
             }
             else{
                 cardPlants.remove(sunFlower);
-                removeCard(SunFlower);
+                removeCard(sunFlower.getCardView());
             }
         });
-        Peashooter.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(Peashooter)){
+        peaShooter.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(peaShooter.getCardView())){
                 cardPlants.add(peaShooter);
-                selectCard(Peashooter);
+                selectCard(peaShooter.getCardView());
             }
             else{
                 cardPlants.remove(peaShooter);
-                removeCard(Peashooter);
+                removeCard(peaShooter.getCardView());
             }
         });
-        Repeater.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(Repeater)){
+        repeater.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(repeater.getCardView())){
                 cardPlants.add(repeater);
-                selectCard(Repeater);
+                selectCard(repeater.getCardView());
             }
             else{
                 cardPlants.remove(repeater);
-                removeCard(Repeater);
+                removeCard(repeater.getCardView());
             }
         });
-        Snowpea.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(Snowpea)){
+        snowPea.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(snowPea.getCardView())){
                 cardPlants.add(snowPea);
-                selectCard(Snowpea);
+                selectCard(snowPea.getCardView());
             }
             else{
                 cardPlants.remove(snowPea);
-                removeCard(Snowpea);
+                removeCard(snowPea.getCardView());
             }
         });
-        WallNut.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(WallNut)){
+        wallNut.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(wallNut.getCardView())){
                 cardPlants.add(wallNut);
-                selectCard(WallNut);
+                selectCard(wallNut.getCardView());
             }
             else{
                 cardPlants.remove(wallNut);
-                removeCard(WallNut);
+                removeCard(wallNut.getCardView());
             }
         });
-        TallNut.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(TallNut)){
+        tallNut.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(tallNut.getCardView())){
                 cardPlants.add(tallNut);
-                selectCard(TallNut);
+                selectCard(tallNut.getCardView());
             }
             else{
                 cardPlants.remove(tallNut);
-                removeCard(TallNut);
+                removeCard(tallNut.getCardView());
             }
         });
-        CherryBomb.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(CherryBomb)){
+        cherryBomb.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(cherryBomb.getCardView())){
                 cardPlants.add(cherryBomb);
-                selectCard(CherryBomb);
+                selectCard(cherryBomb.getCardView());
             }
             else{
                 cardPlants.remove(cherryBomb);
-                removeCard(CherryBomb);
+                removeCard(cherryBomb.getCardView());
             }
         });
-        Jalapeno.setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(Jalapeno)){
+        jalapeno.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(jalapeno.getCardView())){
                 cardPlants.add(jalapeno);
-                selectCard(Jalapeno);
+                selectCard(jalapeno.getCardView());
             }
             else{
                 cardPlants.remove(jalapeno);
-                removeCard(Jalapeno);
+                removeCard(jalapeno.getCardView());
             }
         });
     }

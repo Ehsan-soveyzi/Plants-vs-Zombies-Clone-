@@ -12,13 +12,14 @@ public class WallNut extends NutPlant implements Serializable {
 
     public static final int cooldown = 7;
     public static boolean isReady = true;
+    private static final String wallNutCardImageAddress = "/Images/resources/graphics/Cards/WallNut.png";
     private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut.gif";
     private static final String WallNutImageAddress1 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut1.gif";
     private static final String WallNutImageAddress2 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut2.gif";
     public static Timeline cooldownTimeline;
 
     public WallNut() {
-        super(50, 10, new Image(WallNutImageAddress));
+        super(50, 10, new Image(WallNutImageAddress),new Image(wallNutCardImageAddress));
     }
 
     @Override

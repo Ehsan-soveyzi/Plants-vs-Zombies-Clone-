@@ -18,13 +18,14 @@ import java.util.Objects;
 public class Jalapeno extends BombPlant implements Serializable {
     public static final int cooldown = 1;
     public static boolean isReady = true;
+    private static final String jalapenoCardImageAddress = "/Images/resources/graphics/Cards/Jalapeno.png";
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
     public static Timeline cooldownTimeline;
 
     public Jalapeno() {
         //dont have idea about the hp!
-        super(125, 100000, new Image(JalapenoImageAddress));
+        super(125, 100000, new Image(JalapenoImageAddress),new Image(jalapenoCardImageAddress));
     }
 
     @Override

@@ -21,7 +21,6 @@ public class SaveData implements Serializable {
     ArrayList<Sun> suns;
     ArrayList<Plant> playerCard;
     ArrayList<Bullet> bullets;
-    transient VBox cards;
     public SaveData() {
             this.score = MapController.score;
             this.zombies = ZombieFactory.zombies;
@@ -29,7 +28,6 @@ public class SaveData implements Serializable {
             this.suns = Sun.sunList;
             this.playerCard = ChooseCardController.cardPlants;
             this.bullets = PeaPlant.bulletList;
-            this.cards = ChooseCardController.cards;
     }
 
 }

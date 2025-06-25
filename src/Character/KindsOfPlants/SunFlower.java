@@ -15,12 +15,13 @@ public class SunFlower extends Plant implements Serializable {
     public static final int cooldown = 7;
     public static boolean isReady = true;
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower.gif";
+    private static final String sunFlowerCardImageAddress = "/Images/resources/graphics/Cards/SunFlower.png";
     public static Timeline cooldownTimeline;
     // static because before making this field the super execute
 
 
     public SunFlower() {
-        super(50, 5, new Image(sunImageAddress));
+        super(50, 5, new Image(sunImageAddress),new Image(sunFlowerCardImageAddress));
     }
 
     @Override

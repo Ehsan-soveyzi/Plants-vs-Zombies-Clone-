@@ -10,11 +10,11 @@
    <children>
       <ImageView fx:id="dayMode" fitHeight="486.0" fitWidth="338.0" layoutX="281.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/dauMode.png" />
+            <Image url="@../Images/resources/graphics/extentions/dauMode.png" />
          </image></ImageView>
       <ImageView fx:id="nightMode" fitHeight="425.0" fitWidth="374.0" layoutX="782.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/nightMode.png" />
+            <Image url="@../Images/resources/graphics/extentions/nightMode.png" />
          </image></ImageView>
       <Label layoutX="346.0" layoutY="14.0" prefHeight="109.0" prefWidth="1144.0" text="CHOOSE YOUR PLAYING MODE" textFill="#4706d4">
          <font>
@@ -23,7 +23,7 @@
       </Label>
       <ImageView fx:id="BackButton" fitHeight="109.0" fitWidth="153.0" layoutX="11.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/BackButton.png" />
+            <Image url="@../Images/resources/graphics/extentions/BackButton.png" />
          </image>
       </ImageView>
    </children>

@@ -16,10 +16,11 @@ public class SnowPea extends PeaPlant implements Serializable {
     public static final int cooldown = 7;
     public static boolean isReady = true;
     private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea.gif";
+    private static final String snowPeaCardImageAddress = "/Images/resources/graphics/Cards/SnowPea.png";
     public static Timeline cooldownTimeline;
 
     public SnowPea() {
-        super(175, 5, new Image(snowPeaImageAddress));
+        super(175, 5, new Image(snowPeaImageAddress),new Image(snowPeaCardImageAddress));
     }
 
     @Override

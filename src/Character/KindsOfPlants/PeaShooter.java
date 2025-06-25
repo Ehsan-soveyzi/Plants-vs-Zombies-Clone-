@@ -13,12 +13,13 @@ import java.sql.Time;
 public class PeaShooter extends PeaPlant implements Serializable {
 
     private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
+    private static final String peaShooterCardImageAddress = "/Images/resources/graphics/Cards/Peashooter.png";
     public static final int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public PeaShooter() {
-        super(100,5, new Image(peaShooterImageAddress));
+        super(100,5, new Image(peaShooterImageAddress),new Image(peaShooterCardImageAddress));
     }
 
     @Override

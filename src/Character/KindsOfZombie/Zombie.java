@@ -27,7 +27,7 @@ public abstract class Zombie implements Serializable {
     private double eatingSpeed;
     private final int row;
     private double col;
-    private double x , y = 0.0;
+    private double x = 1500 , y = 0.0;
 
 
     private boolean isDead;

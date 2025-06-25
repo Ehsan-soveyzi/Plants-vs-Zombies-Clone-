@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class OptionController {
     private ImageView BackButton;
     @FXML
     private ImageView loadButton;
+    @FXML
+    private Label infoLabel;
 
     @FXML
     public void initialize() {
@@ -24,8 +27,9 @@ public class OptionController {
             backButton();
         });
         loadButton.setOnMouseClicked(event -> {
-            SaveGame.loadGame();
-            loadButton();
+
+            if(SaveGame.loadGame())loadButton();
+            else infoLabel.setText("no saved game!");
         });
     }
 

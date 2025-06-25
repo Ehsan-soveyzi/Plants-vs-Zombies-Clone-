@@ -43,51 +43,42 @@ public class MapController {
     public static ZombieFactory zombieFactory;
     static int waveCount = 1;
     static Timeline gameLoop;
-    long time;
+    static long time = 0;
     ImageCursor cursor;
     Plant choosenPlant;
-    private final VBox playerCards = ChooseCardController.cards;
     boolean shovelUsed  = false;
 
-    public static int score;
+    public static int score = 1000;
 
-    ArrayList<Plant> cardPlants = ChooseCardController.cardPlants;
+    ArrayList<Plant> cardPlants;
 
     @FXML
     public void initialize() {
-        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Items/Background/Night.jpg'); -fx-background-size: 1550px 865px;");
-        else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Items/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
-        score = 1000;
-        waveCount = 1;
-        time = 0;
-        MainMenuController.animateImage(menu);
-        menu.setOnMouseClicked(event -> {
-            if(PauseGameController.pauseStage == null ) {
-                pause();
-            }
-            else{
-                if(!PauseGameController.pauseStage.isShowing())pause();
-            }
-        });
-        paneWindow.getChildren().add(playerCards);
-        playerCards.setLayoutX(50);
-        mouseEvents();
+        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Night.jpg'); -fx-background-size: 1550px 865px;");
+        else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
 
         zombieFactory = new ZombieFactory(paneWindow);
+        paneWindow.getChildren().add(ChooseCardController.cards);
+        ChooseCardController.cards.setLayoutX(50);
+        cardPlants = ChooseCardController.cardPlants;
 
-        for(Plant plant : GameMap.plants) {
-            map.addPlant(plant, plant.getRow(), plant.getCol());
-            plant.updateImageSituation(paneWindow);
-            if(!paneWindow.getChildren().contains(plant.getImageView())) {
-                for(int i = 0;i < gridPane.getRowCount();i++){
-                    for(int j = 0;j < gridPane.getColumnCount();j++){
-                        if(plant.getRow() == i && plant.getCol() == j) {
-                            gridPane.getChildren().add(plant.getImageView());
-                        }
-                    }
-                }
-            }
-        }
+        mouseEvents();
+
+
+
+//        for(Plant plant : GameMap.plants) {
+//            map.addPlant(plant, plant.getRow(), plant.getCol());
+//            plant.updateImageSituation(paneWindow);
+//            if(!paneWindow.getChildren().contains(plant.getImageView())) {
+//                for(int i = 0;i < gridPane.getRowCount();i++){
+//                    for(int j = 0;j < gridPane.getColumnCount();j++){
+//                        if(plant.getRow() == i && plant.getCol() == j) {
+//                            gridPane.getChildren().add(plant.getImageView());
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
@@ -105,6 +96,15 @@ public class MapController {
         gameLoop.playFromStart();
 
         createGrid();
+        MainMenuController.animateImage(menu);
+        menu.setOnMouseClicked(event -> {
+            if(PauseGameController.pauseStage == null ) {
+                pause();
+            }
+            else{
+                if(!PauseGameController.pauseStage.isShowing())pause();
+            }
+        });
     }
 
     //check what the card chosen from the user
@@ -121,8 +121,8 @@ public class MapController {
     }
 
     public void mouseEvents(){
-        for(int i = 0; i < playerCards.getChildren().size(); i++){
-            ImageView imageView = (ImageView) playerCards.getChildren().get(i);
+        for(int i = 0; i < ChooseCardController.cards.getChildren().size(); i++){
+            ImageView imageView = (ImageView) ChooseCardController.cards.getChildren().get(i);
             int finalI = i;
             imageView.setOnMouseClicked(e -> {
                 if(score >= cardPlants.get(finalI).getCost() &&  checkChosenCard(cardPlants.get(finalI)) != null){
@@ -235,7 +235,7 @@ public class MapController {
                 choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
-                score += choosenPlant.getCost();
+                score -= choosenPlant.getCost();
                 choosenPlant = null;
 
                 shovelUsed = false;

@@ -18,8 +18,8 @@ public abstract class PeaPlant extends Plant implements Serializable {
     private boolean checkShot;
     public static ArrayList<Bullet> bulletList = new ArrayList<>();
 
-    PeaPlant(int cost, int hp, Image image) {
-        super(cost, hp, image);
+    PeaPlant(int cost, int hp, Image image,Image cardImage) {
+        super(cost, hp, image,cardImage);
         this.checkShot = false;
     }
 

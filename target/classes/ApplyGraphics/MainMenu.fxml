@@ -8,17 +8,17 @@
    <children>
       <ImageView fx:id="playButton" fitHeight="176.0" fitWidth="434.0" layoutX="537.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/PlayButton.png" />
+            <Image url="@../Images/resources/graphics/extentions/PlayButton.png" />
          </image>
       </ImageView>
       <ImageView fx:id="optionButton" fitHeight="185.0" fitWidth="440.0" layoutX="541.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/OptionsButton.png" />
+            <Image url="@../Images/resources/graphics/extentions/OptionsButton.png" />
          </image>
       </ImageView>
       <ImageView fx:id="quitButton" fitHeight="187.0" fitWidth="483.0" layoutX="526.0" layoutY="534.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/resources/graphics/Background/QuiteButton.png" />
+            <Image url="@../Images/resources/graphics/extentions/QuiteButton.png" />
          </image>
       </ImageView>
    </children>

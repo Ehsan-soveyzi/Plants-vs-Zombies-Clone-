@@ -2,7 +2,6 @@ package Character;
 
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.image.Image;
-
 import java.io.Serializable;
 
 

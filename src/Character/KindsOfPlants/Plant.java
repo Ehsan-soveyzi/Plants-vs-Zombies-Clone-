@@ -18,14 +18,15 @@ public abstract class Plant implements Serializable {
     private int col;
     protected transient Timeline timeline;
 
-
+    private transient ImageView cardView;
     private transient ImageView imageView; // pay attention when the plant dies should set another image
 
-    Plant(int cost, int hp, Image image) {
+    Plant(int cost, int hp, Image image,Image cardImage) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
         imageView = new ImageView(image);
+        cardView = new ImageView(cardImage);
         imageView.setLayoutX(imageView.getX() + 20);
         imageView.setLayoutY(imageView.getY() + 20);
     }
@@ -64,7 +65,7 @@ public abstract class Plant implements Serializable {
     public void setCol(int col) {this.col = col;}
     public int getCol() {return col;}
     public Timeline getTimeline() {return timeline;}
-
+    public ImageView getCardView() {return cardView;}
     public ImageView getImageView() {
         return imageView;
     }
