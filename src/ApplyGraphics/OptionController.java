@@ -19,6 +19,8 @@ public class OptionController {
     @FXML
     private Label infoLabel;
 
+    public static int clicked = -1;
+
     @FXML
     public void initialize() {
         MainMenuController.animateImage(BackButton);
@@ -27,8 +29,7 @@ public class OptionController {
             backButton();
         });
         loadButton.setOnMouseClicked(event -> {
-
-            if(SaveGame.loadGame())loadButton();
+            if(SaveGame.load)loadButton();
             else infoLabel.setText("no saved game!");
         });
     }
@@ -48,6 +49,7 @@ public class OptionController {
     }
     public void loadButton(){
         try{
+            clicked = 1;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

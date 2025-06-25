@@ -7,9 +7,7 @@ import javafx.animation.Timeline;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -85,13 +83,16 @@ public class Sun implements Serializable {
     public void removeSun(){
         if (sunImageView.getParent() != null) {
             ((Pane) sunImageView.getParent()).getChildren().remove(sunImageView);
+            sunList.remove(this);
         }
     }
 
     public ImageView getImageView(){
         return sunImageView;
     }
-
+    public void setImageView(ImageView imageView){
+        this.sunImageView = imageView;
+    }
     public Timeline getTimeline(){
         return timeline;
     }

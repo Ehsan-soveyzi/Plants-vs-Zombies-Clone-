@@ -35,7 +35,6 @@ public class GameMap {
     public void addPlant(Plant plant, int row, int col) {
         if(!isCellEmpty(row, col))return;
         grid[row][col] = plant;
-        plants.add(plant);
     }
 
     public void checkWar() {

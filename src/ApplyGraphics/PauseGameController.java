@@ -124,6 +124,7 @@ public class PauseGameController implements Serializable {
         PeaShooter.bulletList.clear();
         GameMap.plants.clear();
         MapController.map.refreshPlants();
+        Sun.sunList.clear();
         startTimelines();
     }
 

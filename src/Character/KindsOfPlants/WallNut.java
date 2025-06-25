@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class WallNut extends NutPlant implements Serializable {
 
-    public static final int cooldown = 7;
+    public static int cooldown = 5;
     public static boolean isReady = true;
     private static final String wallNutCardImageAddress = "/Images/resources/graphics/Cards/WallNut.png";
     private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut.gif";
@@ -31,10 +31,15 @@ public class WallNut extends NutPlant implements Serializable {
     public static void startCooldown() {
         isReady = false;
 
-        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 5;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.setCycleCount(5);
         cooldownTimeline.play();
     }
 

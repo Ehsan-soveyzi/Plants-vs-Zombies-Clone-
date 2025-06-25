@@ -8,8 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class ModeController {
+public class ModeController implements Serializable {
 
     //we need call this enum from this class to apply the changes between day and night!
     public enum Mode{

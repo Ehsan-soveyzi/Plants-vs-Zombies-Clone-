@@ -21,7 +21,7 @@ public class ZombieFactory {
 
     public Zombie createRegularZombie(int row,double x){
         Zombie zombie = new Regular(row);
-//        zombie.setX(x);
+        zombie.setX(x);
         zombie.getImageView().setFitWidth(width);
         zombie.getImageView().setFitHeight(height);
         zombie.playWalkingAnimation(pane);

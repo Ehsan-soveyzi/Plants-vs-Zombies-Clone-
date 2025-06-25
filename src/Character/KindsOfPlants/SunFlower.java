@@ -12,7 +12,7 @@ import java.util.Random;
 public class SunFlower extends Plant implements Serializable {
 
 
-    public static final int cooldown = 7;
+    public static int cooldown = 5;
     public static boolean isReady = true;
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower.gif";
     private static final String sunFlowerCardImageAddress = "/Images/resources/graphics/Cards/SunFlower.png";
@@ -48,10 +48,15 @@ public class SunFlower extends Plant implements Serializable {
     public static void startCooldown() {
         isReady = false;
 
-        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 5;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.setCycleCount(5);
         cooldownTimeline.play();
     }
 

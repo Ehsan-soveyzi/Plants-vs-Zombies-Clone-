@@ -4,6 +4,7 @@ import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
+import Save_Logic.SaveGame;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -41,9 +42,9 @@ public class MapController {
 
     public static GameMap map = new GameMap();
     public static ZombieFactory zombieFactory;
-    static int waveCount = 1;
+    public static int waveCount = 1;
     static Timeline gameLoop;
-    static long time = 0;
+    public static long time = 0;
     ImageCursor cursor;
     Plant choosenPlant;
     boolean shovelUsed  = false;
@@ -56,29 +57,18 @@ public class MapController {
     public void initialize() {
         if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Night.jpg'); -fx-background-size: 1550px 865px;");
         else paneWindow.setStyle("-fx-background-image: url('/Images/resources/graphics/Background/Day1.jpg'); -fx-background-size: 1550px 865px;");
-
         zombieFactory = new ZombieFactory(paneWindow);
+        if(SaveGame.load && OptionController.clicked == 1) {
+            SaveGame.loadGame();
+            for(Bullet bullet:PeaPlant.bulletList)bullet.addToPane(paneWindow);
+        }
+        OptionController.clicked = -1;
         paneWindow.getChildren().add(ChooseCardController.cards);
         ChooseCardController.cards.setLayoutX(50);
         cardPlants = ChooseCardController.cardPlants;
 
         mouseEvents();
 
-
-
-//        for(Plant plant : GameMap.plants) {
-//            map.addPlant(plant, plant.getRow(), plant.getCol());
-//            plant.updateImageSituation(paneWindow);
-//            if(!paneWindow.getChildren().contains(plant.getImageView())) {
-//                for(int i = 0;i < gridPane.getRowCount();i++){
-//                    for(int j = 0;j < gridPane.getColumnCount();j++){
-//                        if(plant.getRow() == i && plant.getCol() == j) {
-//                            gridPane.getChildren().add(plant.getImageView());
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
@@ -206,7 +196,13 @@ public class MapController {
                 cell.setPrefSize(80, 80);
 
                 setOnCell(cell, i, j);
-
+                for(Plant plant : GameMap.plants){
+                    if(plant.getRow() == i && plant.getCol() == j){
+                        cell.getChildren().add(plant.getImageView());
+                        map.addPlant(plant, i, j);
+                        plant.updateImageSituation(paneWindow);
+                    }
+                }
                 gridPane.add(cell, j, i);
             }
         }
@@ -227,6 +223,7 @@ public class MapController {
             else{
                 cell.getChildren().add(choosenPlant.getImageView());
                 map.addPlant(choosenPlant, row, col);
+                GameMap.plants.add(choosenPlant);
                 choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
                 choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
                 choosenPlant.setRow(row);

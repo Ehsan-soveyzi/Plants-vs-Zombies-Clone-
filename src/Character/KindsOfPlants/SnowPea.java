@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class SnowPea extends PeaPlant implements Serializable {
 
-    public static final int cooldown = 7;
+    public static int cooldown = 7;
     public static boolean isReady = true;
     private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea.gif";
     private static final String snowPeaCardImageAddress = "/Images/resources/graphics/Cards/SnowPea.png";
@@ -49,10 +49,15 @@ public class SnowPea extends PeaPlant implements Serializable {
     public static void startCooldown() {
         isReady = false;
 
-        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 7;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
 
