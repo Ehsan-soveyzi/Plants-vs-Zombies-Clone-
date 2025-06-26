@@ -222,55 +222,56 @@ public class MapController {
         shovelUsed = false;
     }
 
-        private void handleZombiesWave(){
-        long current = time/1000;
-        ArrayList<Zombie> types;
-        Random rand = new Random();
-        if(current > 60){
-            return;
-        }
-        else if (current>= 47) {
-            types = possibleZombie(true, true, true, true);
-            for(int i = 0;i < 5;i++){ // 3 zombies per second
-                for(int j = 0;j < 3;j++){
-                    int index = rand.nextInt(types.size());
-                    zombieFactory.createZombie(types.get(index), i);
-                }
-            }
-        } else if (current >= 45) {
-            if (current % 2 == 1){
-                types = possibleZombie(true, true, true, true);
-                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
-                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
-            }
-        }else if (current > 33) {
-            if (current % 2 == 0){
-                types = possibleZombie(true, true, true, false);
-                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
-            }
-        }else if (current >= 26) {
-            types = possibleZombie(true, true, false, false);
-            for(int i = 0;i < 5;i++){ // 3 zombies per second
-                for(int j = 0;j < 2;j++){
-                    int index = rand.nextInt(types.size());
-                    zombieFactory.createZombie(types.get(index), i);
-                }
-            }
-        } else if (current>= 15) {
-            if (current % 2 == 0){
-                types = possibleZombie(true, true, false, false);
-                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
-            }
+//        private void handleZombiesWave(){
+//        long current = time/1000;
+//        ArrayList<Zombie> types;
+//        Random rand = new Random();
+//        if(current > 60){
+//            return;
+//        }
+//        else if (current>= 47) {
+//            types = possibleZombie(true, true, true, true);
+//            for(int i = 0;i < 5;i++){ // 3 zombies per second
+//                for(int j = 0;j < 3;j++){
+//                    int index = rand.nextInt(types.size());
+//                    zombieFactory.createZombie(types.get(index), i);
+//                }
+//            }
+//        } else if (current >= 45) {
+//            if (current % 2 == 1){
+//                types = possibleZombie(true, true, true, true);
+//                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+//                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+//            }
+//        }else if (current > 33) {
+//            if (current % 2 == 0){
+//                types = possibleZombie(true, true, true, false);
+//                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+//            }
+//        }else if (current >= 26) {
+//            types = possibleZombie(true, true, false, false);
+//            for(int i = 0;i < 5;i++){ // 3 zombies per second
+//                for(int j = 0;j < 2;j++){
+//                    int index = rand.nextInt(types.size());
+//                    zombieFactory.createZombie(types.get(index), i);
+//                }
+//            }
+//        } else if (current>= 15) {
+//            if (current % 2 == 0){
+//                types = possibleZombie(true, true, false, false);
+//                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+//            }
+//
+//        }else if (current >= 0) {
+//            if (current % 3 == 0){
+//                types = possibleZombie(true, false, false, false);
+//                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
+//            }
+//        }
+//
+//
+//    }
 
-        }else if (current >= 0) {
-            if (current % 3 == 0){
-                types = possibleZombie(true, false, false, false);
-                zombieFactory.createZombie(types.get(rand.nextInt(types.size())), rand.nextInt(5));
-            }
-        }
-
-
-    }
     private void handleZombiesWave1() {
         long current = time / 1000;
         ArrayList<Zombie> types;
