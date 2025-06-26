@@ -55,10 +55,19 @@ public class MapController {
     public void initialize() {
         zombieFactory = new ZombieFactory(paneWindow);
 
-        //check if user inter to this part by loading or playButton.
+        //check if user enter to this part by loading or playButton.
         if(SaveGame.load && OptionController.clicked == 1) {
             SaveGame.loadGame();
             for(Bullet bullet:PeaPlant.bulletList)bullet.addToPane(paneWindow);
+            for(Sun sun:Sun.sunList){
+                sun.applyTimelineRemaining();
+                sun.sunCollector();
+                paneWindow.getChildren().add(sun.getImageView());
+                sun.getImageView().setOnMouseClicked(event -> {
+                    sun.addSun();
+                    sun.removeSun();
+                });
+            }
             OptionController.clicked = -1;
         }
 

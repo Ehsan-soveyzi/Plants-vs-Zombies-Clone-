@@ -8,16 +8,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Sun implements Serializable {
-    double x;
-    double y;
-    boolean clicked = false;
-    transient ImageView sunImageView;
+
+    private double x;
+    private double y;
+    private boolean clicked = false;
+    private int pauseRemaining = 6;
+    private int timelineRemaining;
+    private transient ImageView sunImageView;
     private transient Timeline timeline;
-    private transient PauseTransition pause;
+    private transient Timeline pause;
     public static ArrayList<Sun> sunList = new ArrayList<>();
     private static final String sunAddress = "/Images/resources/graphics/Plants/Sun/sun.png";
 
@@ -41,8 +46,8 @@ public class Sun implements Serializable {
         sunCollector();
         sunImageView.setOnMouseClicked(event -> {
             clicked = true;
-            removeSun();
             addSun();
+            removeSun();
         });
         sunList.add(this);
     }
@@ -53,10 +58,16 @@ public class Sun implements Serializable {
     }
 
     public void sunCollector(){
-        pause = new PauseTransition(Duration.seconds(6));
-        pause.setOnFinished(event -> {
-            sunImageView.setImage(null);
-        });
+        pause = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            pauseRemaining--;
+            if(pauseRemaining == 0) {
+                sunImageView.setImage(null);
+                sunList.remove(this);
+                pause.stop();
+                return;
+            }
+        }));
+        pause.setCycleCount(Timeline.INDEFINITE);
         pause.play();
     }
 
@@ -64,16 +75,28 @@ public class Sun implements Serializable {
         Random rand = new Random();
         int x = rand.nextInt(1030) + 370;
         int y = rand.nextInt(180) + 20;
+        timelineRemaining = y;
+        this.setX(x);
         sunImageView.setX(x);
 
         timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
             sunImageView.setY(sunImageView.getY() + 4);
+            this.setY(sunImageView.getY());
+            timelineRemaining--;
         }));
         timeline.setCycleCount(y);
         timeline.play();
         timeline.setOnFinished(e -> {
             sunCollector();
         });
+    }
+    public void applyTimelineRemaining(){
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+            sunImageView.setY(sunImageView.getY() + 4);
+            this.setY(sunImageView.getY());
+        }));
+        timeline.setCycleCount(timelineRemaining);
+        timeline.play();
     }
 
     public void addSun(){
@@ -90,14 +113,19 @@ public class Sun implements Serializable {
     public ImageView getImageView(){
         return sunImageView;
     }
-    public void setImageView(ImageView imageView){
-        this.sunImageView = imageView;
-    }
+    public void setImageView(ImageView imageView){this.sunImageView = imageView;}
     public Timeline getTimeline(){
         return timeline;
     }
-    public PauseTransition getPause(){
+    public Timeline getPause(){
         return pause;
     }
+    public double getX() {return x;}
+    public double getY() {return y;}
+    public void setX(double x) {this.x = x;}
+    public void setY(double y) {this.y = y;}
+    public boolean isClicked() {return clicked;}
+    public int getPauseRemaining() {return pauseRemaining;}
+    public ImageView getSunImageView() {return sunImageView;}
 
 }

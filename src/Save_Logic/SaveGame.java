@@ -9,6 +9,9 @@ import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.*;
 import Map.GameMap;
 import Character.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.*;
 
 //no need to create any object from this class!
@@ -99,6 +102,13 @@ public abstract class SaveGame implements Serializable {
             for(Bullet bullet : data.bullets){
                 Bullet loadBullet = identifyKindsOfBullet(bullet);
                 PeaPlant.bulletList.add(loadBullet);
+            }
+            System.out.println(data.suns.size());
+            for(Sun sun : data.suns){
+                sun.setImageView(new ImageView(new Image("/Images/resources/graphics/Plants/Sun/sun.png")));
+                sun.getImageView().setX(sun.getX());
+                sun.getImageView().setY(sun.getY());
+                Sun.sunList.add(sun);
             }
 
         }catch (Exception e){
