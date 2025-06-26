@@ -3,19 +3,19 @@ package Character.KindsOfPlants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 
 public class TallNut extends NutPlant implements Serializable {
-
-    public static int cooldown = 7;
-    public static boolean isReady = true;
     private static final String tallNutCardImageAddress = "/Images/resources/graphics/Cards/TallNut.png";
     private static final String TallNutImageAddress = "/Images/resources/graphics/Plants/TallNut/TallNut.gif";
     private static final String TallNutImageAddress1 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked1.gif";
     private static final String TallNutImageAddress2 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked2.gif";
+    public static final ImageView cardView = new ImageView(new Image(tallNutCardImageAddress));
+    public static int cooldown = 7;
+    public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public TallNut() {

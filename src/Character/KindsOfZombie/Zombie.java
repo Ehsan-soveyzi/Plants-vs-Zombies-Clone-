@@ -1,6 +1,7 @@
 package Character.KindsOfZombie;
 
 import ApplyGraphics.MapController;
+import ApplyGraphics.PauseGameController;
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
 import Map.ZombieFactory;
@@ -13,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,8 +38,6 @@ public abstract class Zombie implements Serializable {
     private transient Pane parentPane;
     private transient PauseTransition slowTimer;
     private transient Timeline biteTimeline;
-
-    //    protected Image image;
     private transient ImageView imageView;
 
 
@@ -56,7 +54,10 @@ public abstract class Zombie implements Serializable {
         setY(row * 140 + 60);
         getImageView().setLayoutX(x);
         getImageView().setLayoutY(y);
+        MapController.totalZombies++;
+        System.out.println(MapController.totalZombies);
     }
+
 
     public void addToPane(Pane pane) {
         // اگه imageView قبلاً در یک والد بوده، اول از اون جداش کن
@@ -78,10 +79,12 @@ public abstract class Zombie implements Serializable {
             imageView.setLayoutX(x);
             updateImageSituation();
             setCol(getCol());
-            if(col <= 0) MapController.pause();
+            if(col <= 0) {
+                PauseGameController.isWin = -1;
+                MapController.pause();
+            }
         }
     }
-
 
     public void takeDamage(int damage) {
         if (isDead) return;
@@ -91,6 +94,7 @@ public abstract class Zombie implements Serializable {
 
         }
     }
+
     public void burn(){
         isBurn = true;
         isDead = true;
@@ -114,15 +118,13 @@ public abstract class Zombie implements Serializable {
         target.takeDamage();
     }
 
-
-
     public void stopEating() {
         isEating = false;
     }
 
     public void stopWalking() {
         isEating = true;
-    } // abstract
+    }
 
     public void updateImageSituation(){
         if (isSlowed) {
@@ -142,10 +144,32 @@ public abstract class Zombie implements Serializable {
             System.out.println("one zombie eating");
             playEatingAnimation();
         }
-
-
     }
+
     public abstract void playWalkingAnimation(Pane pane);
+
+    public void playEatingAnimation(int number, String path) {
+        Image[] frames = new Image[number];
+        for(int i = 0; i < number; i++){
+            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    path + i + ".png"
+            )));
+        }
+        ImageView zombieView = getImageView();
+        final int[] frameIndex = {0};
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            zombieView.setImage(frames[frameIndex[0]]);
+            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
+            if(isDead()) {
+                timeline.stop();
+                setDead(true);
+                die();
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
+    }
+
     public void playWalkingAnimation(Pane pane, int number, String path) {
         addToPane(pane);
         Image[] frames = new Image[number];
@@ -168,7 +192,9 @@ public abstract class Zombie implements Serializable {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-    public abstract void  playEatingAnimation();
+
+    public abstract void playEatingAnimation();
+
     public void playDeathAnimation(int number, String path) {
         Image[] frames = new Image[number];
         for (int i = 0; i < number; i++) {
@@ -262,90 +288,27 @@ public abstract class Zombie implements Serializable {
     }
 
 
-    public void setEating(boolean eating) {
-        isEating = eating;
-    }
-
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-
-    public void setEatingSpeed(double eatingSpeed) {
-        this.eatingSpeed = eatingSpeed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public double getCol() {
-        return (this.getX() - 260)/122;
-    }
-
-    public void setCol(double col){
-        this.col = col;
-    }
-
-    public double getEatingSpeed() {
-        return eatingSpeed;
-    }
-    public double getSpeed(){
-        return speed;
-    }
-
-    public Timeline getBiteTimeline(){
-        return biteTimeline;
-    }
-
-    public PauseTransition getSlowTimer(){
-        return slowTimer;
-    }
-    public int getRow() {
-        return row;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public boolean isEating() {
-        return isEating;
-    }
-
-    public boolean isSlowed() {
-        return isSlowed;
-    }
-
-    public Timeline getTimeline() {
-        return timeline;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
-    }
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
+    public void setEating(boolean eating) {isEating = eating;}
+    public void setDead(boolean dead) {isDead = dead;}
+    public void setY(double y) {this.y = y;}
+    public void setX(double x) {this.x = x;}
+    public void setEatingSpeed(double eatingSpeed) {this.eatingSpeed = eatingSpeed;}
+    public void setSpeed(double speed) {this.speed = speed;}
+    public double getCol() {return (this.getX() - 260)/122;}
+    public void setCol(double col){this.col = col;}
+    public double getEatingSpeed() {return eatingSpeed;}
+    public double getSpeed(){return speed;}
+    public Timeline getBiteTimeline(){return biteTimeline;}
+    public PauseTransition getSlowTimer(){return slowTimer;}
+    public int getRow() {return row;}
+    public double getX() {return x;}
+    public double getY() {return y;}
+    public boolean isDead() {return isDead;}
+    public boolean isEating() {return isEating;}
+    public boolean isSlowed() {return isSlowed;}
+    public Timeline getTimeline() {return timeline;}
+    public ImageView getImageView() {return imageView;}
+    public void setImageView(ImageView imageView) {this.imageView = imageView;}
+    public void setHp(int hp) {this.hp = hp;}
     public int getHp(){return hp;}
 }

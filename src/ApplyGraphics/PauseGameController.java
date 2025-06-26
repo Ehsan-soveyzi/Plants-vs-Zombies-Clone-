@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
+
 import Character.*;
 
 public class PauseGameController implements Serializable {
@@ -29,9 +31,12 @@ public class PauseGameController implements Serializable {
     private Label infoLabel;
 
     public static Stage pauseStage;
+    public static int isWin = 0;
 
     @FXML
     private void initialize() {
+        if(isWin == 1)infoLabel.setText("You Win!");
+        if(isWin == -1)infoLabel.setText("You Lose!");
         MainMenuController.animateImage(home);
         MainMenuController.animateImage(refresh);
         MainMenuController.animateImage(resume);
@@ -121,7 +126,6 @@ public class PauseGameController implements Serializable {
         MapController.time = 0;
         ZombieFactory.zombies.clear();
         PeaShooter.bulletList.clear();
-        ChooseCardController.cardPlants.clear();
         GameMap.plants.clear();
         MapController.map.refreshPlants();
         Sun.sunList.clear();

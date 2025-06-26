@@ -11,21 +11,12 @@ import Map.GameMap;
 import Character.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.io.*;
 
 //no need to create any object from this class!
 public abstract class SaveGame implements Serializable {
     //check file exist.
     public static boolean load = new File("saveGame.dat").exists();
-
-    public static Zombie identifyKindsOfZombie(Zombie zombie){
-        if(zombie instanceof Regular)return MapController.zombieFactory.createRegularZombie(zombie.getRow(),zombie.getX());
-        if(zombie instanceof ConeHead)return MapController.zombieFactory.createConeHeadZombie(zombie.getRow(),zombie.getX());
-        if(zombie instanceof ScreenDoorZombie)return MapController.zombieFactory.createScreenDoorZombie(zombie.getRow(),zombie.getX());
-        if (zombie instanceof IMPZombie)return MapController.zombieFactory.createIMPZombie(zombie.getRow(),zombie.getX());
-        return null;
-    }
 
     public static Plant identifyKindsOfPlant(Plant plant){
         if(plant instanceof SunFlower)return new SunFlower();
@@ -74,7 +65,7 @@ public abstract class SaveGame implements Serializable {
             SunFlower.cooldown = data.sunFlowerCooldown;
 
             for(Zombie zombie : data.zombies){
-                Zombie loadZombie = identifyKindsOfZombie(zombie);
+                Zombie loadZombie = MapController.zombieFactory.createZombie(zombie,zombie.getRow());
                 loadZombie.setHp(zombie.getHp());
                 loadZombie.setSlowed(zombie.isSlowed());
             }

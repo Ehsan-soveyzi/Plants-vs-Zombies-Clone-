@@ -1,4 +1,5 @@
 package Character.KindsOfPlants;
+
 import Character.Bullet;
 import Character.NormalBullet;
 import javafx.animation.KeyFrame;
@@ -6,15 +7,13 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 
 public class Repeater extends PeaPlant implements Serializable {
-
-    public static int cooldown = 7;
-    public static boolean isReady = true;
     private static final String repeaterImageAddress = "/Images/resources/graphics/Plants/RepeaterPea/Repeater.gif";
     private static final String repeaterCardImageAddress = "/Images/resources/graphics/Cards/Repeater.png";
+    public static int cooldown = 7;
+    public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public Repeater() {

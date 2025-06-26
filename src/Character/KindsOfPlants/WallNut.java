@@ -3,19 +3,19 @@ package Character.KindsOfPlants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 
 public class WallNut extends NutPlant implements Serializable {
-
-    public static int cooldown = 5;
-    public static boolean isReady = true;
     private static final String wallNutCardImageAddress = "/Images/resources/graphics/Cards/WallNut.png";
     private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut.gif";
     private static final String WallNutImageAddress1 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut1.gif";
     private static final String WallNutImageAddress2 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut2.gif";
+    public static final ImageView cardView = new ImageView(new Image(wallNutCardImageAddress));
+    public static int cooldown = 5;
+    public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public WallNut() {
@@ -43,7 +43,6 @@ public class WallNut extends NutPlant implements Serializable {
         cooldownTimeline.play();
     }
 
-
     @Override
     public void changeImage() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),e ->{
@@ -53,4 +52,5 @@ public class WallNut extends NutPlant implements Serializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
 }

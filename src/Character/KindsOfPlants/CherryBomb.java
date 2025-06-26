@@ -12,11 +12,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public  class CherryBomb extends BombPlant implements Serializable {
-    public static int cooldown = 7;
-    public static boolean isReady = true;
     private static final String cherryBombCardImageAddress = "/Images/resources/graphics/Cards/CherryBomb.png";
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
     private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
+    public static int cooldown = 7;
+    public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public CherryBomb() {

@@ -1,24 +1,22 @@
 package Character.KindsOfPlants;
+
 import Character.Sun;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 import java.util.Random;
 
 public class SunFlower extends Plant implements Serializable {
-
-
-    public static int cooldown = 5;
-    public static boolean isReady = true;
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower.gif";
     private static final String sunFlowerCardImageAddress = "/Images/resources/graphics/Cards/SunFlower.png";
+    public static final ImageView cardView = new ImageView(new Image(sunFlowerCardImageAddress));
+    public static int cooldown = 5;
+    public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    // static because before making this field the super execute
-
 
     public SunFlower() {
         super(50, 5, new Image(sunImageAddress),new Image(sunFlowerCardImageAddress));

@@ -1,6 +1,7 @@
 package Character.KindsOfPlants;
 
 import javafx.animation.Timeline;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -8,8 +9,6 @@ import javafx.scene.layout.Pane;
 import java.io.Serializable;
 
 public abstract class Plant implements Serializable {
-
-
     private int cost;
     private int hp;
     private double x, y;
@@ -17,9 +16,8 @@ public abstract class Plant implements Serializable {
     private int row;
     private int col;
     protected transient Timeline timeline;
-
     private transient ImageView cardView;
-    private transient ImageView imageView; // pay attention when the plant dies should set another image
+    private transient ImageView imageView;
 
     Plant(int cost, int hp, Image image,Image cardImage) {
         this.cost = cost;
@@ -40,13 +38,18 @@ public abstract class Plant implements Serializable {
         hp--;
     }
 
-
     public void die() {
         isDead = true;
         if(timeline != null) timeline.stop();
     }
 
-
+    public void setEffect(){
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(5);
+        colorAdjust.setContrast(2);
+        colorAdjust.setBrightness(3);
+        imageView.setEffect(colorAdjust);
+    }
 
     public abstract void updateImageSituation(Pane pane); // abstract
 
@@ -69,9 +72,9 @@ public abstract class Plant implements Serializable {
     public ImageView getImageView() {
         return imageView;
     }
-
     public void setDead(boolean dead) {
         isDead = dead;
     }
+
 }
 

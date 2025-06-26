@@ -9,7 +9,6 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,7 +22,6 @@ public abstract class PeaPlant extends Plant implements Serializable {
         this.checkShot = false;
     }
 
-
     public void sameRowZombies() {
         boolean zombieInRow = false;
 
@@ -34,7 +32,6 @@ public abstract class PeaPlant extends Plant implements Serializable {
         }
         setCheckShot(zombieInRow);
     }
-
 
     public void sameRowBullet() {
         ArrayList<Bullet> removeBullets = new ArrayList<>();
@@ -51,7 +48,6 @@ public abstract class PeaPlant extends Plant implements Serializable {
         }
         bulletList.removeAll(removeBullets);
     }
-
 
     public void checkBullet() {
         timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
@@ -73,6 +69,7 @@ public abstract class PeaPlant extends Plant implements Serializable {
     public void setCheckShot(boolean checkShot) {
         this.checkShot = checkShot;
     }
+
 }
 
 

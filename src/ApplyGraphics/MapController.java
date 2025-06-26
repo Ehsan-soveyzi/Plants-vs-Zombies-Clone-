@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import Character.*;
+import Character.KindsOfZombie.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -44,6 +45,7 @@ public class MapController {
     public static Timeline gameLoop;
     public static long time = 0;
     public static int score = 1000;
+    public static int totalZombies = 0;
 
 
     ImageCursor cursor;
@@ -87,13 +89,14 @@ public class MapController {
             if(choosenPlant == null && !shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
             time += 100;
-            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY)Sun.addToPane(paneWindow);
+            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
             map.checkWar();
             sunPoint.setText(Integer.toString(score));
-            if(time % 10000 == 0)attackOne();
-            if(time % 20000 == 0)waveCount++;
+            //apply zombies attack
+            if(time % 1000 == 0 && time <= 120000){
+                handleZombiesWave1();
+            }
         }));
-        //play until losing or winning
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.playFromStart();
 
@@ -141,7 +144,6 @@ public class MapController {
             paneWindow.setCursor(cursor);
             choosenPlant = null;
         });
-
     }
 
 
@@ -226,7 +228,6 @@ public class MapController {
         }
     }
 
-
     public void setOnCell(Pane cell,int row,int col){
         cell.setOnMouseClicked(event -> {
             if(!map.isCellEmpty(row, col) && shovelUsed){
@@ -257,27 +258,11 @@ public class MapController {
         });
     }
 
-    public void attackOne(){
-        for (int i = 1; i <= waveCount; i++) {
-            chooseRandomZombie(i);
-        }
-    }
-
 
     public void shovel(int row, int col){
         choosenPlant = null;
         map.removePlant(row, col);
         shovelUsed = false;
-    }
-
-    public void chooseRandomZombie(int wave){
-        Random rand = new Random();
-        int randomRow = rand.nextInt(5);
-        int number = rand.nextInt(wave);
-        if(number <= 4)zombieFactory.createRegularZombie(randomRow,1500);
-        else if(number <= 7)zombieFactory.createConeHeadZombie(randomRow,1500);
-        else if(number <= 9)zombieFactory.createScreenDoorZombie(randomRow,1500);
-        else zombieFactory.createIMPZombie(randomRow,1500);
     }
 
     //apply when pausing the game for stop the timelines!
@@ -308,6 +293,59 @@ public class MapController {
         if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.stop();
         if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.stop();
         if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.stop();
+    }
+
+    private void handleZombiesWave1() {
+        long current = time / 1000;
+        ArrayList<Zombie> types;
+        Random rand = new Random();
+
+        // choose zombies depending on the time
+        boolean normal = true;
+        boolean conehead = current >= 20;
+        boolean screendoor = current >= 60;
+        boolean imp = current >= 80;
+        // make an array for possible zombies
+        types = possibleZombie(normal, conehead, screendoor, imp);
+
+        boolean isBreakTime = (current >= 45 && current < 50) || (current >= 90 && current < 100);
+        boolean isStrongAttack = (current >= 50 && current < 60) || (current >= 100 && current < 120);
+
+        if (isBreakTime) {
+            return;
+        }
+        int numberOfZombies;
+
+        if (isStrongAttack) {
+            if (current % 3 != 0) return;
+            numberOfZombies = 2 + (int)(current / 35);
+        }
+        else {
+            if (current % 6 != 0) return;
+            numberOfZombies = 1 + (int)(current / 60);
+
+        }
+
+        for (int i = 0; i < numberOfZombies; i++) {
+            int index = rand.nextInt(types.size());
+            int lane = rand.nextInt(5);
+            zombieFactory.createZombie(types.get(index), lane);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    private ArrayList<Zombie> possibleZombie(boolean regular, boolean coneHead, boolean screenDoor, boolean imp) {
+        ArrayList<Zombie> zombies = new ArrayList<>();
+        if (regular) zombies.add(new Regular(1));
+        if (coneHead) zombies.add(new ConeHead(1));
+        if (screenDoor) zombies.add(new ScreenDoorZombie(1));
+        if (imp) zombies.add(new IMPZombie(1));
+        return zombies;
     }
 
 }

@@ -1,4 +1,5 @@
 package Character.KindsOfPlants;
+
 import Character.Bullet;
 import Character.SnowBullet;
 import javafx.animation.KeyFrame;
@@ -7,16 +8,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 public class SnowPea extends PeaPlant implements Serializable {
-
-    public static int cooldown = 7;
-    public static boolean isReady = true;
     private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea.gif";
     private static final String snowPeaCardImageAddress = "/Images/resources/graphics/Cards/SnowPea.png";
+    public static final ImageView cardView = new ImageView(new Image(snowPeaCardImageAddress));
+    public static int cooldown = 7;
+    public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public SnowPea() {
@@ -60,6 +59,5 @@ public class SnowPea extends PeaPlant implements Serializable {
         cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
-
 
 }

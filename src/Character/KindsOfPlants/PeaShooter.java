@@ -18,6 +18,7 @@ public class PeaShooter extends PeaPlant implements Serializable {
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
+
     public PeaShooter() {
         super(100,5, new Image(peaShooterImageAddress),new Image(peaShooterCardImageAddress));
     }
@@ -33,7 +34,6 @@ public class PeaShooter extends PeaPlant implements Serializable {
 
     public static void startCooldown() {
         isReady = false;
-
          cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
              cooldown--;
             if(cooldown == 0) {
@@ -45,10 +45,6 @@ public class PeaShooter extends PeaPlant implements Serializable {
         cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
-
-
-
-
 
     @Override
     public void updateImageSituation(Pane pane) {
@@ -62,6 +58,6 @@ public class PeaShooter extends PeaPlant implements Serializable {
         timeline.play();
 
         startCooldown();
-
     }
+
 }

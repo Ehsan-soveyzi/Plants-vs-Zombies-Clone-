@@ -55,4 +55,11 @@ public class ZombieFactory {
         zombies.add(zombie);
         return zombie;
     }
+    public Zombie createZombie(Zombie zombie, int row){
+        if (zombie instanceof Regular){return createRegularZombie(row,zombie.getX());}
+        else if (zombie instanceof ConeHead){return createConeHeadZombie(row,zombie.getX());}
+        else if (zombie instanceof ScreenDoorZombie){return  createScreenDoorZombie(row,zombie.getX());}
+        else if (zombie instanceof IMPZombie){return createIMPZombie(row,zombie.getX());}
+        return null;
+    }
 }

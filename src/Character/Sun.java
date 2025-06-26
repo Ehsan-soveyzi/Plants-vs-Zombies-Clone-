@@ -2,16 +2,13 @@ package Character;
 
 import ApplyGraphics.MapController;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Sun implements Serializable {
 
