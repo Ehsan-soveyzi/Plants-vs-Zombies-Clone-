@@ -301,6 +301,7 @@ public class MapController {
         else {
             if (current % 6 != 0) return;
             numberOfZombies = 1 + (int)(current / 60);
+            zombieFactory.createIMPZombie(1);
 
         }
 
