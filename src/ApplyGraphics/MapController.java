@@ -344,11 +344,11 @@ public class MapController {
             int lane = rand.nextInt(5);
             zombieFactory.createZombie(types.get(index), lane);
 
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
         }
     }
 
