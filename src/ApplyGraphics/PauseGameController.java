@@ -39,8 +39,6 @@ public class PauseGameController implements Serializable {
         if(isWin == -1)infoLabel.setText("You Lose!");
         MainMenuController.animateImage(home);
         MainMenuController.animateImage(refresh);
-        MainMenuController.animateImage(resume);
-        MainMenuController.animateImage(saveButton);
         mouseEnteredAction();
         home.setOnMouseClicked(event -> {
             homeButtonClicked();
@@ -48,13 +46,17 @@ public class PauseGameController implements Serializable {
         refresh.setOnMouseClicked(event -> {
             refreshButtonClicked();
         });
-        resume.setOnMouseClicked(event -> {
-           resumeButtonClicked();
-        });
-        saveButton.setOnMouseClicked(event -> {
-            SaveGame.saveGame();
-            infoLabel.setText("Game saved!");
-        });
+        if(isWin == 0) {
+            MainMenuController.animateImage(resume);
+            MainMenuController.animateImage(saveButton);
+            resume.setOnMouseClicked(event -> {
+                resumeButtonClicked();
+            });
+            saveButton.setOnMouseClicked(event -> {
+                SaveGame.saveGame();
+                infoLabel.setText("Game saved!");
+            });
+        }
     }
 
     public void homeButtonClicked(){
@@ -85,18 +87,20 @@ public class PauseGameController implements Serializable {
         refresh.setOnMouseExited(event -> {
             infoLabel.setText("");
         });
-        resume.setOnMouseEntered(event -> {
-            infoLabel.setText("resume to the game");
-        });
-        refresh.setOnMouseExited(event -> {
-            infoLabel.setText("");
-        });
-        saveButton.setOnMouseEntered(event -> {
-            infoLabel.setText("Save Game");
-        });
-        saveButton.setOnMouseExited(event -> {
-            infoLabel.setText("");
-        });
+        if(isWin == 0) {
+            resume.setOnMouseEntered(event -> {
+                infoLabel.setText("resume to the game");
+            });
+            resume.setOnMouseExited(event -> {
+                infoLabel.setText("");
+            });
+            saveButton.setOnMouseEntered(event -> {
+                infoLabel.setText("Save Game");
+            });
+            saveButton.setOnMouseExited(event -> {
+                infoLabel.setText("");
+            });
+        }
     }
 
     public void refreshButtonClicked(){

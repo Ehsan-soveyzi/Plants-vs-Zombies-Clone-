@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import Character.*;
 import Character.KindsOfZombie.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -44,7 +45,7 @@ public class MapController {
     public static int waveCount = 1;
     public static Timeline gameLoop;
     public static long time = 0;
-    public static int score = 1000;
+    public static int score = 10000;
     public static int totalZombies = 0;
 
 
@@ -86,7 +87,7 @@ public class MapController {
 
         //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
-            if(choosenPlant == null && !shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
+            if(!shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
             time += 100;
             if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
@@ -134,7 +135,6 @@ public class MapController {
                 if(score >= cardPlants.get(finalI).getCost() &&  checkChosenCard(cardPlants.get(finalI)) != null){
                     shovelUsed = false;
                     choosenPlant = checkChosenCard(cardPlants.get(finalI));
-                    if (choosenPlant != null)setCursorImage(choosenPlant);
                 }
             });
         }
@@ -148,28 +148,41 @@ public class MapController {
 
 
     public static void pause(){
-        try{
-            //stop timelines
-            stopTheGame();
-            gameLoop.stop();
+        //stop timelines
+        stopTheGame();
+        gameLoop.stop();
+        if(PauseGameController.isWin == 0) {
+            try {
 
-            PauseGameController.pauseStage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            PauseGameController.pauseStage.setScene(scene);
-            PauseGameController.pauseStage.setResizable(false);
-            PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-            PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
-            PauseGameController.pauseStage.show();
-        }catch(Exception e){
-            e.printStackTrace();
+                PauseGameController.pauseStage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                PauseGameController.pauseStage.setScene(scene);
+                PauseGameController.pauseStage.setResizable(false);
+                PauseGameController.pauseStage.initOwner(GameMain.mainStage);
+                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
+                PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
+                PauseGameController.pauseStage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                PauseGameController.pauseStage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("winLose.fxml"));
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                PauseGameController.pauseStage.setScene(scene);
+                PauseGameController.pauseStage.setResizable(false);
+                PauseGameController.pauseStage.initOwner(GameMain.mainStage);
+                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
+                PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
+                PauseGameController.pauseStage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    public void setCursorImage(Plant plant) {
-        cursor = new ImageCursor(plant.getImageView().getImage());
-        paneWindow.setCursor(cursor);
     }
 
     public void setOnMouseEntered(){
