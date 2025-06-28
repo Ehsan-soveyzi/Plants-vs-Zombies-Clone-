@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Map;
+import Map.Grave;
 
 import Character.*;
 
@@ -131,26 +131,32 @@ public class PauseGameController implements Serializable {
         MapController.time = 0;
         ZombieFactory.zombies.clear();
         PeaShooter.bulletList.clear();
-        GameMap.plants.clear();
-        MapController.map.refreshPlants();
+        Grave.graves.clear();
+        GameMap.getInstance().cleanGrave();
+        GameMap.getInstance().plants.clear();
+        GameMap.getInstance().refreshPlants();
         Sun.sunList.clear();
         startTimelines();
     }
 
     public void startTimelines(){
+
         for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
             bullet.getTimeline().play();
         }
+
         for(Sun sun : Sun.sunList){
             if(sun.getTimeline() != null)sun.getTimeline().play();
             if(sun.getPause() != null)sun.getPause().play();
         }
+
         for(Zombie zombie : ZombieFactory.zombies){
             if(zombie.getTimeline() != null)zombie.getTimeline().play();
             if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().play();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().play();
         }
-        for(Plant plant : GameMap.plants){
+
+        for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
                 plant.getTimeline().play();
             }

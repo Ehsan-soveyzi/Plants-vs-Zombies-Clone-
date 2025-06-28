@@ -1,5 +1,6 @@
 package Character.KindsOfPlants;
 
+import Map.GameMap;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -41,6 +42,7 @@ public abstract class Plant implements Serializable {
     public void die() {
         isDead = true;
         if(timeline != null) timeline.stop();
+        GameMap.getInstance().removePlant(row,col);
     }
 
     public void setEffect(){
@@ -62,19 +64,14 @@ public abstract class Plant implements Serializable {
     public void setX(double x) {this.x = x;}
     public double getY() {return y;}
     public void setY(double y) {this.y = y;}
-    public boolean isDead() {
-        return isDead;
-    }
+    public boolean isDead() {return isDead;}
     public void setCol(int col) {this.col = col;}
     public int getCol() {return col;}
     public Timeline getTimeline() {return timeline;}
     public ImageView getCardView() {return cardView;}
-    public ImageView getImageView() {
-        return imageView;
-    }
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
+    public ImageView getImageView() {return imageView;}
+    public void setDead(boolean dead) {isDead = dead;}
+    public void setImageView(ImageView imageView) {this.imageView = imageView;}
 
 }
 

@@ -8,6 +8,7 @@ import Character.KindsOfZombie.Zombie;
 import Character.Sun;
 import Character.Bullet;
 import Map.GameMap;
+import Map.Grave;
 import Map.ZombieFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class SaveData implements Serializable {
     ArrayList<Sun> suns;
     ArrayList<Plant> playerCard;
     ArrayList<Bullet> bullets;
+    ArrayList<Grave> graves;
     public SaveData() {
             this.mode = ModeController.getSelectedMode();
             this.score = MapController.score;
@@ -45,7 +47,8 @@ public class SaveData implements Serializable {
             this.time = MapController.time;
             this.wave = MapController.waveCount;
             this.zombies = ZombieFactory.zombies;
-            this.plants = GameMap.plants;
+            this.graves = Grave.graves;
+            this.plants = GameMap.getInstance().plants;
             this.suns = Sun.sunList;
             this.playerCard = ChooseCardController.cardPlants;
             this.bullets = PeaPlant.bulletList;

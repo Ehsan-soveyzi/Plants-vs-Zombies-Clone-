@@ -4,22 +4,28 @@ import Character.KindsOfPlants.Plant;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class GameMap {
 
+    public static GameMap instance;
     private final int ROWS = 5;
     private final int COLS = 9;
-
-    public static ArrayList<Plant> plants = new ArrayList<>();
-
-
-
-    private final int CELL_WIDTH = 1100;
-    private final int CELL_HEIGHT = 700;
-    private final int OFFSET_Y = 20;
-
-
     private final Plant[][] grid = new Plant[ROWS][COLS];
+
+
+    private final boolean[][] graved = new boolean[ROWS][COLS];
+
+    public ArrayList<Plant> plants = new ArrayList<>();
+
+
+    private GameMap() {}
+
+    public static GameMap getInstance() {
+        if(instance == null) instance = new GameMap();
+        return instance;
+    }
 
     public boolean isCellEmpty(int row, int col) {
         return grid[row][col] == null && isValidCell(row,col);
@@ -33,17 +39,12 @@ public class GameMap {
 
     public void checkWar() {
         for (Zombie z : ZombieFactory.zombies) {
-            for (Plant plant : GameMap.plants) {
-                if(plant.isDead()){
-                    plants.remove(plant);
-                    removePlant(plant.getRow(), plant.getCol());
-                    break;
-                }
-                else if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
+            for (Plant plant : plants) {
+                if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
                     z.stopWalking();
                     z.getTimeline().stop();
                     z.updateImageSituation();
-                    z.startBiting(plant, this);
+                    z.startBiting(plant);
                     break;
                 }
             }
@@ -75,17 +76,33 @@ public class GameMap {
         return row >= 0 && row < ROWS && col >= 0 && col < COLS;
     }
 
+    public void generateGrave(){
+        Random rand = new Random();
+        //at most 5 grave can be existed in the map
+        int numberOfGraves = rand.nextInt(5);
+        for(int i = 0; i < numberOfGraves; i++){
+            int row = rand.nextInt(5);
+            int col = rand.nextInt(3) + 6;
+            new Grave(row,col);
+            graved[row][col] = true;
+        }
+    }
+
+
+
+    public void cleanGrave(){
+        for(boolean[] row : graved){
+            Arrays.fill(row, false);
+        }
+    }
+
     public Plant getPlant(int row, int col) {
         if(!isValidCell(row, col)) return null;
         return grid[row][col];
     }
-
-    public double getXForCol(int col){
-        return col*CELL_WIDTH;
-    }
-    public double getYForRow(int row){
-        return row*CELL_HEIGHT + OFFSET_Y;
-    }
+    public boolean getGraved(int row, int col) {return graved[row][col];}
+    public void setGraved(int row, int col,boolean bool){graved[row][col] = bool;}
+    public ArrayList<Plant> getPlants() {return plants;}
     public int getRows(){
         return ROWS;
     }
@@ -96,4 +113,5 @@ public class GameMap {
         return grid;
     }
 }
+
 

@@ -9,6 +9,7 @@ import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.*;
 import Map.GameMap;
 import Character.*;
+import Map.Grave;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.*;
@@ -26,7 +27,10 @@ public abstract class SaveGame implements Serializable {
         if(plant instanceof TallNut)return new TallNut();
         if(plant instanceof WallNut)return new WallNut();
         if(plant instanceof Jalapeno)return new Jalapeno();
-        if(plant instanceof CherryBomb)return new CherryBomb()  ;
+        if(plant instanceof CherryBomb)return new CherryBomb();
+        if(plant instanceof GraveBuster)return new GraveBuster();
+        if(plant instanceof ScaredyShroom)return new ScaredyShroom();
+        if(plant instanceof PuffShroom)return new PuffShroom();
         return null;
     }
 
@@ -77,7 +81,7 @@ public abstract class SaveGame implements Serializable {
                 loadPlant.setX(plant.getX());
                 loadPlant.setY(plant.getY());
                 loadPlant.setCol(plant.getCol());
-                GameMap.plants.add(loadPlant);
+                GameMap.getInstance().plants.add(loadPlant);
             }
 
             ChooseCardController.cards.getChildren().clear();
@@ -94,12 +98,15 @@ public abstract class SaveGame implements Serializable {
                 Bullet loadBullet = identifyKindsOfBullet(bullet);
                 PeaPlant.bulletList.add(loadBullet);
             }
-            System.out.println(data.suns.size());
             for(Sun sun : data.suns){
                 sun.setImageView(new ImageView(new Image("/Images/resources/graphics/Plants/Sun/sun.png")));
                 sun.getImageView().setX(sun.getX());
                 sun.getImageView().setY(sun.getY());
                 Sun.sunList.add(sun);
+            }
+            for(Grave grave : data.graves){
+                grave.setImageView(new ImageView("/Images/resources/graphics/extentions/grave.png"));
+                Grave.graves.add(grave);
             }
 
         }catch (Exception e){

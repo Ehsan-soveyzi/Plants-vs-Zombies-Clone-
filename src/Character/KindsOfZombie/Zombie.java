@@ -54,8 +54,6 @@ public abstract class Zombie implements Serializable {
         setY(row * 140 + 60);
         getImageView().setLayoutX(x);
         getImageView().setLayoutY(y);
-        MapController.totalZombies++;
-        System.out.println(MapController.totalZombies);
     }
 
 
@@ -131,12 +129,10 @@ public abstract class Zombie implements Serializable {
             setSlowedEffect();
         }
         if (isBurn){
-            System.out.println("one zombie burn");
             playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
             return;
         }
         if (isDead){
-            System.out.println("one zombie die");
             if (this instanceof IMPZombie){
                 playDeathAnimation(21, "/Images/resources/graphics/Zombies/Imp/ZombieDie/");
                 return;
@@ -145,7 +141,6 @@ public abstract class Zombie implements Serializable {
             return;
         }
         if (isEating) {
-            System.out.println("one zombie eating");
             playEatingAnimation();
         }
     }
@@ -216,11 +211,7 @@ public abstract class Zombie implements Serializable {
         timeline.setCycleCount(frames.length);
         timeline.setOnFinished(e -> {
             imageView.setImage(null);
-            imageView.setOnMouseClicked(mouseEvent -> {
-                System.out.println(mouseEvent.getSceneX());
-            });
             if(parentPane != null)parentPane.getChildren().remove(imageView);
-            else System.out.println("realllllllllly");
         });
         timeline.playFromStart();
     }
@@ -260,19 +251,16 @@ public abstract class Zombie implements Serializable {
         }
     }
 
-    public void startBiting(Plant plant, GameMap map) {
+    public void startBiting(Plant plant) {
         if (biteTimeline != null) return; // اگر در حال گاز زدن هست، برنگرد
         AtomicInteger i = new AtomicInteger(1);
         biteTimeline = new Timeline(new KeyFrame(Duration.millis(eatingSpeed), e -> {
             bite(plant);
-            System.out.println("bite " + i.getAndIncrement());
             if(isDead){
                 stopBiting();
             }
             if (plant.getHp() <= 0) {
-                plant.setDead(true);
-                GameMap.plants.remove(plant);
-                map.removePlant(plant.getRow(), plant.getCol());
+                plant.die();
                 stopBiting();
             }
         }));

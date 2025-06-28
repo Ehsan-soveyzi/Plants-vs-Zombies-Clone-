@@ -3,6 +3,7 @@ package ApplyGraphics;
 import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
+import Map.Grave;
 import Map.ZombieFactory;
 import Save_Logic.SaveGame;
 import javafx.animation.KeyFrame;
@@ -40,13 +41,11 @@ public class MapController {
 
 
     //static fields used between ui and backend.
-    public static GameMap map = new GameMap();
     public static ZombieFactory zombieFactory;
     public static int waveCount = 1;
     public static Timeline gameLoop;
     public static long time = 0;
     public static int score = 10000;
-    public static int totalZombies = 0;
 
 
     ImageCursor cursor;
@@ -71,7 +70,6 @@ public class MapController {
                     sun.removeSun();
                 });
             }
-            OptionController.clicked = -1;
         }
 
         //set the night or day.
@@ -91,7 +89,7 @@ public class MapController {
             setOnMouseEntered();
             time += 100;
             if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
-            map.checkWar();
+            GameMap.getInstance().checkWar();
             sunPoint.setText(Integer.toString(score));
             //apply zombies attack
             if(time % 1000 == 0 && time <= 120000){
@@ -112,6 +110,7 @@ public class MapController {
                 if(!PauseGameController.pauseStage.isShowing())pause();
             }
         });
+        OptionController.clicked = -1;
     }
 
     //check what the card chosen from the user
@@ -124,6 +123,7 @@ public class MapController {
         else if(plant instanceof CherryBomb && CherryBomb.isReady)return new CherryBomb();
         else if(plant instanceof TallNut && TallNut.isReady)return new TallNut();
         else if (plant instanceof Repeater && Repeater.isReady)return new Repeater();
+        else if(plant instanceof GraveBuster)return new GraveBuster();
         return null;
     }
 
@@ -153,7 +153,6 @@ public class MapController {
         gameLoop.stop();
         if(PauseGameController.isWin == 0) {
             try {
-
                 PauseGameController.pauseStage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
                 Parent root = fxmlLoader.load();
@@ -219,22 +218,35 @@ public class MapController {
         final int rows = gridPane.getRowCount();
         final int cols = gridPane.getColumnCount();
 
-        for(int i = 0 ; i < rows ; i++){
+        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT && OptionController.clicked == -1) {
+            GameMap.getInstance().generateGrave();
+            System.out.println("are you fucking keeding me !");
+        }
+
+            for(int i = 0 ; i < rows ; i++){
             for(int j = 0; j < cols; j++){
                 Pane cell = new Pane();
 
                 cell.setPrefSize(80, 80);
 
+                    //adding graves!
+                    for(Grave grave : Grave.graves){
+                        if(grave.getCol() == j && grave.getRow() == i){
+                            cell.getChildren().add(grave.getImageView());
+                            GameMap.getInstance().setGraved(grave.getRow(), grave.getCol(), true);
+                        }
+                    }
+
+                    //this added when loading action
+                    for(Plant plant : GameMap.getInstance().plants){
+                        if(plant.getRow() == i && plant.getCol() == j){
+                            cell.getChildren().add(plant.getImageView());
+                            GameMap.getInstance().addPlant(plant, i, j);
+                            plant.updateImageSituation(paneWindow);
+                        }
+                    }
                 setOnCell(cell, i, j);
 
-                //this added when loading action
-                for(Plant plant : GameMap.plants){
-                    if(plant.getRow() == i && plant.getCol() == j){
-                        cell.getChildren().add(plant.getImageView());
-                        map.addPlant(plant, i, j);
-                        plant.updateImageSituation(paneWindow);
-                    }
-                }
 
                 gridPane.add(cell, j, i);
             }
@@ -243,27 +255,29 @@ public class MapController {
 
     public void setOnCell(Pane cell,int row,int col){
         cell.setOnMouseClicked(event -> {
-            if(!map.isCellEmpty(row, col) && shovelUsed){
+            if(!GameMap.getInstance().isCellEmpty(row, col) && shovelUsed){
                 //using shovel
                 shovel(row, col);
                 System.out.println("cell is already not empty");
-            } else if (!map.isCellEmpty(row, col)) {
+            } else if (!GameMap.getInstance().isCellEmpty(row, col)) {
                 System.out.println("cell is already not empty");
             } else if (choosenPlant == null ){
                 System.out.println("No plant selected");
             }
-            else{
+            else if(choosenPlant instanceof GraveBuster && !GameMap.getInstance().getGraved(row, col)){
+                System.out.println("graveBooster must use on graves!");
+            } else if (!(choosenPlant instanceof GraveBuster) && GameMap.getInstance().getGraved(row, col)){
+                System.out.println("can't plant on graves!");
+            } else{
                 cell.getChildren().add(choosenPlant.getImageView());
-                map.addPlant(choosenPlant, row, col);
-                GameMap.plants.add(choosenPlant);
+                GameMap.getInstance().addPlant(choosenPlant, row, col);
+                GameMap.getInstance().plants.add(choosenPlant);
                 choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
                 choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
                 choosenPlant.setRow(row);
-                System.out.println(choosenPlant.getRow());
-                System.out.println(choosenPlant.getX() + " ..." + choosenPlant.getY());
-                choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
+                choosenPlant.updateImageSituation(paneWindow);
                 score -= choosenPlant.getCost();
                 choosenPlant = null;
                 shovelUsed = false;
@@ -274,7 +288,7 @@ public class MapController {
 
     public void shovel(int row, int col){
         choosenPlant = null;
-        map.removePlant(row, col);
+        GameMap.getInstance().removePlant(row, col);
         shovelUsed = false;
     }
 
@@ -292,7 +306,7 @@ public class MapController {
             if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().stop();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().stop();
         }
-        for(Plant plant : GameMap.plants){
+        for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
                 plant.getTimeline().stop();
             }
@@ -344,11 +358,6 @@ public class MapController {
             int lane = rand.nextInt(5);
             zombieFactory.createZombie(types.get(index), lane);
 
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
         }
     }
 

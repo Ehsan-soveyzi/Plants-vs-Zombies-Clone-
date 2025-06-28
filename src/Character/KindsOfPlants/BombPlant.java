@@ -14,13 +14,16 @@ public abstract class BombPlant extends Plant implements Serializable {
     public abstract void burnZombies();
 
     public void burnAnimation(String imagePath){
-        PauseTransition pause = new PauseTransition(Duration.millis(500));
+        PauseTransition pause = new PauseTransition(Duration.millis(200));
         pause.setOnFinished(e -> {
             getImageView().setLayoutY(getImageView().getLayoutY() - 50);
             getImageView().setImage(new Image(imagePath));
-
-            die();
-            burnZombies();
+            PauseTransition pause2 = new PauseTransition(Duration.millis(100));
+            pause2.setOnFinished(e1 ->{
+                die();
+                burnZombies();
+            });
+            pause2.play();
         });
         pause.playFromStart();
     }
