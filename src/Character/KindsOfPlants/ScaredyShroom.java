@@ -5,6 +5,8 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import Character.Bullet;
+import Character.ShroomBullet;
 
 import java.io.Serializable;
 
@@ -31,7 +33,8 @@ public class ScaredyShroom extends Shroom implements Serializable {
         timeline.setCycleCount(1);
         timeline.play();
     }
-    public void shoot(){
-
+    public void shoot(Pane pane){
+        Bullet shroomBullet = new ShroomBullet(getX() + 10, getY(), getRow());
+        shroomBullet.addToPane(pane);
     }
 }

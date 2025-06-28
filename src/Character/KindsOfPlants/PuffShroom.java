@@ -35,8 +35,8 @@ public class PuffShroom extends Shroom implements Serializable {
     }
     public void shoot(Pane pane) {
         if(!isDead()) {
-            Bullet normalBullet = new ShroomBullet(getX() + 10, getY(), getRow());
-            normalBullet.addToPane(pane);
+            Bullet shroomBullet = new ShroomBullet(getX() + 10, getY(), getRow());
+            shroomBullet.addToPane(pane);
 
         }
     }
