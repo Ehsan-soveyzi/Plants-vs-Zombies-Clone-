@@ -62,6 +62,7 @@ public class PauseGameController implements Serializable {
     public void homeButtonClicked(){
         try {
             clearData();
+            ChooseCardController.cardPlants.clear();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

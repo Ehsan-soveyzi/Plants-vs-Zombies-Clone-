@@ -30,8 +30,10 @@ public class ChooseCardController {
     public static GridPane cardList = new GridPane();
 
     public static ArrayList<Plant> cardPlants = new ArrayList<>();
+
     //this use to get the cardView images for each plant.
-    public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb(),new Jalapeno(),new TallNut(),new WallNut()};
+    public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb()
+            ,new Jalapeno(),new TallNut(),new WallNut(),new PuffShroom(),new IceShroom(),new ScaredyShroom()};
 
 
     @FXML
@@ -88,6 +90,9 @@ public class ChooseCardController {
         TallNut tallNut = (TallNut) plants[6];
         CherryBomb cherryBomb = (CherryBomb) plants[4];
         Jalapeno jalapeno = (Jalapeno) plants[5];
+        PuffShroom puffShroom = (PuffShroom) plants[8];
+        IceShroom iceShroom = (IceShroom) plants[9];
+        ScaredyShroom scaredyShroom = (ScaredyShroom) plants[10];
 
         sunFlower.getCardView().setOnMouseClicked(e -> {
             if(!playerCards.getChildren().contains(sunFlower.getCardView())){
@@ -169,6 +174,37 @@ public class ChooseCardController {
                 removeCard(jalapeno.getCardView());
             }
         });
+        puffShroom.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(puffShroom.getCardView())){
+                cardPlants.add(puffShroom);
+                selectCard(puffShroom.getCardView());
+            }
+            else{
+                cardPlants.remove(puffShroom);
+                removeCard(puffShroom.getCardView());
+            }
+        });
+        iceShroom.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(iceShroom.getCardView())){
+                cardPlants.add(iceShroom);
+                selectCard(iceShroom.getCardView());
+            }
+            else{
+                cardPlants.remove(iceShroom);
+                removeCard(iceShroom.getCardView());
+            }
+        });
+        scaredyShroom.getCardView().setOnMouseClicked(e -> {
+            if(!playerCards.getChildren().contains(scaredyShroom.getCardView())){
+                cardPlants.add(scaredyShroom);
+                selectCard(scaredyShroom.getCardView());
+            }
+            else{
+                cardPlants.remove(scaredyShroom);
+                removeCard(scaredyShroom.getCardView());
+            }
+        });
+
     }
 
 
