@@ -3,30 +3,39 @@ package Character.KindsOfPlants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import java.io.Serializable;
 
-public class TallNut extends NutPlant {
-
-    public static final int cooldown = 2;
-    public static boolean isReady = true;
+public class TallNut extends NutPlant implements Serializable {
+    private static final String tallNutCardImageAddress = "/Images/resources/graphics/Cards/TallNut.png";
     private static final String TallNutImageAddress = "/Images/resources/graphics/Plants/TallNut/TallNut.gif";
     private static final String TallNutImageAddress1 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked1.gif";
     private static final String TallNutImageAddress2 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked2.gif";
+    public static final ImageView cardView = new ImageView(new Image(tallNutCardImageAddress));
+    public static int cooldown = 7;
+    public static boolean isReady = true;
+    public static Timeline cooldownTimeline;
 
     public TallNut() {
-        super(125, 20, new Image(TallNutImageAddress));
+        super(125, 20, new Image(TallNutImageAddress),new Image(tallNutCardImageAddress));
         getImageView().setLayoutY(getImageView().getLayoutY() - 20);
     }
 
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 7;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.play();
     }
 
     @Override

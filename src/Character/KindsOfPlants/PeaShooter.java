@@ -1,29 +1,25 @@
 package Character.KindsOfPlants;
+
 import Character.Bullet;
-import Character.KindsOfZombie.Zombie;
 import Character.NormalBullet;
-import Character.SnowBullet;
-import Map.ZombieFactory;
-import Map.MapController;
-import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import java.io.Serializable;
 
-
-import java.util.Objects;
-
-public class PeaShooter extends PeaPlant {
+public class PeaShooter extends PeaPlant implements Serializable {
 
     private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
-    public static final int cooldown = 7;
+    private static final String peaShooterCardImageAddress = "/Images/resources/graphics/Cards/Peashooter.png";
+    public static int cooldown = 7;
     public static boolean isReady = true;
+    public static Timeline cooldownTimeline;
+
 
     public PeaShooter() {
-        super(100,5, new Image(peaShooterImageAddress));
+        super(100,5, new Image(peaShooterImageAddress),new Image(peaShooterCardImageAddress));
     }
 
     @Override
@@ -31,23 +27,23 @@ public class PeaShooter extends PeaPlant {
             if(!isDead()) {
                 Bullet normalBullet = new NormalBullet(getX() + 10, getY(), getRow());
                 normalBullet.addToPane(pane);
-                bulletQueue.add(normalBullet);
+                bulletList.add(normalBullet);
             }
     }
 
     public static void startCooldown() {
         isReady = false;
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown),event -> {
-            isReady = true;
+         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+             cooldown--;
+            if(cooldown == 0) {
+                cooldown = 7;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.play();
     }
-
-
-
-
 
     @Override
     public void updateImageSituation(Pane pane) {
@@ -61,6 +57,6 @@ public class PeaShooter extends PeaPlant {
         timeline.play();
 
         startCooldown();
-
     }
+
 }

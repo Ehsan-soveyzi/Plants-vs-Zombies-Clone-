@@ -1,4 +1,5 @@
 package Character.KindsOfPlants;
+
 import  Character.Bullet;
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
@@ -6,26 +7,19 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public abstract class PeaPlant extends Plant {
+public abstract class PeaPlant extends Plant implements Serializable {
+
     private boolean checkShot;
-    public static ArrayList<Bullet> bulletQueue = new ArrayList<>();
-    PeaPlant(int cost, int hp, Image image) {
-        super(cost, hp, image);
-        this.checkShot = false;
-    }
+    public static ArrayList<Bullet> bulletList = new ArrayList<>();
 
-    public boolean getCheckShot() {
-        return checkShot;
-    }
-    public void setCheckShot(boolean checkShot) {
-        this.checkShot = checkShot;
+    PeaPlant(int cost, int hp, Image image,Image cardImage) {
+        super(cost, hp, image,cardImage);
+        this.checkShot = false;
     }
 
     public void sameRowZombies() {
@@ -39,10 +33,9 @@ public abstract class PeaPlant extends Plant {
         setCheckShot(zombieInRow);
     }
 
-
     public void sameRowBullet() {
         ArrayList<Bullet> removeBullets = new ArrayList<>();
-        for (Bullet b : bulletQueue) {
+        for (Bullet b : bulletList) {
             for (Zombie z : ZombieFactory.zombies) {
                 if (z.getRow() != b.getRow()) continue;
                 if (z.getRow() == getRow() && Math.abs(z.getX() - b.getX()) < 30) {
@@ -53,12 +46,11 @@ public abstract class PeaPlant extends Plant {
                 }
             }
         }
-        bulletQueue.removeAll(removeBullets);
+        bulletList.removeAll(removeBullets);
     }
 
-
     public void checkBullet() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             sameRowZombies();
             sameRowBullet();
         }));
@@ -67,9 +59,17 @@ public abstract class PeaPlant extends Plant {
     }
 
 
-    //every time this method called a bullet object will be created!
+    //every time this method called , a bullet object will be created!
     // باید در بازی بررسی بشه که در سطر تا زمانی که زامبی هست صدا زده بشه
     abstract public void shoot(Pane pane);
+
+    public boolean getCheckShot() {
+        return checkShot;
+    }
+    public void setCheckShot(boolean checkShot) {
+        this.checkShot = checkShot;
+    }
+
 }
 
 

@@ -2,27 +2,25 @@ package Character.KindsOfPlants;
 
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class Jalapeno extends BombPlant {
-    public static final int cooldown = 1;
-    public static boolean isReady = true;
+public class Jalapeno extends BombPlant implements Serializable {
+    private static final String jalapenoCardImageAddress = "/Images/resources/graphics/Cards/Jalapeno.png";
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
+    public static int cooldown = 5;
+    public static boolean isReady = true;
+    public static Timeline cooldownTimeline;
 
     public Jalapeno() {
         //dont have idea about the hp!
-        super(125, 100000, new Image(JalapenoImageAddress));
+        super(125, 100000, new Image(JalapenoImageAddress),new Image(jalapenoCardImageAddress));
     }
 
     @Override
@@ -39,11 +37,16 @@ public class Jalapeno extends BombPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 5;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(5);
+        cooldownTimeline.play();
     }
 
     @Override

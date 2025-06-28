@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" style="-fx-background-image: url('/Images/resources/graphics/Background/menuBackGround.jpg'); -fx-background-size: 1000px 600px;       -fx-background-repeat: no-repeat;       -fx-background-position: center center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ApplyGraphics.PauseGameController">
+   <children>
+      <ImageView fx:id="resume" fitHeight="125.0" fitWidth="125.0" layoutX="139.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/extentions/BackButton.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="home" fitHeight="135.0" fitWidth="128.0" layoutX="304.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/extentions/home_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="refresh" fitHeight="124.0" fitWidth="111.0" layoutX="467.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/extentions/refresh_icon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="infoLabel" layoutX="284.0" layoutY="76.0" prefHeight="72.0" prefWidth="561.0" textFill="#9407eb">
+         <font>
+            <Font name="Segoe Script Bold" size="43.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="saveButton" fitHeight="163.0" fitWidth="204.0" layoutX="603.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/resources/graphics/extentions/saveButton.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

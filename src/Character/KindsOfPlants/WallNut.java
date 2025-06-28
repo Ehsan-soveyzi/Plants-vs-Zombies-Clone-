@@ -3,19 +3,23 @@ package Character.KindsOfPlants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import java.io.Serializable;
 
-public class WallNut extends NutPlant {
-
-    public static final int cooldown = 7;
-    public static boolean isReady = true;
+public class WallNut extends NutPlant implements Serializable {
+    private static final String wallNutCardImageAddress = "/Images/resources/graphics/Cards/WallNut.png";
     private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut.gif";
     private static final String WallNutImageAddress1 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut1.gif";
     private static final String WallNutImageAddress2 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut2.gif";
+    public static final ImageView cardView = new ImageView(new Image(wallNutCardImageAddress));
+    public static int cooldown = 5;
+    public static boolean isReady = true;
+    public static Timeline cooldownTimeline;
 
     public WallNut() {
-        super(50, 10, new Image(WallNutImageAddress));
+        super(50, 10, new Image(WallNutImageAddress),new Image(wallNutCardImageAddress));
     }
 
     @Override
@@ -27,13 +31,17 @@ public class WallNut extends NutPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 5;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(5);
+        cooldownTimeline.play();
     }
-
 
     @Override
     public void changeImage() {
@@ -44,4 +52,5 @@ public class WallNut extends NutPlant {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
 }

@@ -8,9 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ConeHead extends Zombie {
+public class ConeHead extends Zombie implements Serializable {
     private final static String coneHeadImageAddress =
             "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombie/ConeheadZombie_";
 
@@ -20,25 +21,8 @@ public class ConeHead extends Zombie {
 
 
     public void  playEatingAnimation(){
-        Image[] frames = new Image[11];
-        for(int i = 0;i < 11;i++){
-            frames[i] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombieAttack/ConeheadZombieAttack_" + i + ".png"
-            )));
-        }
-        ImageView zombieView = getImageView();
-        final int[] frameIndex = {0};
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            zombieView.setImage(frames[frameIndex[0]]);
-            frameIndex[0] = (frameIndex[0] + 1) % frames.length;
-            if(isDead()) {
-                timeline.stop();
-                setDead(true);
-                die();
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.playFromStart();
+        super.playEatingAnimation(11,
+                "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombieAttack/ConeheadZombieAttack_");
     }
 
     public void playWalkingAnimation(Pane pane){

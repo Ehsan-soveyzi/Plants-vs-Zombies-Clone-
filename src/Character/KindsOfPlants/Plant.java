@@ -1,39 +1,34 @@
 package Character.KindsOfPlants;
 
-import Map.GameMap;
-import Map.MapController;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
-import java.util.Objects;
+import java.io.Serializable;
 
-public abstract class Plant {
-
-
+public abstract class Plant implements Serializable {
     private int cost;
     private int hp;
     private double x, y;
     private boolean isDead;
     private int row;
     private int col;
-    protected Timeline timeline;
+    protected transient Timeline timeline;
+    private transient ImageView cardView;
+    private transient ImageView imageView;
 
-
-    private ImageView imageView; // pay attention when the plant dies should set another image
-
-    Plant(int cost, int hp, Image image) {
+    Plant(int cost, int hp, Image image,Image cardImage) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
         imageView = new ImageView(image);
+        cardView = new ImageView(cardImage);
         imageView.setLayoutX(imageView.getX() + 20);
         imageView.setLayoutY(imageView.getY() + 20);
     }
+
     public void takeDamage() {
         if (isDead) return;
         if (hp <= 0){
@@ -41,23 +36,26 @@ public abstract class Plant {
             return;
         }
         hp--;
-//        updateImageSituation();
     }
-
 
     public void die() {
         isDead = true;
         if(timeline != null) timeline.stop();
     }
 
-
+    public void setEffect(){
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(5);
+        colorAdjust.setContrast(2);
+        colorAdjust.setBrightness(3);
+        imageView.setEffect(colorAdjust);
+    }
 
     public abstract void updateImageSituation(Pane pane); // abstract
 
     public int getRow(){return row;};
     public void setRow(int row){this.row = row;};
     public int getCost() {return cost;}
-    public void setCost(int cost) {this.cost = cost;}
     public int getHp() {return hp;}
     public void setHp(int hp) {this.hp = hp;}
     public double getX() {return x;}
@@ -69,13 +67,14 @@ public abstract class Plant {
     }
     public void setCol(int col) {this.col = col;}
     public int getCol() {return col;}
-
+    public Timeline getTimeline() {return timeline;}
+    public ImageView getCardView() {return cardView;}
     public ImageView getImageView() {
         return imageView;
     }
-
     public void setDead(boolean dead) {
         isDead = dead;
     }
+
 }
 

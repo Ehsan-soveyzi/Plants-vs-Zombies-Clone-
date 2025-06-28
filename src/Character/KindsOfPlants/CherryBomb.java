@@ -8,16 +8,20 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public  class CherryBomb extends BombPlant {
-    public static final int cooldown = 1;
-    public static boolean isReady = true;
+public  class CherryBomb extends BombPlant implements Serializable {
+    private static final String cherryBombCardImageAddress = "/Images/resources/graphics/Cards/CherryBomb.png";
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
     private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
+    public static int cooldown = 7;
+    public static boolean isReady = true;
+    public static Timeline cooldownTimeline;
+
     public CherryBomb() {
         //dont have idea about the hp!
-        super(150, 100000, new Image(cherryBombImageAddress));
+        super(150, 100000, new Image(cherryBombImageAddress),new Image(cherryBombCardImageAddress));
 
     }
 
@@ -25,7 +29,7 @@ public  class CherryBomb extends BombPlant {
     public void burnZombies(){
         ArrayList<Zombie> removeZombie = new ArrayList<>();
         for(Zombie zombie : ZombieFactory.zombies){
-            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - zombie.getCol()) <= 1){
+            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 1){
                 removeZombie.add(zombie);
             }
         }
@@ -41,10 +45,15 @@ public  class CherryBomb extends BombPlant {
     public static void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 7;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        timeline.setCycleCount(1);
-        timeline.play();
+        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.play();
     }
 }
