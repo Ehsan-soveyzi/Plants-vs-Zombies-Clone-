@@ -1,6 +1,7 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
@@ -124,6 +125,12 @@ public class MapController {
         else if(plant instanceof CherryBomb && CherryBomb.isReady)return new CherryBomb();
         else if(plant instanceof TallNut && TallNut.isReady)return new TallNut();
         else if (plant instanceof Repeater && Repeater.isReady)return new Repeater();
+        else if(plant instanceof IceShroom && IceShroom.isReady)return new IceShroom();
+        else if (plant instanceof DoomShroom && DoomShroom.isReady) return new DoomShroom();
+        else if (plant instanceof PuffShroom && PuffShroom.isReady) return new PuffShroom();
+        else if (plant instanceof ScaredyShroom && ScaredyShroom.isReady) return new ScaredyShroom();
+        else if (plant instanceof HypnoShroom && HypnoShroom.isReady) return new HypnoShroom();
+
         return null;
     }
 

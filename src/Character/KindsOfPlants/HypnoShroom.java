@@ -13,8 +13,12 @@ public class HypnoShroom extends Plant implements Serializable {
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
-    HypnoShroom(int cost, int hp, Image image, Image cardImage) {
+    public HypnoShroom(int cost, int hp, Image image, Image cardImage) {
         super(cost, hp, image, cardImage);
+    }
+
+    public HypnoShroom() {
+        super(75, 0, new Image(hypnoShroomImageAddress), new Image(hypnoShroomCardImageAddress));
     }
 
     @Override

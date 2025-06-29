@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -34,6 +35,7 @@ public abstract class Zombie implements Serializable {
     private boolean isEating;
     private boolean isSlowed;
     private boolean isBurn;
+    private boolean isFreezed;
     protected transient Timeline timeline;
     private transient Pane parentPane;
     private transient PauseTransition slowTimer;
@@ -130,6 +132,10 @@ public abstract class Zombie implements Serializable {
         if (isSlowed) {
             setSlowedEffect();
         }
+        if (isFreezed){
+
+        }
+
         if (isBurn){
             System.out.println("one zombie burn");
             playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
@@ -232,6 +238,20 @@ public abstract class Zombie implements Serializable {
         colorAdjust.setBrightness(-0.19);
         imageView.setEffect(colorAdjust);
     }
+    private void setFreezedEffect() {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(0.33);
+        colorAdjust.setSaturation(-0.02);
+        colorAdjust.setContrast(0.09);
+        colorAdjust.setHue(1.0);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(11.76);
+        dropShadow.setWidth(23.34);
+        dropShadow.setHeight(25.71);
+        dropShadow.setInput(colorAdjust);
+        imageView.setEffect(dropShadow);
+    }
+
 
     //this method will call after the ice bullet damage.
     public void setSlowed(boolean slowed) {
