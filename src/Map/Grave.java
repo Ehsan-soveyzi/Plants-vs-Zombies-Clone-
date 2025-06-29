@@ -1,11 +1,13 @@
 package Map;
 
+import ApplyGraphics.MapController;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Grave implements Serializable {
     private static final String ImageAddress = "/Images/resources/graphics/extentions/grave.png";
@@ -24,6 +26,20 @@ public class Grave implements Serializable {
         this.hp = 5;
         imageView = new ImageView(new Image(ImageAddress));
         graves.add(this);
+    }
+
+    public void generateZombies() {
+        double random = Math.random();
+        if(MapController.time/1000 <= 60){
+            if(random < 0.5)MapController.zombieFactory.createRegularZombie(row, x);
+            else MapController.zombieFactory.createConeHeadZombie(row, x);
+        }
+        else{
+            if(random < 0.4)MapController.zombieFactory.createRegularZombie(row, x);
+            else if(random < 0.7)MapController.zombieFactory.createConeHeadZombie(row, x);
+            else if(random < 0.9)MapController.zombieFactory.createScreenDoorZombie(row, x);
+            else MapController.zombieFactory.createIMPZombie(row, x);
+        }
     }
 
     public int getRow() {return row;}

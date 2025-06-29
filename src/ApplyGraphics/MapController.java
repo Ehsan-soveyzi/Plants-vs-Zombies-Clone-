@@ -8,8 +8,10 @@ import Map.ZombieFactory;
 import Save_Logic.SaveGame;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -234,6 +236,15 @@ public class MapController {
                         if(grave.getCol() == j && grave.getRow() == i){
                             cell.getChildren().add(grave.getImageView());
                             GameMap.getInstance().setGraved(grave.getRow(), grave.getCol(), true);
+                            Platform.runLater(() -> {
+                                Bounds bounds = grave.getImageView().localToScene(grave.getImageView().getBoundsInLocal());
+                                grave.setX(bounds.getMinX());
+                                grave.setY(bounds.getMinY());
+                                System.out.println(grave.getCol());
+                                grave.getImageView().setLayoutX(5);
+                                grave.getImageView().setLayoutY(25);
+                            });
+
                         }
                     }
 
@@ -346,6 +357,7 @@ public class MapController {
         if (isStrongAttack) {
             if (current % 3 != 0) return;
             numberOfZombies = 2 + (int)(current / 35);
+            GameMap.getInstance().zombieGraveAttack();
         }
         else {
             if (current % 6 != 0) return;

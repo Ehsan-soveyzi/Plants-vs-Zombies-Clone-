@@ -51,6 +51,16 @@ public class GameMap {
         }
     }
 
+    public void zombieGraveAttack() {
+        Random rand = new Random();
+        int numberOfZombies = rand.nextInt(Grave.graves.size());
+        for(Grave grave : Grave.graves) {
+            grave.generateZombies();
+            numberOfZombies--;
+            if(numberOfZombies == -1) break;
+        }
+    }
+
     public void removePlant(int row, int col) {
         if(isValidCell(row, col)){
             Plant plant = grid[row][col];

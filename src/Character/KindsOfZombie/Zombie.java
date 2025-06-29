@@ -259,7 +259,7 @@ public abstract class Zombie implements Serializable {
             if(isDead){
                 stopBiting();
             }
-            if (plant.getHp() <= 0) {
+            if (plant.getHp() <= 0 || plant.isDead()) {
                 plant.die();
                 stopBiting();
             }
