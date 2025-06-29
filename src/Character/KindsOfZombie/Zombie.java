@@ -133,7 +133,11 @@ public abstract class Zombie implements Serializable {
             setSlowedEffect();
         }
         if (isFreezed){
-
+            setFreezedEffect();
+            if (!isBurn && !isDead) {
+                timeline.pause();
+                return;
+            }
         }
 
         if (isBurn){
@@ -335,4 +339,10 @@ public abstract class Zombie implements Serializable {
     public void setImageView(ImageView imageView) {this.imageView = imageView;}
     public void setHp(int hp) {this.hp = hp;}
     public int getHp(){return hp;}
+    public boolean isFreezed() {
+        return isFreezed;
+    }
+    public void setFreezed(boolean freezed) {
+        isFreezed = freezed;
+    }
 }

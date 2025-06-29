@@ -44,24 +44,31 @@ public class IceShroom extends Plant implements Serializable {
         timeline.play();
     }
     public void freeze(){
+        PauseTransition removeTimer = new PauseTransition(Duration.seconds(2));
+        removeTimer.setOnFinished(event -> {
+            die();
+
+        });
         for (Zombie zombie : ZombieFactory.zombies){
             freezeZombie(zombie);
         }
+
     }
     public void freezeZombie(Zombie zombie) {
-
         if (freezeTimer != null) freezeTimer.stop();
-
-
+        zombie.setFreezed(true);
         //new timer for affect slowing for 5 sec!
         freezeTimer = new PauseTransition(Duration.seconds(5));
         freezeTimer.setOnFinished(event -> {
-            die();
             zombie.getImageView().setEffect(null);
+            zombie.setFreezed(false);
+            zombie.takeDamage(1);
+            zombie.getTimeline().play();
+
 
         });
         freezeTimer.playFromStart();
-        zombie.takeDamage(1);
+
     }
 
 }
