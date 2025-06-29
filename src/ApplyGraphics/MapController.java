@@ -357,7 +357,7 @@ public class MapController {
         if (isStrongAttack) {
             if (current % 3 != 0) return;
             numberOfZombies = 2 + (int)(current / 35);
-            GameMap.getInstance().zombieGraveAttack();
+            if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)GameMap.getInstance().zombieGraveAttack();
         }
         else {
             if (current % 6 != 0) return;
