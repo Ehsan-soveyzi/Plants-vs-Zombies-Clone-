@@ -10,9 +10,9 @@ public class CoffeeBean extends Plant{
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    private static final String coffeeBeanImageAddress = "/new_resources/images/Plants/CoffeeBean/CoffeeBean.gif";
+    private static final String coffeeBeanImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBean.gif";
     private static final String coffeeBeanCardImageAddress = "/new_resources/images/Card/Plants/CoffeeBean.png";
-    private static final String coffeeBeanEatImageAddress = "/new_resources/images/Plants/CoffeeBean/CoffeeBeanEat.gif";
+    private static final String coffeeBeanEatImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBeanEat.gif";
 
 
     CoffeeBean() {

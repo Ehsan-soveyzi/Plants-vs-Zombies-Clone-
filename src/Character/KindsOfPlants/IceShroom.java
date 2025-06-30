@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class IceShroom extends Plant implements Serializable {
-    private static final String iceShooterImageAddress = "/new_resources/images/Plants/IceShroom/IceShroom.gif";
+    private static final String iceShooterImageAddress = "/Images/resources/graphics/Plants/IceShroom/IceShroom.gif";
     private static final String iceShooterCardImageAddress = "/Images/resources/graphics/Cards/IceShroom.png";
     public static int cooldown = 7;
     public static boolean isReady = true;

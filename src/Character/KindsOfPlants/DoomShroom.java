@@ -13,11 +13,13 @@ import java.util.ArrayList;
 
 public class DoomShroom extends BombPlant implements Serializable {
 
-    public static final int cooldown = 7;
+    public static int cooldown = 7;
     public static boolean isReady = true;
-    private static final String doomShroomAddress = "/new_resources/images/Plants/DoomShroom/BeginBoom.gif";
-    private static final String burnDoomShroomImageAddress = "/new_resources/images/Plants/DoomShroom/Boom.gif";
+    private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
+    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.gif";
     private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/DoomShroom.png";
+    public static Timeline cooldownTimeline;
+
     public DoomShroom() {
         super(125, 0, new Image(doomShroomAddress), new Image(doomCardImageAddress));
     }
@@ -36,6 +38,20 @@ public class DoomShroom extends BombPlant implements Serializable {
             }
         }
     }
+    public static void startCooldown() {
+        isReady = false;
+
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 7;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
+        }));
+        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.play();
+    }
 
     @Override
     public void updateImageSituation(Pane pane) {
@@ -43,14 +59,6 @@ public class DoomShroom extends BombPlant implements Serializable {
         startCooldown();
 
     }
-    public static void startCooldown() {
-        isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
-        }));
-        timeline.setCycleCount(1);
-        timeline.play();
-    }
 
 }

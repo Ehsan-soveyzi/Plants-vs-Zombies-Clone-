@@ -15,8 +15,8 @@ import java.io.Serializable;
 public class ScaredyShroom extends PeaPlant implements Serializable {
 
     public static final String cardViewImageAddress = "/Images/resources/graphics/Cards/ScaredyShroom.png";
-    private static final String scaredyShroomImageAddress = "/new_resources/images/Plants/ScaredyShroom/ScaredyShroom.gif";
-    private static final String ScaredyShroomCryImageAddress = "/new_resources/images/Plants/ScaredyShroom/ScaredyShroomCry.gif";
+    private static final String scaredyShroomImageAddress = "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroom.gif";
+    private static final String ScaredyShroomCryImageAddress = "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroomCry.gif";
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
