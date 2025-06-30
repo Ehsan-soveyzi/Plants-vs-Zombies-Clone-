@@ -32,16 +32,18 @@ public abstract class Plant implements Serializable {
 
     public void takeDamage() {
         if (isDead) return;
+        hp--;
         if (hp <= 0){
             die();
-            return;
         }
-        hp--;
+
     }
 
     public void die() {
         isDead = true;
         if(timeline != null) timeline.stop();
+
+
     }
 
     public void setEffect(){

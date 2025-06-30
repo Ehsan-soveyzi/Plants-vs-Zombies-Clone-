@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class IceShroom extends Plant implements Serializable {
     private static final String iceShooterImageAddress = "/new_resources/images/Plants/IceShroom/IceShroom.gif";
@@ -30,8 +32,8 @@ public class IceShroom extends Plant implements Serializable {
 
     @Override
     public void updateImageSituation(Pane pane) {
-        freeze();
         startCooldown();
+        freeze();
 
     }
     public static void startCooldown() {
@@ -43,31 +45,35 @@ public class IceShroom extends Plant implements Serializable {
         timeline.setCycleCount(1);
         timeline.play();
     }
-    public void freeze(){
-        PauseTransition removeTimer = new PauseTransition(Duration.seconds(2));
-        removeTimer.setOnFinished(event -> {
-            die();
-
-        });
-        for (Zombie zombie : ZombieFactory.zombies){
-            freezeZombie(zombie);
+    public void freeze() {
+        die();
+        for (Zombie zombie : new ArrayList<>(ZombieFactory.zombies)) {
+            if (!zombie.isDead()) {
+                freezeZombie(zombie);
+                zombie.takeDamage(1);
+            }
         }
-
     }
     public void freezeZombie(Zombie zombie) {
-        if (freezeTimer != null) freezeTimer.stop();
+        if (zombie == null || zombie.isDead()) return;
+
         zombie.setFreezed(true);
-        //new timer for affect slowing for 5 sec!
-        freezeTimer = new PauseTransition(Duration.seconds(5));
-        freezeTimer.setOnFinished(event -> {
+        zombie.updateImageSituation();
+
+        PauseTransition freeze = new PauseTransition(Duration.seconds(5));
+        freeze.setOnFinished(event -> {
             zombie.getImageView().setEffect(null);
             zombie.setFreezed(false);
-            zombie.takeDamage(1);
-            zombie.getTimeline().play();
-
-
+            if (zombie.getTimeline() != null && !zombie.isDead()) {
+                zombie.getTimeline().play();
+            }
         });
-        freezeTimer.playFromStart();
+
+        zombie.setFreezeTimer(freeze);
+        freeze.playFromStart();
+        if (zombie.getTimeline() != null) {
+            zombie.getTimeline().pause();
+        }
 
     }
 

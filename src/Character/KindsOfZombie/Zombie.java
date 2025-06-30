@@ -9,6 +9,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -41,6 +42,7 @@ public abstract class Zombie implements Serializable {
     private transient PauseTransition slowTimer;
     private transient Timeline biteTimeline;
     private transient ImageView imageView;
+    private transient PauseTransition freezeTimer;
 
 
 
@@ -106,7 +108,8 @@ public abstract class Zombie implements Serializable {
     public void die() {
         isDead = true;
         if(timeline != null)timeline.stop();
-        ZombieFactory.zombies.remove(this);
+//        ZombieFactory.zombies.remove(this);
+        Platform.runLater(() -> ZombieFactory.zombies.remove(this));
         updateImageSituation();
     }
 
@@ -134,10 +137,6 @@ public abstract class Zombie implements Serializable {
         }
         if (isFreezed){
             setFreezedEffect();
-            if (!isBurn && !isDead) {
-                timeline.pause();
-                return;
-            }
         }
 
         if (isBurn){
@@ -344,5 +343,15 @@ public abstract class Zombie implements Serializable {
     }
     public void setFreezed(boolean freezed) {
         isFreezed = freezed;
+    }
+    public PauseTransition getFreezeTimer() {
+        return freezeTimer;
+    }
+
+    public void setFreezeTimer(PauseTransition freezeTimer) {
+        if (this.freezeTimer != null) {
+            this.freezeTimer.stop(); // Cancel previous freeze if exists
+        }
+        this.freezeTimer = freezeTimer;
     }
 }
