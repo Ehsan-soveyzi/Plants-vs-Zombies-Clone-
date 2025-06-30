@@ -5,16 +5,12 @@ import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class IceShroom extends Plant implements Serializable {
     private static final String iceShooterImageAddress = "/new_resources/images/Plants/IceShroom/IceShroom.gif";
