@@ -1,6 +1,7 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.Grave;
@@ -132,6 +133,11 @@ public class MapController {
         else if(plant instanceof GraveBuster)return new GraveBuster();
         else if(plant instanceof Blover && Blover.isReady)return new Blover();
         else if(plant instanceof Plantern && Plantern.isReady)return new Plantern();
+        else if(plant instanceof DoomShroom && DoomShroom.isReady)return new DoomShroom();
+        else if(plant instanceof HypnoShroom && HypnoShroom.isReady)return new HypnoShroom();
+        else if(plant instanceof ScaredyShroom && ScaredyShroom.isReady)return new ScaredyShroom();
+        else if(plant instanceof PuffShroom && PuffShroom.isReady)return new PuffShroom();
+        else if(plant instanceof IceShroom && IceShroom.isReady)return new IceShroom();
         return null;
     }
 
@@ -340,10 +346,12 @@ public class MapController {
         if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.stop();
         if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.stop();
         if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.stop();
-        if (ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.stop();
+        if(ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.stop();
         if(PuffShroom.cooldownTimeline != null) PuffShroom.cooldownTimeline.stop();
         if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.stop();
         if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.stop();
+        if(DoomShroom.cooldownTimeline != null)DoomShroom.cooldownTimeline.stop();
+        if(HypnoShroom.cooldownTimeline != null)HypnoShroom.cooldownTimeline.stop();
     }
 
     private void handleZombiesWave1() {

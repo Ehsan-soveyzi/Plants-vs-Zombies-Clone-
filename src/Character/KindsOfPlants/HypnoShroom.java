@@ -1,8 +1,10 @@
 package Character.KindsOfPlants;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.io.Serializable;
 
@@ -13,12 +15,27 @@ public class HypnoShroom extends Plant implements Serializable {
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
-    HypnoShroom(int cost, int hp, Image image, Image cardImage) {
-        super(cost, hp, image, cardImage);
+    public HypnoShroom() {
+        super(75, 5, new Image(hypnoShroomImageAddress), new Image(hypnoShroomCardImageAddress));
+    }
+
+    public static void startCooldown() {
+        isReady = false;
+
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 5;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
+        }));
+        cooldownTimeline.setCycleCount(5);
+        cooldownTimeline.play();
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        startCooldown();
     }
 }
