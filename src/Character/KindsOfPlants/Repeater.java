@@ -51,6 +51,7 @@ public class Repeater extends PeaPlant implements Serializable {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1.75), e -> {
                     if (getCheckShot()) shoot(pane);
+                    if(isDead())timeline.stop();
                 }),
                 new KeyFrame(Duration.seconds(1.85), e -> {
                     if (getCheckShot()) shoot(pane);

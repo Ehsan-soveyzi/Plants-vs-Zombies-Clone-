@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.security.Key;
+
 public class Plantern extends Plant {
     private static final String planternImageAddress = "/Images/resources/graphics/Plants/Plantern/Plantern.gif";
     private static final String planternCardImageAddress = "/Images/resources/graphics/Cards/plantern.jpg";
@@ -48,6 +50,15 @@ public class Plantern extends Plant {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        setFog(false);
+        timeline = new Timeline(new KeyFrame(Duration.millis(100),event ->{
+            setFog(false);
+            if(isDead()){
+                System.out.println("Plantern dead");
+                setFog(true);
+                timeline.stop();
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 }

@@ -31,6 +31,8 @@ public abstract class SaveGame implements Serializable {
         if(plant instanceof GraveBuster)return new GraveBuster();
         if(plant instanceof ScaredyShroom)return new ScaredyShroom();
         if(plant instanceof PuffShroom)return new PuffShroom();
+        if(plant instanceof Plantern )return new Plantern();
+        if (plant instanceof Blover)return new Blover();
         return null;
     }
 

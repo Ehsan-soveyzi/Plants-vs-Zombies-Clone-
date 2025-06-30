@@ -45,10 +45,10 @@ public class Blover extends Plant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        removeFog();
-        timeline = new Timeline(new KeyFrame(Duration.seconds(5),event -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(50),event -> {
+            removeFog();
         }));
-        timeline.setCycleCount(1);
+        timeline.setCycleCount(100);
         timeline.play();
         timeline.setOnFinished(event -> {
             GameMap.getInstance().initializeFog();

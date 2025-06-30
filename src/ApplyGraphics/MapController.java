@@ -389,9 +389,9 @@ public class MapController {
         for(int i = 0; i < 5;i++){
             for(int j = 5; j < 9;j++){
                 fogView[i][j - 5].setMouseTransparent(true);
+                fogView[i][j - 5].setFitWidth(400);
+                fogView[i][j - 5].setFitHeight(400);
                 if(GameMap.getInstance().getFog(i,j) && !paneWindow.getChildren().contains(fogView[i][j - 5])) {
-                    fogView[i][j - 5].setFitWidth(400);
-                    fogView[i][j - 5].setFitHeight(400);
                     fogView[i][j - 5].setOpacity(0.8);
                     paneWindow.getChildren().add(fogView[i][j - 5]);
                     fogView[i][j - 5].setLayoutX(gridPanes[i][j].localToScreen(gridPanes[i][j - 5].getBoundsInLocal()).getMinX());
