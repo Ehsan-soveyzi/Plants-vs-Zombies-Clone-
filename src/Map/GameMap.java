@@ -1,6 +1,7 @@
 package Map;
 
 import Character.KindsOfPlants.Plant;
+import Character.KindsOfPlants.Plantern;
 import Character.KindsOfZombie.Zombie;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class GameMap {
     private final int COLS = 9;
     private final Plant[][] grid = new Plant[ROWS][COLS];
 
-
     private final boolean[][] graved = new boolean[ROWS][COLS];
+    private final boolean[][] foged = new boolean[ROWS][COLS];
 
     public ArrayList<Plant> plants = new ArrayList<>();
 
@@ -68,6 +69,7 @@ public class GameMap {
                 Pane parent = (Pane) plant.getImageView().getParent();
                 if (parent != null) parent.getChildren().remove(plant.getImageView());
                 plant.setDead(true);
+//                if(plant instanceof Plantern)((Plantern) plant).setFog(true);
             }
             plants.remove(plant);
             grid[row][col] = null;
@@ -81,6 +83,7 @@ public class GameMap {
             }
         }
     }
+
 
     public boolean isValidCell(int row, int col) {
         return row >= 0 && row < ROWS && col >= 0 && col < COLS;
@@ -98,6 +101,14 @@ public class GameMap {
         }
     }
 
+    public void initializeFog(){
+        for(int i = 0;i < ROWS;i++){
+            for(int j = 5;j < COLS;j++){
+                foged[i][j] = true;
+            }
+        }
+    }
+
 
 
     public void cleanGrave(){
@@ -112,6 +123,7 @@ public class GameMap {
     }
     public boolean getGraved(int row, int col) {return graved[row][col];}
     public void setGraved(int row, int col,boolean bool){graved[row][col] = bool;}
+    public void setFoged(int row, int col,boolean bool){foged[row][col] = bool;}
     public ArrayList<Plant> getPlants() {return plants;}
     public int getRows(){
         return ROWS;
@@ -121,6 +133,11 @@ public class GameMap {
     }
     public Plant[][] getGrid() {
         return grid;
+    }
+    public boolean getFog(int row, int col) {return foged[row][col];}
+
+    public boolean[][] getFoged() {
+        return foged;
     }
 }
 

@@ -41,16 +41,8 @@ public abstract class Plant implements Serializable {
 
     public void die() {
         isDead = true;
-        if(timeline != null) timeline.stop();
         GameMap.getInstance().removePlant(row,col);
-    }
-
-    public void setEffect(){
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setHue(5);
-        colorAdjust.setContrast(2);
-        colorAdjust.setBrightness(3);
-        imageView.setEffect(colorAdjust);
+//        if(timeline != null) timeline.stop();
     }
 
     public abstract void updateImageSituation(Pane pane); // abstract

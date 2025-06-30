@@ -48,15 +48,18 @@ public class MapController {
     public static Timeline gameLoop;
     public static long time = 0;
     public static int score = 10000;
+    private final ImageView[][] fogView = new ImageView[5][5];
 
 
     ImageCursor cursor;
     Plant choosenPlant;
     boolean shovelUsed  = false;
     ArrayList<Plant> cardPlants;
+    private final Pane[][] gridPanes = new Pane[5][9];
 
     @FXML
     public void initialize() {
+        GameMap.getInstance().initializeFog();
         zombieFactory = new ZombieFactory(paneWindow);
 
         //check if user enter to this part by loading or playButton.
@@ -83,12 +86,14 @@ public class MapController {
         cardPlants = ChooseCardController.cardPlants;
 
         mouseEvents();
+        createGrid();
 
 
         //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             if(!shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
+            if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)applyFog();
             time += 100;
             if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
             GameMap.getInstance().checkWar();
@@ -101,7 +106,6 @@ public class MapController {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.playFromStart();
 
-        createGrid();
 
         MainMenuController.animateImage(menu);
         menu.setOnMouseClicked(event -> {
@@ -126,6 +130,8 @@ public class MapController {
         else if(plant instanceof TallNut && TallNut.isReady)return new TallNut();
         else if (plant instanceof Repeater && Repeater.isReady)return new Repeater();
         else if(plant instanceof GraveBuster)return new GraveBuster();
+        else if(plant instanceof Blover && Blover.isReady)return new Blover();
+        else if(plant instanceof Plantern && Plantern.isReady)return new Plantern();
         return null;
     }
 
@@ -228,8 +234,10 @@ public class MapController {
             for(int i = 0 ; i < rows ; i++){
             for(int j = 0; j < cols; j++){
                 Pane cell = new Pane();
+                gridPanes[i][j] = cell;
 
                 cell.setPrefSize(80, 80);
+                if(j < 5)fogView[i][j] = new ImageView(new Image("/Images/resources/graphics/extentions/fog0.png"));
 
                     //adding graves!
                     for(Grave grave : Grave.graves){
@@ -331,6 +339,11 @@ public class MapController {
         if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.stop();
         if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.stop();
         if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.stop();
+        if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.stop();
+        if (ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.stop();
+        if(PuffShroom.cooldownTimeline != null) PuffShroom.cooldownTimeline.stop();
+        if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.stop();
+        if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.stop();
     }
 
     private void handleZombiesWave1() {
@@ -370,6 +383,26 @@ public class MapController {
             int lane = rand.nextInt(5);
             zombieFactory.createZombie(types.get(index), lane);
 
+        }
+    }
+    public void applyFog(){
+        for(int i = 0; i < 5;i++){
+            for(int j = 5; j < 9;j++){
+                fogView[i][j - 5].setMouseTransparent(true);
+                fogView[i][j - 5].setFitWidth(400);
+                fogView[i][j - 5].setFitHeight(400);
+                if(GameMap.getInstance().getFog(i,j) && !paneWindow.getChildren().contains(fogView[i][j - 5])) {
+                    fogView[i][j - 5].setOpacity(0.8);
+                    paneWindow.getChildren().add(fogView[i][j - 5]);
+                    fogView[i][j - 5].setLayoutX(gridPanes[i][j].localToScreen(gridPanes[i][j - 5].getBoundsInLocal()).getMinX());
+                    fogView[i][j - 5].setLayoutY(gridPanes[i][j].localToScreen(gridPanes[i][j - 5].getBoundsInLocal()).getMinY() - 200);
+                    fogView[i][j - 5].toFront();
+                    fogView[i][j - 5].setViewOrder(-1);
+                }
+                else if(!GameMap.getInstance().getFog(i,j)) {
+                    paneWindow.getChildren().remove(fogView[i][j - 5]);
+                }
+            }
         }
     }
 

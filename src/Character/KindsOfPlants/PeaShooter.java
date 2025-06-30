@@ -52,6 +52,7 @@ public class PeaShooter extends PeaPlant implements Serializable {
             if(getCheckShot()){
                 shoot(pane);
             }
+            if(isDead())timeline.stop();
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

@@ -54,6 +54,7 @@ public abstract class Zombie implements Serializable {
         setY(row * 140 + 60);
         getImageView().setLayoutX(x);
         getImageView().setLayoutY(y);
+        imageView.setMouseTransparent(true);
     }
 
 

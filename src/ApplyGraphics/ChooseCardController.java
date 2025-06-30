@@ -33,7 +33,8 @@ public class ChooseCardController {
 
     //this use to get the cardView images for each plant.
     public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb()
-            ,new Jalapeno(),new TallNut(),new WallNut(),new PuffShroom(),new IceShroom(),new ScaredyShroom(),new GraveBuster()};
+            ,new Jalapeno(),new TallNut(),new WallNut(),new PuffShroom(),new IceShroom(),new ScaredyShroom(),new GraveBuster(),
+            new Blover(),new Plantern()};
 
 
     @FXML

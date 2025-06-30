@@ -161,6 +161,7 @@ public class PauseGameController implements Serializable {
                 plant.getTimeline().play();
             }
         }
+
         if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.play();
         if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.play();
         if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.play();
@@ -169,6 +170,9 @@ public class PauseGameController implements Serializable {
         if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.play();
         if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.play();
         if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.play();
+        if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.play();
+        if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.play();
+        if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.play();
     }
 
 
