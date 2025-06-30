@@ -16,8 +16,8 @@ public class DoomShroom extends BombPlant implements Serializable {
     public static int cooldown = 7;
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
-    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.gif";
-    private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/DoomShroom.png";
+    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.png";
+    private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/doomshroom.jpg";
     public static Timeline cooldownTimeline;
 
     public DoomShroom() {
