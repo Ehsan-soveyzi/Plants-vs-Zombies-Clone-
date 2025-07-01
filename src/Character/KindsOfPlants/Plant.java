@@ -14,7 +14,7 @@ public abstract class Plant implements Serializable {
     private int hp;
     private double x, y;
     private boolean isDead;
-    private boolean isAwake;
+    private static boolean isMorningAwake;
     private int row;
     private int col;
     protected transient Timeline timeline;
@@ -75,8 +75,9 @@ public abstract class Plant implements Serializable {
     public ImageView getImageView() {return imageView;}
     public void setDead(boolean dead) {isDead = dead;}
     public void setImageView(ImageView imageView) {this.imageView = imageView;}
-    public void setAwake(boolean awake) {isAwake = awake;}
-    public boolean isAwake() {return isAwake;}
+    public void setMorningAwake(boolean morningAwake) {
+        isMorningAwake = morningAwake;}
+    public boolean isMorningAwake() {return isMorningAwake;}
 
 
 }

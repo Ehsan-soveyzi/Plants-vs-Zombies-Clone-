@@ -15,13 +15,21 @@ import java.util.ArrayList;
 public class IceShroom extends Plant implements Serializable {
     private static final String iceShroomImageAddress = "/Images/resources/graphics/Plants/IceShroom/IceShroom/IceShroom.gif";
     private static final String iceShroomCardImageAddress = "/Images/resources/graphics/Cards/IceShroom.png";
+    private static final String iceShroomSleepImage = "/Images/resources/graphics/Plants/IceShroom/IceShroomSleep/IceShroomSleep.gif";
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
     public static PauseTransition freezeTimer;
 
+
     public IceShroom() {
-        super(75,0,new Image(iceShroomImageAddress),new Image(iceShroomCardImageAddress));
+        this(true);
+    }
+    public IceShroom(boolean atNight){
+        this(atNight ? iceShroomImageAddress : iceShroomSleepImage, atNight ? 0 : 5);
+    }
+    public IceShroom(String imageAddress, int hp) {
+        super(75, hp, new Image(imageAddress), new Image(iceShroomCardImageAddress));
     }
 
 

@@ -38,8 +38,8 @@ public class CoffeeBean extends Plant{
         cooldownTimeline.play();
     }
     public void wakeUp(Plant plant) {
-        if (!plant.isAwake()){
-            setAwake(true);
+        if (!plant.isMorningAwake()){
+            setMorningAwake(true);
 
         }
     }

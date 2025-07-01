@@ -17,12 +17,19 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
     public static final String cardViewImageAddress = "/Images/resources/graphics/Cards/ScaredyShroom.png";
     private static final String scaredyShroomImageAddress = "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroom/ScaredyShroom.gif";
     private static final String ScaredyShroomCryImageAddress = "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroomCry/ScaredyShroomCry.gif";
+    private static final String ScaredyShroomSleepImageAddress =  "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroomSleep/ScaredyShroomSleep.gif";
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public ScaredyShroom() {
-        super(25, 5, new Image(scaredyShroomImageAddress), new Image(cardViewImageAddress));
+        this(true);
+    }
+    public ScaredyShroom(boolean isMorningAwake){
+        this(isMorningAwake ? scaredyShroomImageAddress : ScaredyShroomSleepImageAddress);
+    }
+    public ScaredyShroom(String imageAddress) {
+        super(25, 5, new Image(imageAddress), new Image(cardViewImageAddress));
     }
 
 

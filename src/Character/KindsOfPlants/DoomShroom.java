@@ -12,16 +12,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DoomShroom extends BombPlant implements Serializable {
-
     public static int cooldown = 7;
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
     private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.png";
+    private static final String doomShroomSleepAddress = "/Images/resources/graphics/Plants/DoomShroom/Sleep.png";
     private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/doomshroom.jpg";
     public static Timeline cooldownTimeline;
+    
+
 
     public DoomShroom() {
-        super(125, 0, new Image(doomShroomAddress), new Image(doomCardImageAddress));
+        this(true);
+    }
+    public DoomShroom(boolean atNight){
+        this(atNight ? doomShroomAddress : doomShroomSleepAddress, atNight? 0 : 5);
+    }
+    public DoomShroom(String imageAddress, int hp) {
+        super(125, hp, new Image(imageAddress), new Image(doomCardImageAddress));
     }
     @Override
     public void burnZombies() {

@@ -9,14 +9,21 @@ import javafx.util.Duration;
 import java.io.Serializable;
 
 public class HypnoShroom extends Plant implements Serializable {
-    private static final String hypnoShroomImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
+    private static final String hypnoShroomImageAddress = "/Images/resources/graphics/Plants/HypnoShroom/HypnoShroom/HypnoShroom.gif";
     private static final String hypnoShroomCardImageAddress = "/Images/resources/graphics/Cards/HypnoShroom.png";
+    private static final String hypnoShroomSleepImageAddress = "/Images/resources/graphics/Plants/HypnoShroom/HypnoShroomSleep/HypnoShroomSleep.gif";
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public HypnoShroom() {
-        super(75, 5, new Image(hypnoShroomImageAddress), new Image(hypnoShroomCardImageAddress));
+        this(true);
+    }
+    public HypnoShroom(boolean atNight){
+        this(atNight ? hypnoShroomImageAddress : hypnoShroomSleepImageAddress, atNight? 0 : 5);
+    }
+    public HypnoShroom(String imageAddress, int hp) {
+        super(75, hp, new Image(imageAddress), new Image(hypnoShroomCardImageAddress));
     }
 
     public static void startCooldown() {

@@ -1,5 +1,6 @@
 package Character.KindsOfPlants;
 
+import ApplyGraphics.ModeController;
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
@@ -15,12 +16,19 @@ import java.io.Serializable;
 public class PuffShroom extends PeaPlant implements Serializable {
     private static final String cardViewImageAddress = "/Images/resources/graphics/Cards/PuffShroom.png";
     private static final String puffShroomImageAddress = "/Images/resources/graphics/Plants/PuffShroom/PuffShroom.gif";
+    private static final String puffShroomSleepImage = "/Images/resources/graphics/Plants/PuffShroom/PuffShroomSleep.gif";
     public static boolean isReady = true;
     public static int cooldown = 5;
     public static Timeline cooldownTimeline;
 
     public PuffShroom() {
-        super(0, 5, new Image(puffShroomImageAddress), new Image(cardViewImageAddress));
+        this(true);
+    }
+    public PuffShroom(boolean isMorningAwake){
+        this(isMorningAwake ? puffShroomImageAddress : puffShroomSleepImage);
+    }
+    public PuffShroom(String imageAddress) {
+        super(0, 5, new Image(imageAddress), new Image(cardViewImageAddress));
     }
 
     @Override
@@ -42,6 +50,9 @@ public class PuffShroom extends PeaPlant implements Serializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
+    public void updateImageSituation(ModeController.Mode mode) {
+        checkBullet();
     }
     public static void startCooldown() {
         isReady = false;
