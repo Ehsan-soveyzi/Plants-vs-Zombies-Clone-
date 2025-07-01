@@ -136,6 +136,7 @@ public class PauseGameController implements Serializable {
         GameMap.getInstance().plants.clear();
         GameMap.getInstance().refreshPlants();
         Sun.sunList.clear();
+        isWin = 0;
         startTimelines();
     }
 

@@ -21,7 +21,7 @@ public class DoomShroom extends BombPlant implements Serializable {
 
     @Override
     public void burnZombies() {
-
+            
     }
 
     public static void startCooldown() {
