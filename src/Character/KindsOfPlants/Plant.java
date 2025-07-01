@@ -14,6 +14,7 @@ public abstract class Plant implements Serializable {
     private int hp;
     private double x, y;
     private boolean isDead;
+    private boolean isAwake;
     private int row;
     private int col;
     protected transient Timeline timeline;
@@ -32,18 +33,28 @@ public abstract class Plant implements Serializable {
 
     public void takeDamage() {
         if (isDead) return;
+        hp--;
         if (hp <= 0){
             die();
-            return;
         }
-        hp--;
+
     }
 
     public void die() {
         isDead = true;
         GameMap.getInstance().removePlant(row,col);
 //        if(timeline != null) timeline.stop();
+        if(timeline != null) timeline.stop();
     }
+
+    public void setEffect(){
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(5);
+        colorAdjust.setContrast(2);
+        colorAdjust.setBrightness(3);
+        imageView.setEffect(colorAdjust);
+    }
+
 
     public abstract void updateImageSituation(Pane pane); // abstract
 
@@ -64,6 +75,9 @@ public abstract class Plant implements Serializable {
     public ImageView getImageView() {return imageView;}
     public void setDead(boolean dead) {isDead = dead;}
     public void setImageView(ImageView imageView) {this.imageView = imageView;}
+    public void setAwake(boolean awake) {isAwake = awake;}
+    public boolean isAwake() {return isAwake;}
+
 
 }
 
