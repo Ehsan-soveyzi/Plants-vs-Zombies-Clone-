@@ -3,6 +3,7 @@ package Save_Logic;
 import ApplyGraphics.ChooseCardController;
 import ApplyGraphics.MapController;
 import ApplyGraphics.ModeController;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfPlants.PeaShooter;
 import Character.KindsOfPlants.Plant;
 import Character.KindsOfPlants.*;
@@ -35,6 +36,7 @@ public abstract class SaveGame implements Serializable {
         if(plant instanceof Blover)return new Blover();
         if(plant instanceof DoomShroom)return new DoomShroom();
         if(plant instanceof HypnoShroom)return new HypnoShroom();
+        if(plant instanceof IceShroom)return new IceShroom();
         return null;
     }
 
@@ -76,6 +78,8 @@ public abstract class SaveGame implements Serializable {
                 Zombie loadZombie = MapController.zombieFactory.createZombie(zombie,zombie.getRow());
                 loadZombie.setHp(zombie.getHp());
                 loadZombie.setSlowed(zombie.isSlowed());
+                loadZombie.setFreezed(zombie.isFreezed());
+//                loadZombie.updateImageSituation();
             }
 
             for(Plant plant : data.plants){

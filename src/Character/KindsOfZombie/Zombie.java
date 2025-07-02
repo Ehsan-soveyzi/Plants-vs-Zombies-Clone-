@@ -2,6 +2,7 @@ package Character.KindsOfZombie;
 
 import ApplyGraphics.MapController;
 import ApplyGraphics.PauseGameController;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
 import Map.ZombieFactory;
@@ -149,6 +150,7 @@ public abstract class Zombie implements Serializable {
         }
         if (isFreezed){
             setFreezedEffect();
+            freezeZombie();
             return;
         }
         if (isEating) {
@@ -292,6 +294,23 @@ public abstract class Zombie implements Serializable {
         biteTimeline.play();
     }
 
+    public void freezeZombie() {
+        getTimeline().pause();
+        if(getBiteTimeline() != null)getBiteTimeline().pause();
+        freezeTimer = new PauseTransition(Duration.seconds(5));
+        freezeTimer.setOnFinished(event -> {
+            getImageView().setEffect(null);
+            setFreezed(false);
+            if (getTimeline() != null && !isDead()) {
+                getTimeline().play();
+                if (getBiteTimeline() != null)getBiteTimeline().play();
+            }
+        });
+        freezeTimer.play();
+//        zombie.setFreezeTimer(freeze);
+
+    }
+
     public void stopBiting() {
         if (biteTimeline != null) {
             biteTimeline.stop();
@@ -332,6 +351,4 @@ public abstract class Zombie implements Serializable {
     public PauseTransition getFreezeTimer() {
         return freezeTimer;
     }
-    public void setFreezeTimer(PauseTransition freezeTimer) {this.freezeTimer = freezeTimer;}
-
 }

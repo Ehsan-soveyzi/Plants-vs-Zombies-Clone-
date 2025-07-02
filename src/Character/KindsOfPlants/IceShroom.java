@@ -18,7 +18,6 @@ public class IceShroom extends Plant implements Serializable {
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    public static PauseTransition freezeTimer;
 
     public IceShroom() {
         super(75,1000,new Image(iceShroomImageAddress),new Image(iceShroomCardImageAddress));
@@ -36,7 +35,7 @@ public class IceShroom extends Plant implements Serializable {
 
     }
 
-    public static void startCooldown() {
+    public void startCooldown() {
         isReady = false;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
@@ -49,31 +48,11 @@ public class IceShroom extends Plant implements Serializable {
     public void freeze() {
         die();
         for (Zombie zombie : new ArrayList<>(ZombieFactory.zombies)) {
-                freezeZombie(zombie);
+                zombie.setFreezed(true);
                 zombie.takeDamage(1);
+                zombie.updateImageSituation();
         }
     }
 
-    public void freezeZombie(Zombie zombie) {
-
-        zombie.setFreezed(true);
-        zombie.updateImageSituation();
-        zombie.getTimeline().pause();
-        if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
-
-        PauseTransition freeze = new PauseTransition(Duration.seconds(5));
-        freeze.setOnFinished(event -> {
-            zombie.getImageView().setEffect(null);
-            zombie.setFreezed(false);
-            if (zombie.getTimeline() != null && !zombie.isDead()) {
-                zombie.getTimeline().play();
-                if (zombie.getBiteTimeline() != null)zombie.getBiteTimeline().play();
-            }
-        });
-
-        zombie.setFreezeTimer(freeze);
-        freeze.play();
-
-    }
 
 }
