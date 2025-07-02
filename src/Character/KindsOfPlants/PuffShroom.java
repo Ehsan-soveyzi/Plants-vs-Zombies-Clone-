@@ -16,7 +16,7 @@ public class PuffShroom extends PeaPlant implements Serializable {
     private static final String cardViewImageAddress = "/Images/resources/graphics/Cards/PuffShroom.png";
     private static final String puffShroomImageAddress = "/Images/resources/graphics/Plants/PuffShroom/PuffShroom.gif";
     public static boolean isReady = true;
-    public static int cooldown = 5;
+    public static int cooldown = 7;
     public static Timeline cooldownTimeline;
 
     public PuffShroom() {

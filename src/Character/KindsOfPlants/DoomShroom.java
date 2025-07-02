@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class DoomShroom extends BombPlant implements Serializable {
 
-    public static int cooldown = 7;
+    public static int cooldown = 15;
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
     private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.png";
