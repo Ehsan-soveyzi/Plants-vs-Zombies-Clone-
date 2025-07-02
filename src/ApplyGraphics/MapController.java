@@ -283,7 +283,6 @@ public class MapController {
             if(!GameMap.getInstance().isCellEmpty(row, col) && shovelUsed){
                 //using shovel
                 shovel(row, col);
-                System.out.println("cell is already not empty");
             } else if (!GameMap.getInstance().isCellEmpty(row, col)) {
                 System.out.println("cell is already not empty");
             } else if (choosenPlant == null ){
@@ -291,7 +290,7 @@ public class MapController {
             }
             else if(choosenPlant instanceof GraveBuster && !GameMap.getInstance().getGraved(row, col)){
                 System.out.println("graveBooster must use on graves!");
-            } else if (!(choosenPlant instanceof GraveBuster) && GameMap.getInstance().getGraved(row, col)){
+            } else if (!(choosenPlant instanceof GraveBuster) && !cell.getChildren().isEmpty()){
                 System.out.println("can't plant on graves!");
             } else{
                 cell.getChildren().add(choosenPlant.getImageView());

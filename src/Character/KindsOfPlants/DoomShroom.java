@@ -5,6 +5,7 @@ import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -13,31 +14,30 @@ import java.util.ArrayList;
 
 public class DoomShroom extends BombPlant implements Serializable {
 
-    public static int cooldown = 15;
+    public static int cooldown = 1;
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
-    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.png";
+    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.gif";
     private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/doomshroom.jpg";
+    private static final String squareBombAddress = "/Images/resources/graphics/Plants/DoomShroom/square bomb.png";
     public static Timeline cooldownTimeline;
 
     public DoomShroom() {
-        super(125, 0, new Image(doomShroomAddress), new Image(doomCardImageAddress));
+        super(125, 1000, new Image(doomShroomAddress), new Image(doomCardImageAddress));
     }
 
     @Override
     public void burnZombies() {
-//        ArrayList<Zombie> removeZombie = new ArrayList<>();
-//        for(Zombie zombie : ZombieFactory.zombies){
-//            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 1){
-//                removeZombie.add(zombie);
-//            }
-//        }
-//        for(Zombie zombie : removeZombie)zombie.burn();
+        ImageView boom = new ImageView(new Image(squareBombAddress));
+        boom.setLayoutY(boom.getLayoutY() + 25);
+        ((Pane)getImageView().getParent()).getChildren().add(boom);
+        ArrayList<Zombie> zombies = new ArrayList<>();
         for (Zombie zombie : ZombieFactory.zombies){
-            if(Math.abs(this.getRow() - zombie.getRow()) <= 2 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 2){
-                zombie.burn();
+            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 1){
+                zombies.add(zombie);
             }
         }
+        for(Zombie zombie : zombies)zombie.burn();
     }
 
     public static void startCooldown() {
