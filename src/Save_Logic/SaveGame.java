@@ -43,6 +43,7 @@ public abstract class SaveGame implements Serializable {
     public static Bullet identifyKindsOfBullet(Bullet bullet){
         if(bullet instanceof NormalBullet)return new NormalBullet(bullet.getX(),bullet.getY(),bullet.getRow());
         if(bullet instanceof SnowBullet)return new SnowBullet(bullet.getX(),bullet.getY(),bullet.getRow());
+        if(bullet instanceof ShroomBullet)return new ShroomBullet(bullet.getX(),bullet.getY(),bullet.getRow());
         return null;
     }
 
@@ -79,7 +80,6 @@ public abstract class SaveGame implements Serializable {
                 loadZombie.setHp(zombie.getHp());
                 loadZombie.setSlowed(zombie.isSlowed());
                 loadZombie.setFreezed(zombie.isFreezed());
-//                loadZombie.updateImageSituation();
             }
 
             for(Plant plant : data.plants){
