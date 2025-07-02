@@ -41,7 +41,7 @@ public class GameMap {
     public void checkWar() {
         for (Zombie z : ZombieFactory.zombies) {
             for (Plant plant : plants) {
-                if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead()) {
+                if (z.getX() - plant.getX() <= 20 && z.getX() - plant.getX() >= -50 && z.getRow() == plant.getRow() && !z.isEating() && !z.isDead() && !z.isFreezed()) {
                     z.stopWalking();
                     z.getTimeline().stop();
                     z.updateImageSituation();

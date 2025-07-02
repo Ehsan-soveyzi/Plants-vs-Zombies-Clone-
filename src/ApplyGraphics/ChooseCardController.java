@@ -52,6 +52,7 @@ public class ChooseCardController {
             backButton();
         });
     }
+
     //adding imageViews to the grid
     public void createGrid(){
         int counter = 0;

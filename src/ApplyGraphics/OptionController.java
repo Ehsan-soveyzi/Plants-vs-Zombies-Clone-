@@ -54,7 +54,7 @@ public class OptionController {
         try{
             clicked = 1;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Map.fxml"));
-            Parent root = fxmlLoader.load();
+            Parent root = fxmlLoader.load ();
             Scene scene = new Scene(root);
             GameMain.mainStage.setScene(scene);
             GameMain.mainStage.setFullScreen(true);

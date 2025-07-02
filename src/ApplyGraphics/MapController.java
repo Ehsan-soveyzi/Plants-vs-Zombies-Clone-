@@ -327,9 +327,10 @@ public class MapController {
             if(sun.getPause() != null)sun.getPause().stop();
         }
         for(Zombie zombie : ZombieFactory.zombies){
-            if(zombie.getTimeline() != null)zombie.getTimeline().stop();
-            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().stop();
-            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().stop();
+            if(zombie.getTimeline() != null)zombie.getTimeline().pause();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().pause();
+            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
         }
         for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
@@ -348,6 +349,7 @@ public class MapController {
         if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.stop();
         if(ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.stop();
         if(PuffShroom.cooldownTimeline != null) PuffShroom.cooldownTimeline.stop();
+        if(IceShroom.cooldownTimeline != null) IceShroom.cooldownTimeline.stop();
         if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.stop();
         if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.stop();
         if(DoomShroom.cooldownTimeline != null)DoomShroom.cooldownTimeline.stop();

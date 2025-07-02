@@ -107,8 +107,8 @@ public abstract class Zombie implements Serializable {
     public void die() {
         isDead = true;
         if(timeline != null)timeline.stop();
-//        ZombieFactory.zombies.remove(this);
-        Platform.runLater(() -> ZombieFactory.zombies.remove(this));
+        ZombieFactory.zombies.remove(this);
+//        Platform.runLater(() -> ZombieFactory.zombies.remove(this));
         updateImageSituation();
     }
 
@@ -134,9 +134,6 @@ public abstract class Zombie implements Serializable {
         if (isSlowed) {
             setSlowedEffect();
         }
-        if (isFreezed){
-            setFreezedEffect();
-        }
 
         if (isBurn){
             playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
@@ -148,6 +145,10 @@ public abstract class Zombie implements Serializable {
                 return;
             }
             playDeathAnimation(10 ,"/Images/resources/graphics/Zombies/NormalZombie/ZombieDie/ZombieDie_");
+            return;
+        }
+        if (isFreezed){
+            setFreezedEffect();
             return;
         }
         if (isEating) {
@@ -258,7 +259,7 @@ public abstract class Zombie implements Serializable {
             }
 
             isSlowed = true;
-            setSlowedEffect();
+//            setSlowedEffect();
             if (slowTimer != null) slowTimer.stop();
 
 
@@ -277,7 +278,6 @@ public abstract class Zombie implements Serializable {
 
     public void startBiting(Plant plant) {
         if (biteTimeline != null) return; // اگر در حال گاز زدن هست، برنگرد
-        AtomicInteger i = new AtomicInteger(1);
         biteTimeline = new Timeline(new KeyFrame(Duration.millis(eatingSpeed), e -> {
             bite(plant);
             if(isDead){
@@ -327,20 +327,11 @@ public abstract class Zombie implements Serializable {
     public void setImageView(ImageView imageView) {this.imageView = imageView;}
     public void setHp(int hp) {this.hp = hp;}
     public int getHp(){return hp;}
-    public boolean isFreezed() {
-        return isFreezed;
-    }
-    public void setFreezed(boolean freezed) {
-        isFreezed = freezed;
-    }
+    public boolean isFreezed() {return isFreezed;}
+    public void setFreezed(boolean freezed) {isFreezed = freezed;}
     public PauseTransition getFreezeTimer() {
         return freezeTimer;
     }
+    public void setFreezeTimer(PauseTransition freezeTimer) {this.freezeTimer = freezeTimer;}
 
-    public void setFreezeTimer(PauseTransition freezeTimer) {
-        if (this.freezeTimer != null) {
-            this.freezeTimer.stop(); // Cancel previous freeze if exists
-        }
-        this.freezeTimer = freezeTimer;
-    }
 }

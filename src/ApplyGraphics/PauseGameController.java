@@ -5,6 +5,8 @@ import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
 import Save_Logic.SaveGame;
+import javafx.animation.Animation;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -152,9 +154,10 @@ public class PauseGameController implements Serializable {
         }
 
         for(Zombie zombie : ZombieFactory.zombies){
-            if(zombie.getTimeline() != null)zombie.getTimeline().play();
-            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().play();
+            if(zombie.getTimeline() != null && !zombie.isFreezed())zombie.getTimeline().play();
+            if(zombie.getBiteTimeline() != null && !zombie.isFreezed())zombie.getBiteTimeline().play();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().play();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().play();
         }
 
         for(Plant plant : GameMap.getInstance().plants){

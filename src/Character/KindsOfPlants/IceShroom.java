@@ -21,17 +21,21 @@ public class IceShroom extends Plant implements Serializable {
     public static PauseTransition freezeTimer;
 
     public IceShroom() {
-        super(75,0,new Image(iceShroomImageAddress),new Image(iceShroomCardImageAddress));
+        super(75,1000,new Image(iceShroomImageAddress),new Image(iceShroomCardImageAddress));
     }
-
 
 
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        freeze();
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+            freeze();
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
 
     }
+
     public static void startCooldown() {
         isReady = false;
 
@@ -41,20 +45,21 @@ public class IceShroom extends Plant implements Serializable {
         timeline.setCycleCount(1);
         timeline.play();
     }
+
     public void freeze() {
         die();
         for (Zombie zombie : new ArrayList<>(ZombieFactory.zombies)) {
-            if (!zombie.isDead()) {
                 freezeZombie(zombie);
                 zombie.takeDamage(1);
-            }
         }
     }
+
     public void freezeZombie(Zombie zombie) {
-        if (zombie == null || zombie.isDead()) return;
 
         zombie.setFreezed(true);
         zombie.updateImageSituation();
+        zombie.getTimeline().pause();
+        if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
 
         PauseTransition freeze = new PauseTransition(Duration.seconds(5));
         freeze.setOnFinished(event -> {
@@ -62,14 +67,12 @@ public class IceShroom extends Plant implements Serializable {
             zombie.setFreezed(false);
             if (zombie.getTimeline() != null && !zombie.isDead()) {
                 zombie.getTimeline().play();
+                if (zombie.getBiteTimeline() != null)zombie.getBiteTimeline().play();
             }
         });
 
         zombie.setFreezeTimer(freeze);
-        freeze.playFromStart();
-        if (zombie.getTimeline() != null) {
-            zombie.getTimeline().pause();
-        }
+        freeze.play();
 
     }
 

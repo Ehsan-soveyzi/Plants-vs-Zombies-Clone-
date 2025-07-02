@@ -38,7 +38,7 @@ public class GraveBuster extends Plant implements Serializable {
         cooldownTimeline.play();
     }
 
-    public Grave fineGrave() {
+    public Grave findeGrave() {
         for(Grave grave : Grave.graves){
             if(grave.getCol() == getCol() && grave.getRow() == getRow()){
                 return grave;
@@ -50,7 +50,7 @@ public class GraveBuster extends Plant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        grave = fineGrave();
+        grave = findeGrave();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             grave.setHp(grave.getHp() - 1);
         }));

@@ -28,6 +28,7 @@ public class SnowPea extends PeaPlant implements Serializable {
             Bullet snowBullet = new SnowBullet(getX() + 5, getY(), getRow());
             snowBullet.addToPane(pane);
             bulletList.add(snowBullet);
+            String name = "ehsan";
         }
     }
 
