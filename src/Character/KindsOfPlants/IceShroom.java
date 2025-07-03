@@ -39,12 +39,6 @@ public class IceShroom extends Plant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
-            freeze();
-        }));
-        timeline.setCycleCount(1);
-        timeline.play();
-
         if (!isMorning || morningAwake) {
             nightActions(pane);
         } else {

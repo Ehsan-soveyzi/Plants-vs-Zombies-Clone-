@@ -20,6 +20,7 @@ public class DoomShroom extends BombPlant implements Serializable {
     private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.gif";
     private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/doomshroom.jpg";
     private static final String squareBombAddress = "/Images/resources/graphics/Plants/DoomShroom/square bomb.png";
+    private static final String doomShroomSleepAddress = "/Images/resources/graphics/Plants/DoomShroom/Sleep.gif";
     public static Timeline cooldownTimeline;
     private boolean morningAwake = false;
     private boolean isMorning;
