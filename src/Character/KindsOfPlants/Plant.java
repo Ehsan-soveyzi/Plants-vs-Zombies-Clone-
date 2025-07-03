@@ -1,5 +1,6 @@
 package Character.KindsOfPlants;
 
+import ApplyGraphics.ModeController;
 import Map.GameMap;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
@@ -17,11 +18,15 @@ public abstract class Plant implements Serializable {
     private static boolean isMorningAwake;
     private int row;
     private int col;
+    private boolean isDay;
     protected transient Timeline timeline;
     private transient ImageView cardView;
     private transient ImageView imageView;
+    private boolean isShroom;
 
-    Plant(int cost, int hp, Image image,Image cardImage) {
+
+
+    Plant(int cost, int hp, Image image, Image cardImage) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
@@ -29,6 +34,7 @@ public abstract class Plant implements Serializable {
         cardView = new ImageView(cardImage);
         imageView.setLayoutX(imageView.getX() + 20);
         imageView.setLayoutY(imageView.getY() + 20);
+        isDay = ModeController.Mode.DAY == ModeController.getSelectedMode();
     }
 
     public void takeDamage() {
@@ -73,10 +79,9 @@ public abstract class Plant implements Serializable {
     public ImageView getImageView() {return imageView;}
     public void setDead(boolean dead) {isDead = dead;}
     public void setImageView(ImageView imageView) {this.imageView = imageView;}
-    public void setMorningAwake(boolean morningAwake) {
-        isMorningAwake = morningAwake;}
-    public boolean isMorningAwake() {return isMorningAwake;}
-
-
+    public boolean isDay() {return isDay;}
+    public void setDay(boolean day) {isDay = day;}
+    public boolean isShroom() {return isShroom;}
+    public void setShroom(boolean shroom) {isShroom = shroom;}
 }
 

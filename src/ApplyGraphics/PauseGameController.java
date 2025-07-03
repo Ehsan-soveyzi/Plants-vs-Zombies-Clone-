@@ -1,6 +1,7 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
@@ -107,6 +108,7 @@ public class PauseGameController implements Serializable {
     }
 
     public void refreshButtonClicked(){
+        resetCooldowns();
         try{
             clearData();
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Map.fxml"));
@@ -134,12 +136,32 @@ public class PauseGameController implements Serializable {
         ZombieFactory.zombies.clear();
         PeaShooter.bulletList.clear();
         Grave.graves.clear();
+        DoomShroom.explodeArea.clear();
         GameMap.getInstance().cleanGrave();
         GameMap.getInstance().plants.clear();
         GameMap.getInstance().refreshPlants();
         Sun.sunList.clear();
         isWin = 0;
         startTimelines();
+    }
+    public void resetCooldowns(){
+        SunFlower.isReady = true;
+        CherryBomb.isReady = true;
+        Jalapeno.isReady = true;
+        Blover.isReady = true;
+        CoffeeBean.isReady = true;
+        DoomShroom.isReady = true;
+        HypnoShroom.isReady = true;
+        IceShroom.isReady = true;
+        PeaShooter.isReady = true;
+        Repeater.isReady = true;
+        SnowPea.isReady = true;
+        Plantern.isReady = true;
+        ScaredyShroom.isReady = true;
+        PuffShroom.isReady = true;
+        WallNut.isReady = true;
+        TallNut.isReady = true;
+        GraveBuster.isReady = true;
     }
 
     public void startTimelines(){

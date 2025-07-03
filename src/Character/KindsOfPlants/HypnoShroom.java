@@ -15,18 +15,10 @@ public class HypnoShroom extends Plant implements Serializable {
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    private boolean morningAwake = false;
-    private boolean isMorning;
 
     public HypnoShroom() {
-        this(true);
-    }
-    public HypnoShroom(boolean isMorning){
-        this(!isMorning ? hypnoShroomImageAddress : hypnoShroomSleepImageAddress, !isMorning ? 0 : 5);
-        this.isMorning = isMorning;
-    }
-    public HypnoShroom(String imageAddress, int hp) {
-        super(75, hp, new Image(imageAddress), new Image(hypnoShroomCardImageAddress));
+        super(75,5, new Image(hypnoShroomImageAddress), new Image(hypnoShroomCardImageAddress));
+        setShroom(true);
     }
 
     public static void startCooldown() {
@@ -47,11 +39,13 @@ public class HypnoShroom extends Plant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
+        if(!isDay()){
+            getImageView().setImage(new Image(hypnoShroomImageAddress));
+            setHp(1);
+
+        }else{
+            getImageView().setImage(new Image(hypnoShroomSleepImageAddress));
+        }
     }
-    public boolean isMorningAwake() {
-        return morningAwake;
-    }
-    public void setMorningAwake(boolean morningAwake) {
-        this.morningAwake = morningAwake;
-    }
+
 }

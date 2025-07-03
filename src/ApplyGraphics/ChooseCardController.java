@@ -29,7 +29,7 @@ public class ChooseCardController {
     public static VBox cards = new VBox();
     public static GridPane cardList = new GridPane();
 
-    public static ArrayList<Plant> cardPlants = new ArrayList<>();
+    public static ArrayList<Plant> cardPlants;
 
     //this use to get the cardView images for each plant.
     public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb()
@@ -39,6 +39,7 @@ public class ChooseCardController {
 
     @FXML
     public void initialize() {
+        cardPlants = new ArrayList<>();
         cardList = gridPane;
         cards = playerCards;
 

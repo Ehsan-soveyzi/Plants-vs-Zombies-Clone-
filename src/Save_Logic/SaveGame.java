@@ -37,6 +37,7 @@ public abstract class SaveGame implements Serializable {
         if(plant instanceof DoomShroom)return new DoomShroom();
         if(plant instanceof HypnoShroom)return new HypnoShroom();
         if(plant instanceof IceShroom)return new IceShroom();
+        if (plant instanceof CoffeeBean)return new CoffeeBean();
         return null;
     }
 
@@ -89,7 +90,9 @@ public abstract class SaveGame implements Serializable {
                 loadPlant.setX(plant.getX());
                 loadPlant.setY(plant.getY());
                 loadPlant.setCol(plant.getCol());
-                GameMap.getInstance().plants.add(loadPlant);
+                loadPlant.setShroom(plant.isShroom());
+                loadPlant.setDay(plant.isDay());
+                GameMap.plants.add(loadPlant);
             }
 
             ChooseCardController.cards.getChildren().clear();
@@ -106,6 +109,7 @@ public abstract class SaveGame implements Serializable {
                 Bullet loadBullet = identifyKindsOfBullet(bullet);
                 PeaPlant.bulletList.add(loadBullet);
             }
+            DoomShroom.explodeArea.addAll(data.explodes);
             for(Sun sun : data.suns){
                 sun.setImageView(new ImageView(new Image("/Images/resources/graphics/Plants/Sun/sun.png")));
                 sun.getImageView().setX(sun.getX());

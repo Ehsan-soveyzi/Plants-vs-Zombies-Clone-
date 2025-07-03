@@ -19,45 +19,26 @@ public class IceShroom extends Plant implements Serializable {
     private static final String iceShroomSleepImage = "/Images/resources/graphics/Plants/IceShroom/IceShroomSleep/IceShroomSleep.gif";
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    private boolean morningAwake = false;
-    private boolean isMorning;
-
-
 
     public IceShroom() {
-        this(true);
-    }
-    public IceShroom(boolean isMorning){
-        this(!isMorning ? iceShroomImageAddress : iceShroomSleepImage, !isMorning  ? 0 : 5);
-        this.isMorning = isMorning;
-    }
-
-    public IceShroom(String imageAddress, int hp) {
-        super(75, hp, new Image(imageAddress), new Image(iceShroomCardImageAddress));
+        super(75,7, new Image(iceShroomImageAddress), new Image(iceShroomCardImageAddress));
+        setShroom(true);
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        if (!isMorning || morningAwake) {
-            nightActions(pane);
-        } else {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
-                if (morningAwake) {
-                    nightActions(pane);
-                    ((Timeline)e.getSource()).stop();
-                }
+        if(!isDay()){
+            getImageView().setImage(new Image(iceShroomImageAddress));
+            setHp(1000);
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+                freeze();
             }));
-            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.setCycleCount(1);
             timeline.play();
+        }else{
+            getImageView().setImage(new Image(iceShroomSleepImage));
         }
-    }
-    private void nightActions(Pane pane) {
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
-            freeze();
-        }));
-        timeline.setCycleCount(1);
-        timeline.play();
     }
 
     public void startCooldown() {

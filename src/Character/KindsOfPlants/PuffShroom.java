@@ -18,20 +18,12 @@ public class PuffShroom extends PeaPlant implements Serializable {
     private static final String puffShroomImageAddress = "/Images/resources/graphics/Plants/PuffShroom/PuffShroom.gif";
     private static final String puffShroomSleepImage = "/Images/resources/graphics/Plants/PuffShroom/PuffShroomSleep.gif";
     public static boolean isReady = true;
-    public static int cooldown = 7;
+    public static int cooldown = 1;
     public static Timeline cooldownTimeline;
-    private boolean morningAwake = false;
-    private boolean isMorning;
 
     public PuffShroom() {
-        this(true);
-    }
-    public PuffShroom(boolean isMorning){
-        this(!isMorning ? puffShroomImageAddress : puffShroomSleepImage);
-        this.isMorning = isMorning;
-    }
-    public PuffShroom(String imageAddress) {
-        super(0, 5, new Image(imageAddress), new Image(cardViewImageAddress));
+        super(0, 5, new Image(puffShroomImageAddress), new Image(cardViewImageAddress));
+        setShroom(true);
     }
 
     @Override
@@ -46,41 +38,34 @@ public class PuffShroom extends PeaPlant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        if (!isMorning || morningAwake) {
-            nightActions(pane);
-        } else {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
-                if (morningAwake) {
-                    nightActions(pane);
-                    ((Timeline)e.getSource()).stop();
+        if(!isDay()){
+            getImageView().setImage(new Image(puffShroomImageAddress));
+            checkBullet();
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
+                if(getCheckShot()){
+                    shoot(pane);
                 }
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
         }
+        else{
+            getImageView().setImage(new Image(puffShroomSleepImage));
+        }
     }
-    private void nightActions(Pane pane) {
-        checkBullet();
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
-            if(getCheckShot()){
-                shoot(pane);
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
+
     public static void startCooldown() {
         isReady = false;
 
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 7;
+                cooldown = 1;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.setCycleCount(1);
         cooldownTimeline.play();
     }
     @Override
@@ -93,11 +78,5 @@ public class PuffShroom extends PeaPlant implements Serializable {
             }
         }
         setCheckShot(zombieInRow);
-    }
-    public boolean isMorningAwake() {
-        return morningAwake;
-    }
-    public void setMorningAwake(boolean morningAwake) {
-        this.morningAwake = morningAwake;
     }
 }

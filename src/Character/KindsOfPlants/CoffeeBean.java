@@ -15,6 +15,7 @@ public class CoffeeBean extends Plant{
     private static final String coffeeBeanImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBean.gif";
     private static final String coffeeBeanCardImageAddress = "/Images/resources/graphics/Cards/CoffeeBean.jpg";
     private static final String coffeeBeanEatImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBeanEat.gif";
+    private boolean canWakeUp;
 
 
     public CoffeeBean() {
@@ -24,15 +25,18 @@ public class CoffeeBean extends Plant{
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        Plant plant  = findPlant();
+        Plant plant  = GameMap.getInstance().getPlant(getRow(), getCol());
         PauseTransition pause = new PauseTransition(Duration.millis(300));
+        getImageView().setImage(new Image(coffeeBeanEatImageAddress));
         pause.setOnFinished(event -> {
             ((Pane)getImageView().getParent()).getChildren().remove(getImageView());
-            assert plant != null;
             wakeUp(plant);
+            if(canWakeUp)plant.updateImageSituation(pane);
+            canWakeUp = false;
+
+            GameMap.plants.remove(this);
         });
         pause.play();
-
     }
 
     public static void startCooldown() {
@@ -49,18 +53,11 @@ public class CoffeeBean extends Plant{
         cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
-    private Plant findPlant() {
-        for (Plant p : GameMap.plants){
-            if (p.getCol() == getCol() && p.getRow() == getRow()){
-                return p;
-            }
-        }
-        return null;
-    }
-    public void wakeUp(Plant plant) {
-        if (!plant.isMorningAwake()){
-            plant.setMorningAwake(true);
 
-        }
+    public void wakeUp(Plant plant) {
+            if(plant.isDay() && plant.isShroom()){
+                plant.setDay(false);
+                canWakeUp = true;
+            }
     }
 }

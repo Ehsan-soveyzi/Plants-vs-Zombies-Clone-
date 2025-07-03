@@ -22,18 +22,11 @@ public class DoomShroom extends BombPlant implements Serializable {
     private static final String squareBombAddress = "/Images/resources/graphics/Plants/DoomShroom/square bomb.png";
     private static final String doomShroomSleepAddress = "/Images/resources/graphics/Plants/DoomShroom/Sleep.gif";
     public static Timeline cooldownTimeline;
-    private boolean morningAwake = false;
-    private boolean isMorning;
+    public static ArrayList<Plant> explodeArea = new ArrayList<>();
 
     public DoomShroom() {
-        this(true);
-    }
-    public DoomShroom(boolean isMorning){
-        this(!isMorning ? doomShroomAddress : doomShroomSleepAddress, !isMorning ? 0 : 5);
-        this.isMorning = isMorning;
-    }
-    public DoomShroom(String imageAddress, int hp) {
-        super(125, hp, new Image(imageAddress), new Image(doomCardImageAddress));
+        super(125, 5, new Image(doomShroomAddress), new Image(doomCardImageAddress));
+        setShroom(true);
     }
 
     @Override
@@ -68,28 +61,13 @@ public class DoomShroom extends BombPlant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        if (!isMorning || morningAwake) {
-            nightActions(pane);
-        } else {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
-                if (morningAwake) {
-                    nightActions(pane);
-                    ((Timeline)e.getSource()).stop();
-                }
-            }));
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
+        if(!isDay()){
+            setHp(1000);
+            burnAnimation(burnDoomShroomImageAddress);
+            explodeArea.add(this);
+        }else{
+            getImageView().setImage(new Image(doomShroomSleepAddress));
         }
     }
-    private void nightActions(Pane pane) {
-        burnAnimation(burnDoomShroomImageAddress);
-        startCooldown();
-    }
 
-    public boolean isMorningAwake() {
-        return morningAwake;
-    }
-    public void setMorningAwake(boolean morningAwake) {
-        this.morningAwake = morningAwake;
-    }
 }

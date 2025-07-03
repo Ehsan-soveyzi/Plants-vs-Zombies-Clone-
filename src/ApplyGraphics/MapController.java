@@ -129,25 +129,15 @@ public class MapController {
         else if(plant instanceof Jalapeno && Jalapeno.isReady)return new Jalapeno();
         else if(plant instanceof CherryBomb && CherryBomb.isReady)return new CherryBomb();
         else if(plant instanceof TallNut && TallNut.isReady)return new TallNut();
-        else if (plant instanceof Repeater && Repeater.isReady)return new Repeater();
+        else if(plant instanceof Repeater && Repeater.isReady)return new Repeater();
         else if(plant instanceof GraveBuster)return new GraveBuster();
         else if(plant instanceof Blover && Blover.isReady)return new Blover();
         else if(plant instanceof Plantern && Plantern.isReady)return new Plantern();
-        else if(plant instanceof DoomShroom && DoomShroom.isReady){
-            return new DoomShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
-        }
-        else if(plant instanceof HypnoShroom && HypnoShroom.isReady){
-            return new HypnoShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
-        }
-        else if(plant instanceof ScaredyShroom && ScaredyShroom.isReady){
-            return new ScaredyShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
-        }
-        else if(plant instanceof PuffShroom && PuffShroom.isReady){
-            return new PuffShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
-        }
-        else if(plant instanceof IceShroom && IceShroom.isReady){
-            return new IceShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
-        }
+        else if(plant instanceof DoomShroom && DoomShroom.isReady){return new DoomShroom();}
+        else if(plant instanceof HypnoShroom && HypnoShroom.isReady){return new HypnoShroom();}
+        else if(plant instanceof ScaredyShroom && ScaredyShroom.isReady){return new ScaredyShroom();}
+        else if(plant instanceof PuffShroom && PuffShroom.isReady){return new PuffShroom();}
+        else if(plant instanceof IceShroom && IceShroom.isReady){return new IceShroom();}
         else if(plant instanceof CoffeeBean && CoffeeBean.isReady)return new CoffeeBean();
         return null;
     }
@@ -272,6 +262,12 @@ public class MapController {
                         }
                     }
 
+                    for(Plant plant : DoomShroom.explodeArea){
+                        if(plant.getCol() == j && plant.getRow() == i){
+                            cell.getChildren().add(new ImageView(new Image("/Images/resources/graphics/Plants/DoomShroom/square bomb.png")));
+                        }
+                    }
+
                     //this added when loading action
                     for(Plant plant : GameMap.getInstance().plants){
                         if(plant.getRow() == i && plant.getCol() == j){
@@ -293,24 +289,24 @@ public class MapController {
             if(!GameMap.getInstance().isCellEmpty(row, col) && shovelUsed){
                 //using shovel
                 shovel(row, col);
+                System.out.println("shovel used!");
+            }else if (choosenPlant instanceof CoffeeBean && GameMap.getInstance().isCellEmpty(row, col)) {
+                System.out.println("coffeeBean can only used on Plants!");
+            } else if (!GameMap.getInstance().isCellEmpty(row, col) && !(choosenPlant instanceof CoffeeBean)) {
                 System.out.println("cell is already not empty");
-            } else if (choosenPlant instanceof CoffeeBean && !GameMap.getInstance().isCellEmpty(row, col)) {
-
-            } else if (choosenPlant instanceof CoffeeBean && GameMap.getInstance().isCellEmpty(row, col)) {
-                System.out.println("coffee bean shouldn't plant on empty cell");
-            } else if (!GameMap.getInstance().isCellEmpty(row, col)) {
-                System.out.println("cell is already not empty");
-            } else if (choosenPlant == null ){
+            } else if (choosenPlant == null){
                 System.out.println("No plant selected");
             }
             else if(choosenPlant instanceof GraveBuster && !GameMap.getInstance().getGraved(row, col)){
                 System.out.println("graveBooster must use on graves!");
-            } else if (!(choosenPlant instanceof GraveBuster) && !cell.getChildren().isEmpty()){
+            } else if (!(choosenPlant instanceof GraveBuster) && GameMap.getInstance().getGraved(row, col)){
                 System.out.println("can't plant on graves!");
+            } else if (!cell.getChildren().isEmpty() && GameMap.getInstance().isCellEmpty(row, col) && !GameMap.getInstance().getGraved(row, col)) {
+                System.out.println("can't plant on exploded cell!");
             } else{
                 cell.getChildren().add(choosenPlant.getImageView());
                 GameMap.getInstance().addPlant(choosenPlant, row, col);
-                GameMap.getInstance().plants.add(choosenPlant);
+                GameMap.plants.add(choosenPlant);
                 choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
                 choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
                 choosenPlant.setRow(row);

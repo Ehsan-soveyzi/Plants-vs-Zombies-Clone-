@@ -21,18 +21,10 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    private boolean morningAwake = false;
-    private boolean isMorning;
 
     public ScaredyShroom() {
-        this(true);
-    }
-    public ScaredyShroom(boolean isMorning){
-        this(!isMorning ? scaredyShroomImageAddress : ScaredyShroomSleepImageAddress);
-        this.isMorning = isMorning;
-    }
-    public ScaredyShroom(String imageAddress) {
-        super(25, 5, new Image(imageAddress), new Image(cardViewImageAddress));
+        super(25, 5, new Image(scaredyShroomImageAddress), new Image(cardViewImageAddress));
+        setShroom(true);
     }
 
 
@@ -47,30 +39,22 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
 
     public void updateImageSituation(Pane pane) {
         startCooldown();
-        if (!isMorning || morningAwake) {
-            nightActions(pane);
-        } else {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
-                if (morningAwake) {
-                    nightActions(pane);
-                    ((Timeline)e.getSource()).stop();
+        if(!isDay()){
+            getImageView().setImage(new Image(scaredyShroomImageAddress));
+            checkBullet();
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
+                if(getCheckShot()){
+                    shoot(pane);
                 }
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
         }
+        else{
+            getImageView().setImage(new Image(ScaredyShroomSleepImageAddress));
+        }
     }
 
-    private void nightActions(Pane pane) {
-        checkBullet();
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
-            if(getCheckShot()){
-                shoot(pane);
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
 
     public static void startCooldown() {
         isReady = false;
@@ -103,12 +87,6 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
             else getImageView().setImage(new Image(scaredyShroomImageAddress));
         }
         setCheckShot(zombieInRow);
-    }
-    public boolean isMorningAwake() {
-        return morningAwake;
-    }
-    public void setMorningAwake(boolean morningAwake) {
-        this.morningAwake = morningAwake;
     }
 
 }

@@ -33,6 +33,7 @@ public class SaveData implements Serializable {
     ArrayList<Plant> playerCard;
     ArrayList<Bullet> bullets;
     ArrayList<Grave> graves;
+    ArrayList<Plant>explodes;
     public SaveData() {
             this.mode = ModeController.getSelectedMode();
             this.score = MapController.score;
@@ -52,5 +53,6 @@ public class SaveData implements Serializable {
             this.suns = Sun.sunList;
             this.playerCard = ChooseCardController.cardPlants;
             this.bullets = PeaPlant.bulletList;
+            this.explodes = DoomShroom.explodeArea;
     }
 }
