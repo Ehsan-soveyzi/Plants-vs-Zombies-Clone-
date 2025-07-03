@@ -92,7 +92,7 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
 
         for (Zombie z : ZombieFactory.zombies) {
 
-            if (z.getRow() == getRow() && z.getX() - 10 >= getX()) {
+            if (z.getRow() == getRow() && z.getX() - 10 >= getX() && z.getCol() - getCol() >= 2) {
                 zombieInRow = true;
             }
             else if (z.getRow() == getRow() && z.getX() - 10 >= getX() && z.getCol() - getCol() < 2){
