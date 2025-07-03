@@ -135,7 +135,6 @@ public class MapController {
         else if(plant instanceof Plantern && Plantern.isReady)return new Plantern();
         else if(plant instanceof DoomShroom && DoomShroom.isReady){
             return new DoomShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
-
         }
         else if(plant instanceof HypnoShroom && HypnoShroom.isReady){
             return new HypnoShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
@@ -149,6 +148,7 @@ public class MapController {
         else if(plant instanceof IceShroom && IceShroom.isReady){
             return new IceShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
         }
+        else if(plant instanceof CoffeeBean && CoffeeBean.isReady)return new CoffeeBean();
         return null;
     }
 
@@ -245,7 +245,6 @@ public class MapController {
 
         if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT && OptionController.clicked == -1) {
             GameMap.getInstance().generateGrave();
-            System.out.println("are you fucking keeding me !");
         }
 
             for(int i = 0 ; i < rows ; i++){

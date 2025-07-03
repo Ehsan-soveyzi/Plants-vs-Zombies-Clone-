@@ -1,7 +1,6 @@
 package Character.KindsOfPlants;
 
 import Map.GameMap;
-import Map.Grave;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -14,12 +13,11 @@ public class CoffeeBean extends Plant{
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
     private static final String coffeeBeanImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBean.gif";
-    private static final String coffeeBeanCardImageAddress = "/new_resources/images/Card/Plants/CoffeeBean.png";
+    private static final String coffeeBeanCardImageAddress = "/Images/resources/graphics/Cards/CoffeeBean.jpg";
     private static final String coffeeBeanEatImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBeanEat.gif";
-    private GameMap gameMap;
 
 
-    CoffeeBean() {
+    public CoffeeBean() {
         super(75, 0, new Image(coffeeBeanImageAddress), new Image(coffeeBeanCardImageAddress));
     }
 
@@ -36,6 +34,7 @@ public class CoffeeBean extends Plant{
         pause.play();
 
     }
+
     public static void startCooldown() {
         isReady = false;
 

@@ -45,7 +45,6 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
         }
     }
 
-
     public void updateImageSituation(Pane pane) {
         startCooldown();
         if (!isMorning || morningAwake) {
@@ -61,6 +60,7 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
             timeline.play();
         }
     }
+
     private void nightActions(Pane pane) {
         checkBullet();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{

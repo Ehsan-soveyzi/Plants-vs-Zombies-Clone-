@@ -85,6 +85,7 @@ public class DoomShroom extends BombPlant implements Serializable {
         burnAnimation(burnDoomShroomImageAddress);
         startCooldown();
     }
+
     public boolean isMorningAwake() {
         return morningAwake;
     }
