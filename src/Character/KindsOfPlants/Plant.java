@@ -43,8 +43,6 @@ public abstract class Plant implements Serializable {
     public void die() {
         isDead = true;
         GameMap.getInstance().removePlant(row,col);
-//        if(timeline != null) timeline.stop();
-        if(timeline != null) timeline.stop();
     }
 
     public void setEffect(){

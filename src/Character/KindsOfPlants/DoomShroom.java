@@ -5,6 +5,7 @@ import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -12,12 +13,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DoomShroom extends BombPlant implements Serializable {
-    public static int cooldown = 7;
+
+    public static int cooldown = 1;
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
-    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.png";
-    private static final String doomShroomSleepAddress = "/Images/resources/graphics/Plants/DoomShroom/Sleep.gif";
+    private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.gif";
     private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/doomshroom.jpg";
+    private static final String squareBombAddress = "/Images/resources/graphics/Plants/DoomShroom/square bomb.png";
     public static Timeline cooldownTimeline;
     private boolean morningAwake = false;
     private boolean isMorning;
@@ -32,25 +34,25 @@ public class DoomShroom extends BombPlant implements Serializable {
     public DoomShroom(String imageAddress, int hp) {
         super(125, hp, new Image(imageAddress), new Image(doomCardImageAddress));
     }
+
     @Override
     public void burnZombies() {
-//        ArrayList<Zombie> removeZombie = new ArrayList<>();
-//        for(Zombie zombie : ZombieFactory.zombies){
-//            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 1){
-//                removeZombie.add(zombie);
-//            }
-//        }
-//        for(Zombie zombie : removeZombie)zombie.burn();
+        ImageView boom = new ImageView(new Image(squareBombAddress));
+        boom.setLayoutY(boom.getLayoutY() + 25);
+        ((Pane)getImageView().getParent()).getChildren().add(boom);
+        ArrayList<Zombie> zombies = new ArrayList<>();
         for (Zombie zombie : ZombieFactory.zombies){
-            if(Math.abs(this.getRow() - zombie.getRow()) <= 2 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 2){
-                zombie.burn();
+            if(Math.abs(this.getRow() - zombie.getRow()) <= 1 && Math.abs(this.getCol() - (int)zombie.getCol()) <= 1){
+                zombies.add(zombie);
             }
         }
+        for(Zombie zombie : zombies)zombie.burn();
     }
+
     public static void startCooldown() {
         isReady = false;
 
-        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             cooldown--;
             if(cooldown == 0) {
                 cooldown = 7;
@@ -80,6 +82,7 @@ public class DoomShroom extends BombPlant implements Serializable {
     }
     private void nightActions(Pane pane) {
         burnAnimation(burnDoomShroomImageAddress);
+        startCooldown();
     }
     public boolean isMorningAwake() {
         return morningAwake;
@@ -87,6 +90,4 @@ public class DoomShroom extends BombPlant implements Serializable {
     public void setMorningAwake(boolean morningAwake) {
         this.morningAwake = morningAwake;
     }
-
-
 }

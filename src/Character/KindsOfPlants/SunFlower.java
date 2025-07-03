@@ -13,7 +13,6 @@ import java.util.Random;
 public class SunFlower extends Plant implements Serializable {
     private static final String sunImageAddress = "/Images/resources/graphics/Plants/SunFlower/SunFlower.gif";
     private static final String sunFlowerCardImageAddress = "/Images/resources/graphics/Cards/SunFlower.png";
-    public static final ImageView cardView = new ImageView(new Image(sunFlowerCardImageAddress));
     public static int cooldown = 5;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;

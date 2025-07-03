@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Repeater extends PeaPlant implements Serializable {
     private static final String repeaterImageAddress = "/Images/resources/graphics/Plants/RepeaterPea/Repeater.gif";
     private static final String repeaterCardImageAddress = "/Images/resources/graphics/Cards/Repeater.png";
-    public static int cooldown = 7;
+    public static int cooldown = 10;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 

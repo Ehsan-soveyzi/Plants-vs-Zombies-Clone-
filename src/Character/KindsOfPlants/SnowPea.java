@@ -13,7 +13,6 @@ import java.io.Serializable;
 public class SnowPea extends PeaPlant implements Serializable {
     private static final String snowPeaImageAddress = "/images/resources/graphics/Plants/SnowPea/SnowPea.gif";
     private static final String snowPeaCardImageAddress = "/Images/resources/graphics/Cards/SnowPea.png";
-    public static final ImageView cardView = new ImageView(new Image(snowPeaCardImageAddress));
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
@@ -28,6 +27,7 @@ public class SnowPea extends PeaPlant implements Serializable {
             Bullet snowBullet = new SnowBullet(getX() + 5, getY(), getRow());
             snowBullet.addToPane(pane);
             bulletList.add(snowBullet);
+            String name = "ehsan";
         }
     }
 

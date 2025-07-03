@@ -306,7 +306,7 @@ public class MapController {
             }
             else if(choosenPlant instanceof GraveBuster && !GameMap.getInstance().getGraved(row, col)){
                 System.out.println("graveBooster must use on graves!");
-            } else if (!(choosenPlant instanceof GraveBuster) && GameMap.getInstance().getGraved(row, col)){
+            } else if (!(choosenPlant instanceof GraveBuster) && !cell.getChildren().isEmpty()){
                 System.out.println("can't plant on graves!");
             } else{
                 cell.getChildren().add(choosenPlant.getImageView());
@@ -335,38 +335,40 @@ public class MapController {
     //apply when pausing the game for stop the timelines!
     public static void stopTheGame(){
         for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
-            bullet.getTimeline().stop();
+            bullet.getTimeline().pause();
         }
         for(Sun sun : Sun.sunList){
-            if(sun.getTimeline() != null)sun.getTimeline().stop();
-            if(sun.getPause() != null)sun.getPause().stop();
+            if(sun.getTimeline() != null)sun.getTimeline().pause();
+            if(sun.getPause() != null)sun.getPause().pause();
         }
         for(Zombie zombie : ZombieFactory.zombies){
-            if(zombie.getTimeline() != null)zombie.getTimeline().stop();
-            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().stop();
-            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().stop();
+            if(zombie.getTimeline() != null)zombie.getTimeline().pause();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().pause();
+            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
         }
         for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
-                plant.getTimeline().stop();
+                plant.getTimeline().pause();
             }
         }
         //stop the cooldowns of each plant
-        if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.stop();
-        if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.stop();
-        if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.stop();
-        if(SunFlower.cooldownTimeline != null) SunFlower.cooldownTimeline.stop();
-        if(TallNut.cooldownTimeline != null) TallNut.cooldownTimeline.stop();
-        if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.stop();
-        if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.stop();
-        if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.stop();
-        if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.stop();
-        if(ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.stop();
-        if(PuffShroom.cooldownTimeline != null) PuffShroom.cooldownTimeline.stop();
-        if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.stop();
-        if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.stop();
-        if(DoomShroom.cooldownTimeline != null)DoomShroom.cooldownTimeline.stop();
-        if(HypnoShroom.cooldownTimeline != null)HypnoShroom.cooldownTimeline.stop();
+        if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.pause();
+        if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.pause();
+        if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.pause();
+        if(SunFlower.cooldownTimeline != null) SunFlower.cooldownTimeline.pause();
+        if(TallNut.cooldownTimeline != null) TallNut.cooldownTimeline.pause();
+        if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.pause();
+        if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.pause();
+        if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.pause();
+        if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.pause();
+        if(ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.pause();
+        if(PuffShroom.cooldownTimeline != null) PuffShroom.cooldownTimeline.pause();
+        if(IceShroom.cooldownTimeline != null) IceShroom.cooldownTimeline.pause();
+        if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.pause();
+        if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.pause();
+        if(DoomShroom.cooldownTimeline != null)DoomShroom.cooldownTimeline.pause();
+        if(HypnoShroom.cooldownTimeline != null)HypnoShroom.cooldownTimeline.pause();
     }
 
     private void handleZombiesWave1() {

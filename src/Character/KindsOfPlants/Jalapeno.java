@@ -14,7 +14,7 @@ public class Jalapeno extends BombPlant implements Serializable {
     private static final String jalapenoCardImageAddress = "/Images/resources/graphics/Cards/Jalapeno.png";
     private static final String JalapenoImageAddress = "/Images/resources/graphics/Plants/Jalapeno/Jalapeno/Jalapeno.gif";
     private static final String BurnJalapenoImageAddress =  "/Images/resources/graphics/Plants/Jalapeno/JalapenoExplode/JalapenoAttack.gif";
-    public static int cooldown = 5;
+    public static int cooldown = 1;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
