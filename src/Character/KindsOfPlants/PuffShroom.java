@@ -20,12 +20,15 @@ public class PuffShroom extends PeaPlant implements Serializable {
     public static boolean isReady = true;
     public static int cooldown = 5;
     public static Timeline cooldownTimeline;
+    private boolean morningAwake = false;
+    private boolean isMorning;
 
     public PuffShroom() {
         this(true);
     }
-    public PuffShroom(boolean isMorningAwake){
-        this(isMorningAwake ? puffShroomImageAddress : puffShroomSleepImage);
+    public PuffShroom(boolean isMorning){
+        this(!isMorning ? puffShroomImageAddress : puffShroomSleepImage);
+        this.isMorning = isMorning;
     }
     public PuffShroom(String imageAddress) {
         super(0, 5, new Image(imageAddress), new Image(cardViewImageAddress));
@@ -42,6 +45,21 @@ public class PuffShroom extends PeaPlant implements Serializable {
 
     @Override
     public void updateImageSituation(Pane pane) {
+        startCooldown();
+        if (!isMorning || morningAwake) {
+            nightActions(pane);
+        } else {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+                if (morningAwake) {
+                    nightActions(pane);
+                    ((Timeline)e.getSource()).stop();
+                }
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
+    }
+    private void nightActions(Pane pane) {
         checkBullet();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
             if(getCheckShot()){
@@ -50,9 +68,6 @@ public class PuffShroom extends PeaPlant implements Serializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-    }
-    public void updateImageSituation(ModeController.Mode mode) {
-        checkBullet();
     }
     public static void startCooldown() {
         isReady = false;
@@ -78,5 +93,11 @@ public class PuffShroom extends PeaPlant implements Serializable {
             }
         }
         setCheckShot(zombieInRow);
+    }
+    public boolean isMorningAwake() {
+        return morningAwake;
+    }
+    public void setMorningAwake(boolean morningAwake) {
+        this.morningAwake = morningAwake;
     }
 }

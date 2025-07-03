@@ -19,26 +19,40 @@ public class IceShroom extends Plant implements Serializable {
     public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
-    public static PauseTransition freezeTimer;
+    private boolean morningAwake = false;
+    private boolean isMorning;
+
 
 
     public IceShroom() {
         this(true);
     }
-    public IceShroom(boolean atNight){
-        this(atNight ? iceShroomImageAddress : iceShroomSleepImage, atNight ? 0 : 5);
+    public IceShroom(boolean isMorning){
+        this(!isMorning ? iceShroomImageAddress : iceShroomSleepImage, !isMorning  ? 0 : 5);
+        this.isMorning = isMorning;
     }
     public IceShroom(String imageAddress, int hp) {
         super(75, hp, new Image(imageAddress), new Image(iceShroomCardImageAddress));
     }
 
-
-
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
+        if (!isMorning || morningAwake) {
+            nightActions(pane);
+        } else {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+                if (morningAwake) {
+                    nightActions(pane);
+                    ((Timeline)e.getSource()).stop();
+                }
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
+    }
+    private void nightActions(Pane pane) {
         freeze();
-
     }
     public static void startCooldown() {
         isReady = false;
@@ -79,6 +93,12 @@ public class IceShroom extends Plant implements Serializable {
             zombie.getTimeline().pause();
         }
 
+    }
+    public boolean isMorningAwake() {
+        return morningAwake;
+    }
+    public void setMorningAwake(boolean morningAwake) {
+        this.morningAwake = morningAwake;
     }
 
 }

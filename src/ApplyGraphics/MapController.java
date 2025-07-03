@@ -133,11 +133,22 @@ public class MapController {
         else if(plant instanceof GraveBuster)return new GraveBuster();
         else if(plant instanceof Blover && Blover.isReady)return new Blover();
         else if(plant instanceof Plantern && Plantern.isReady)return new Plantern();
-        else if(plant instanceof DoomShroom && DoomShroom.isReady)return new DoomShroom();
-        else if(plant instanceof HypnoShroom && HypnoShroom.isReady)return new HypnoShroom();
-        else if(plant instanceof ScaredyShroom && ScaredyShroom.isReady)return new ScaredyShroom();
-        else if(plant instanceof PuffShroom && PuffShroom.isReady)return new PuffShroom();
-        else if(plant instanceof IceShroom && IceShroom.isReady)return new IceShroom();
+        else if(plant instanceof DoomShroom && DoomShroom.isReady){
+            return new DoomShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
+
+        }
+        else if(plant instanceof HypnoShroom && HypnoShroom.isReady){
+            return new HypnoShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
+        }
+        else if(plant instanceof ScaredyShroom && ScaredyShroom.isReady){
+            return new ScaredyShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
+        }
+        else if(plant instanceof PuffShroom && PuffShroom.isReady){
+            return new PuffShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
+        }
+        else if(plant instanceof IceShroom && IceShroom.isReady){
+            return new IceShroom(!(ModeController.getSelectedMode() == ModeController.Mode.NIGHT));
+        }
         return null;
     }
 
@@ -284,6 +295,10 @@ public class MapController {
                 //using shovel
                 shovel(row, col);
                 System.out.println("cell is already not empty");
+            } else if (choosenPlant instanceof CoffeeBean && !GameMap.getInstance().isCellEmpty(row, col)) {
+
+            } else if (choosenPlant instanceof CoffeeBean && GameMap.getInstance().isCellEmpty(row, col)) {
+                System.out.println("coffee bean shouldn't plant on empty cell");
             } else if (!GameMap.getInstance().isCellEmpty(row, col)) {
                 System.out.println("cell is already not empty");
             } else if (choosenPlant == null ){

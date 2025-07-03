@@ -18,7 +18,7 @@ public class GameMap {
     private final boolean[][] graved = new boolean[ROWS][COLS];
     private final boolean[][] foged = new boolean[ROWS][COLS];
 
-    public ArrayList<Plant> plants = new ArrayList<>();
+    public static ArrayList<Plant> plants = new ArrayList<>();
 
 
     private GameMap() {}

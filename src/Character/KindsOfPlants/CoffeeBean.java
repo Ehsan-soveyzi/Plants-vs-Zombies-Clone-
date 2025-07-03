@@ -1,6 +1,9 @@
 package Character.KindsOfPlants;
 
+import Map.GameMap;
+import Map.Grave;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -13,6 +16,7 @@ public class CoffeeBean extends Plant{
     private static final String coffeeBeanImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBean.gif";
     private static final String coffeeBeanCardImageAddress = "/new_resources/images/Card/Plants/CoffeeBean.png";
     private static final String coffeeBeanEatImageAddress = "/Images/resources/graphics/Plants/CoffeeBean/CoffeeBeanEat.gif";
+    private GameMap gameMap;
 
 
     CoffeeBean() {
@@ -22,6 +26,15 @@ public class CoffeeBean extends Plant{
     @Override
     public void updateImageSituation(Pane pane) {
         startCooldown();
+        Plant plant  = findPlant();
+        PauseTransition pause = new PauseTransition(Duration.millis(300));
+        pause.setOnFinished(event -> {
+            ((Pane)getImageView().getParent()).getChildren().remove(getImageView());
+            assert plant != null;
+            wakeUp(plant);
+        });
+        pause.play();
+
     }
     public static void startCooldown() {
         isReady = false;
@@ -37,9 +50,17 @@ public class CoffeeBean extends Plant{
         cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
+    private Plant findPlant() {
+        for (Plant p : GameMap.plants){
+            if (p.getCol() == getCol() && p.getRow() == getRow()){
+                return p;
+            }
+        }
+        return null;
+    }
     public void wakeUp(Plant plant) {
         if (!plant.isMorningAwake()){
-            setMorningAwake(true);
+            plant.setMorningAwake(true);
 
         }
     }

@@ -16,17 +16,18 @@ public class DoomShroom extends BombPlant implements Serializable {
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
     private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.png";
-    private static final String doomShroomSleepAddress = "/Images/resources/graphics/Plants/DoomShroom/Sleep.png";
+    private static final String doomShroomSleepAddress = "/Images/resources/graphics/Plants/DoomShroom/Sleep.gif";
     private static final String doomCardImageAddress = "/Images/resources/graphics/Cards/doomshroom.jpg";
     public static Timeline cooldownTimeline;
-    
-
+    private boolean morningAwake = false;
+    private boolean isMorning;
 
     public DoomShroom() {
         this(true);
     }
-    public DoomShroom(boolean atNight){
-        this(atNight ? doomShroomAddress : doomShroomSleepAddress, atNight? 0 : 5);
+    public DoomShroom(boolean isMorning){
+        this(!isMorning ? doomShroomAddress : doomShroomSleepAddress, !isMorning ? 0 : 5);
+        this.isMorning = isMorning;
     }
     public DoomShroom(String imageAddress, int hp) {
         super(125, hp, new Image(imageAddress), new Image(doomCardImageAddress));
@@ -63,9 +64,28 @@ public class DoomShroom extends BombPlant implements Serializable {
 
     @Override
     public void updateImageSituation(Pane pane) {
-        burnAnimation(burnDoomShroomImageAddress);
         startCooldown();
-
+        if (!isMorning || morningAwake) {
+            nightActions(pane);
+        } else {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+                if (morningAwake) {
+                    nightActions(pane);
+                    ((Timeline)e.getSource()).stop();
+                }
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
+    }
+    private void nightActions(Pane pane) {
+        burnAnimation(burnDoomShroomImageAddress);
+    }
+    public boolean isMorningAwake() {
+        return morningAwake;
+    }
+    public void setMorningAwake(boolean morningAwake) {
+        this.morningAwake = morningAwake;
     }
 
 
