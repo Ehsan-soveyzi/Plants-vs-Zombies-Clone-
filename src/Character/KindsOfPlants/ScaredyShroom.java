@@ -18,7 +18,7 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
     private static final String scaredyShroomImageAddress = "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroom/ScaredyShroom.gif";
     private static final String ScaredyShroomCryImageAddress = "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroomCry/ScaredyShroomCry.gif";
     private static final String ScaredyShroomSleepImageAddress =  "/Images/resources/graphics/Plants/ScaredyShroom/ScaredyShroomSleep/ScaredyShroomSleep.gif";
-    public static int cooldown = 7;
+    public static int cooldown = 1;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -62,7 +62,7 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 7;
+                cooldown = 1;
                 isReady = true;
                 cooldownTimeline.stop();
             }

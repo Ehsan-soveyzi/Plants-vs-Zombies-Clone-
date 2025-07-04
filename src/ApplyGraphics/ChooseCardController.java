@@ -86,11 +86,11 @@ public class ChooseCardController {
     public void chooseCard(){
         for(Plant plant : plants){
             plant.getCardView().setOnMouseClicked(e -> {
-               if (!playerCards.getChildren().contains(plant.getCardView())) {
+               if (!playerCards.getChildren().contains(plant.getCardView()) && cardPlants.size() <= 5) {
                    cardPlants.add(plant);
                    selectCard(plant.getCardView());
                }
-               else{
+               else if(playerCards.getChildren().contains(plant.getCardView()) && !cardPlants.isEmpty()) {
                    cardPlants.remove(plant);
                    removeCard(plant.getCardView());
                }

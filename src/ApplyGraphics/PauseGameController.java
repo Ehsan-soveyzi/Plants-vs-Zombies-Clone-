@@ -108,7 +108,6 @@ public class PauseGameController implements Serializable {
     }
 
     public void refreshButtonClicked(){
-        resetCooldowns();
         try{
             clearData();
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Map.fxml"));
@@ -130,7 +129,8 @@ public class PauseGameController implements Serializable {
     }
 
     public void clearData(){
-        MapController.score = 1000;
+        resetCooldowns();
+        MapController.score = 10000;
         MapController.waveCount = 1;
         MapController.time = 0;
         ZombieFactory.zombies.clear();

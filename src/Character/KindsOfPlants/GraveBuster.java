@@ -51,13 +51,15 @@ public class GraveBuster extends Plant implements Serializable {
     public void updateImageSituation(Pane pane) {
         startCooldown();
         grave = findeGrave();
+        int iteration = grave.getHp();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             grave.setHp(grave.getHp() - 1);
         }));
-        timeline.setCycleCount(grave.getHp());
+        timeline.setCycleCount(iteration);
         timeline.play();
 
         timeline.setOnFinished(event -> {
+            if(isDead())return;
             ((Pane)getImageView().getParent()).getChildren().remove(getImageView());
             ((Pane)grave.getImageView().getParent()).getChildren().remove(grave.getImageView());
             GameMap.getInstance().setGraved(getRow(),getCol(),false);

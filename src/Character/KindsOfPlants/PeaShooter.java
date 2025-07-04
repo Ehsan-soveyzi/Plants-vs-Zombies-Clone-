@@ -13,7 +13,7 @@ public class PeaShooter extends PeaPlant implements Serializable {
 
     private static final String peaShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
     private static final String peaShooterCardImageAddress = "/Images/resources/graphics/Cards/Peashooter.png";
-    public static int cooldown = 7;
+    public static int cooldown = 1;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -36,7 +36,7 @@ public class PeaShooter extends PeaPlant implements Serializable {
          cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
              cooldown--;
             if(cooldown == 0) {
-                cooldown = 7;
+                cooldown = 1;
                 isReady = true;
                 cooldownTimeline.stop();
             }

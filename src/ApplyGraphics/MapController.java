@@ -292,7 +292,13 @@ public class MapController {
                 System.out.println("shovel used!");
             }else if (choosenPlant instanceof CoffeeBean && GameMap.getInstance().isCellEmpty(row, col)) {
                 System.out.println("coffeeBean can only used on Plants!");
-            } else if (!GameMap.getInstance().isCellEmpty(row, col) && !(choosenPlant instanceof CoffeeBean)) {
+            }else if(choosenPlant instanceof CoffeeBean && !GameMap.getInstance().getPlant(row, col).isShroom()){
+                System.out.println("coffeeBean can only used on shrooms!");
+            }
+            else if(choosenPlant instanceof CoffeeBean && GameMap.getInstance().getPlant(row, col).isShroom() && !GameMap.getInstance().getPlant(row, col).isDay()){
+                System.out.println("coffeeBean can used only on asleep shrooms!");
+            }
+            else if (!GameMap.getInstance().isCellEmpty(row, col) && !(choosenPlant instanceof CoffeeBean)) {
                 System.out.println("cell is already not empty");
             } else if (choosenPlant == null){
                 System.out.println("No plant selected");
@@ -414,8 +420,8 @@ public class MapController {
                 if(GameMap.getInstance().getFog(i,j) && !paneWindow.getChildren().contains(fogView[i][j - 5])) {
                     fogView[i][j - 5].setOpacity(0.8);
                     paneWindow.getChildren().add(fogView[i][j - 5]);
-                    fogView[i][j - 5].setLayoutX(gridPanes[i][j].localToScreen(gridPanes[i][j - 5].getBoundsInLocal()).getMinX());
-                    fogView[i][j - 5].setLayoutY(gridPanes[i][j].localToScreen(gridPanes[i][j - 5].getBoundsInLocal()).getMinY() - 200);
+                    fogView[i][j - 5].setLayoutX(gridPanes[i][j].localToScreen(gridPanes[i][j].getBoundsInLocal()).getMinX());
+                    fogView[i][j - 5].setLayoutY(gridPanes[i][j].localToScreen(gridPanes[i][j].getBoundsInLocal()).getMinY() - 200);
                     fogView[i][j - 5].toFront();
                     fogView[i][j - 5].setViewOrder(-1);
                 }
