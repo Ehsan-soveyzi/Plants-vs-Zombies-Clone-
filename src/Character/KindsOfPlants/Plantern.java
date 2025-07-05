@@ -12,7 +12,7 @@ import java.security.Key;
 public class Plantern extends Plant {
     private static final String planternImageAddress = "/Images/resources/graphics/Plants/Plantern/Plantern.gif";
     private static final String planternCardImageAddress = "/Images/resources/graphics/Cards/plantern.jpg";
-    public static int cooldown = 1;
+    public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -29,7 +29,7 @@ public class Plantern extends Plant {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 1;
+                cooldown = 7;
                 isReady = true;
                 cooldownTimeline.stop();
             }

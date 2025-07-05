@@ -3,7 +3,6 @@ package Character.KindsOfPlants;
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 public class IceShroom extends Plant implements Serializable {
     private static final String iceShroomImageAddress = "/Images/resources/graphics/Plants/IceShroom/IceShroom/IceShroom.gif";
     private static final String iceShroomCardImageAddress = "/Images/resources/graphics/Cards/IceShroom.png";
-    public static int cooldown = 20;
+    public static int cooldown = 15;
     private static final String iceShroomSleepImage = "/Images/resources/graphics/Plants/IceShroom/IceShroomSleep/IceShroomSleep.gif";
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
@@ -44,10 +43,15 @@ public class IceShroom extends Plant implements Serializable {
     public void startCooldown() {
         isReady = false;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(cooldown), event -> {
-            isReady = true;
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 15;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
         }));
-        timeline.setCycleCount(1);
+        timeline.setCycleCount(15);
         timeline.play();
     }
 

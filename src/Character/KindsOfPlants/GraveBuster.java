@@ -29,12 +29,12 @@ public class GraveBuster extends Plant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 7;
+                cooldown = 10;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.setCycleCount(10);
         cooldownTimeline.play();
     }
 

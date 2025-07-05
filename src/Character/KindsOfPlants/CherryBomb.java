@@ -15,7 +15,7 @@ public  class CherryBomb extends BombPlant implements Serializable {
     private static final String cherryBombCardImageAddress = "/Images/resources/graphics/Cards/CherryBomb.png";
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
     private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
-    public static int cooldown = 1;
+    public static int cooldown = 10;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -48,12 +48,12 @@ public  class CherryBomb extends BombPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 7;
+                cooldown = 10;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.setCycleCount(10);
         cooldownTimeline.play();
     }
 }

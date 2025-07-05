@@ -18,7 +18,7 @@ public class PuffShroom extends PeaPlant implements Serializable {
     private static final String puffShroomImageAddress = "/Images/resources/graphics/Plants/PuffShroom/PuffShroom.gif";
     private static final String puffShroomSleepImage = "/Images/resources/graphics/Plants/PuffShroom/PuffShroomSleep.gif";
     public static boolean isReady = true;
-    public static int cooldown = 1;
+    public static int cooldown = 5;
     public static Timeline cooldownTimeline;
 
     public PuffShroom() {
@@ -60,12 +60,12 @@ public class PuffShroom extends PeaPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 1;
+                cooldown = 5;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(1);
+        cooldownTimeline.setCycleCount(5);
         cooldownTimeline.play();
     }
     @Override

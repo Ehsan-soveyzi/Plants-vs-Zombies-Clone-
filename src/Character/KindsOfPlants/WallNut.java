@@ -33,12 +33,12 @@ public class WallNut extends NutPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 5;
+                cooldown = 7;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(5);
+        cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
 

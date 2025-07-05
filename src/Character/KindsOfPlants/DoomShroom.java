@@ -8,13 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DoomShroom extends BombPlant implements Serializable {
 
-    public static int cooldown = 1;
+    public static int cooldown = 7;
     public static boolean isReady = true;
     private static final String doomShroomAddress = "/Images/resources/graphics/Plants/DoomShroom/BeginBoom.gif";
     private static final String burnDoomShroomImageAddress = "/Images/resources/graphics/Plants/DoomShroom/Boom.gif";
