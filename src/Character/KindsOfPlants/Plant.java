@@ -43,7 +43,6 @@ public abstract class Plant implements Serializable {
         if (hp <= 0){
             die();
         }
-
     }
 
     public void die() {

@@ -48,6 +48,21 @@ public class GameMap {
                     z.startBiting(plant);
                     break;
                 }
+            }for(Zombie zombie : Zombie.hypnoZombie){
+                if(z.getX() - zombie.getX() <= 20 && z.getX() >= -50 && z.getRow() == zombie.getRow()){
+                    if(!z.isEating() && !z.isDead() && !z.isFreezed()){
+                    z.stopWalking();
+                    z.getTimeline().stop();
+                    z.updateImageSituation();
+                    z.startBiting(zombie);
+                    }
+                    if(!zombie.isDead() && !zombie.isFreezed() && !zombie.isEating()){
+                        zombie.stopWalking();
+                        zombie.getTimeline().stop();
+                        zombie.updateImageSituation();
+                        zombie.startBiting(z);
+                    }
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ package Character.KindsOfZombie;
 
 import ApplyGraphics.MapController;
 import ApplyGraphics.PauseGameController;
+import Character.KindsOfPlants.HypnoShroom;
 import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
@@ -18,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,12 +40,15 @@ public abstract class Zombie implements Serializable {
     private boolean isSlowed;
     private boolean isBurn;
     private boolean isFreezed;
+    private boolean isHypno;
     protected transient Timeline timeline;
     private transient Pane parentPane;
     private transient PauseTransition slowTimer;
     private transient Timeline biteTimeline;
     private transient ImageView imageView;
     private transient PauseTransition freezeTimer;
+
+    public static ArrayList<Zombie> hypnoZombie = new ArrayList<>();
 
 
 
@@ -79,7 +84,7 @@ public abstract class Zombie implements Serializable {
     //updating zombie movement per moment.
     public void update(double deltaTime) {
         if (!isEating && !isDead) {
-            x -= speed * deltaTime;
+            x += speed * deltaTime;
             imageView.setLayoutX(x);
             updateImageSituation();
             setCol(getCol());
@@ -90,12 +95,11 @@ public abstract class Zombie implements Serializable {
         }
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage() {
         if (isDead) return;
-        hp -= damage;
+        hp--;
         if (hp <= 0){
             die();
-
         }
     }
 
@@ -109,7 +113,7 @@ public abstract class Zombie implements Serializable {
         isDead = true;
         if(timeline != null)timeline.stop();
         ZombieFactory.zombies.remove(this);
-//        Platform.runLater(() -> ZombieFactory.zombies.remove(this));
+        hypnoZombie.remove(this);
         updateImageSituation();
     }
 
@@ -121,6 +125,15 @@ public abstract class Zombie implements Serializable {
     //if the target is a plant
     public void bite(Plant target) {
         target.takeDamage();
+        if(target instanceof HypnoShroom && !target.isDay()){
+            isHypno = true;
+            setRedEffect();
+        }
+    }
+    //overloading method
+    public void bite(Zombie zombie) {
+        if (zombie == null || zombie.isDead()) return;
+        zombie.takeDamage();
     }
 
     public void stopEating() {
@@ -135,7 +148,6 @@ public abstract class Zombie implements Serializable {
         if (isSlowed) {
             setSlowedEffect();
         }
-
         if (isBurn){
             playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
             return;
@@ -156,6 +168,13 @@ public abstract class Zombie implements Serializable {
         if (isEating) {
             playEatingAnimation();
         }
+        if(isHypno && speed < 0){
+            hypnoZombie.add(this);
+            ZombieFactory.zombies.remove(this);
+            speed *= -1;
+            imageView.setScaleX(-1);
+        }
+
     }
 
     public abstract void playWalkingAnimation(Pane pane);
@@ -236,6 +255,16 @@ public abstract class Zombie implements Serializable {
         colorAdjust.setBrightness(-0.19);
         imageView.setEffect(colorAdjust);
     }
+
+    public void setRedEffect() {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(-0.5); // حالت طبیعی، یا یک مقدار نزدیک به آن
+        colorAdjust.setSaturation(1); // اشباع بالا برای قوی‌تر کردن رنگ
+        colorAdjust.setContrast(-0.07);
+
+        colorAdjust.setBrightness(-0.19);
+        imageView.setEffect(colorAdjust);
+    }
     private void setFreezedEffect() {
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(0.33);
@@ -293,6 +322,22 @@ public abstract class Zombie implements Serializable {
         biteTimeline.setCycleCount(Timeline.INDEFINITE);
         biteTimeline.play();
     }
+    //overloading method
+    public void startBiting(Zombie zombie) {
+        if (biteTimeline != null || zombie == null || zombie.isDead()) return;
+        biteTimeline = new Timeline(new KeyFrame(Duration.millis(eatingSpeed), e -> {
+            bite(zombie);
+            if(isDead){
+                stopBiting();
+            }
+            if (zombie.getHp() <= 0 || zombie.isDead()) {
+                zombie.die();
+                stopBiting();
+            }
+        }));
+        biteTimeline.setCycleCount(Timeline.INDEFINITE);
+        biteTimeline.play();
+    }
 
     public void freezeZombie() {
         getTimeline().pause();
@@ -315,6 +360,7 @@ public abstract class Zombie implements Serializable {
         if (biteTimeline != null) {
             biteTimeline.stop();
             biteTimeline = null;
+            System.out.println("stopBiting");
         }
         setEating(false);
         timeline.stop();
@@ -348,7 +394,7 @@ public abstract class Zombie implements Serializable {
     public int getHp(){return hp;}
     public boolean isFreezed() {return isFreezed;}
     public void setFreezed(boolean freezed) {isFreezed = freezed;}
-    public PauseTransition getFreezeTimer() {
-        return freezeTimer;
-    }
+    public PauseTransition getFreezeTimer() {return freezeTimer;}
+    public boolean isHypno() {return isHypno;}
+    public void setHypno(boolean hypno) {isHypno = hypno;}
 }

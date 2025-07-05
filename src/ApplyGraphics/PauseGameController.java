@@ -134,6 +134,7 @@ public class PauseGameController implements Serializable {
         MapController.waveCount = 1;
         MapController.time = 0;
         ZombieFactory.zombies.clear();
+        Zombie.hypnoZombie.clear();
         PeaShooter.bulletList.clear();
         Grave.graves.clear();
         DoomShroom.explodeArea.clear();
@@ -176,6 +177,13 @@ public class PauseGameController implements Serializable {
         }
 
         for(Zombie zombie : ZombieFactory.zombies){
+            if(zombie.getTimeline() != null && !zombie.isFreezed())zombie.getTimeline().play();
+            if(zombie.getBiteTimeline() != null && !zombie.isFreezed())zombie.getBiteTimeline().play();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().play();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().play();
+        }
+
+        for(Zombie zombie : Zombie.hypnoZombie){
             if(zombie.getTimeline() != null && !zombie.isFreezed())zombie.getTimeline().play();
             if(zombie.getBiteTimeline() != null && !zombie.isFreezed())zombie.getBiteTimeline().play();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().play();

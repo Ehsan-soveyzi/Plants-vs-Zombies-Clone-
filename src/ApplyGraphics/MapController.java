@@ -348,6 +348,12 @@ public class MapController {
             if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
         }
+        for(Zombie zombie : Zombie.hypnoZombie){
+            if(zombie.getTimeline() != null)zombie.getTimeline().pause();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().pause();
+            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
+        }
         for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
                 plant.getTimeline().pause();

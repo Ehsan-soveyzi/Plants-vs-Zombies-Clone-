@@ -55,7 +55,7 @@ public class IceShroom extends Plant implements Serializable {
         die();
         for (Zombie zombie : new ArrayList<>(ZombieFactory.zombies)) {
                 zombie.setFreezed(true);
-                zombie.takeDamage(1);
+                zombie.takeDamage();
                 zombie.updateImageSituation();
         }
     }

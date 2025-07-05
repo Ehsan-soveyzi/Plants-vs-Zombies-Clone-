@@ -11,6 +11,7 @@ import Character.KindsOfZombie.*;
 import Map.GameMap;
 import Character.*;
 import Map.Grave;
+import Map.ZombieFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.*;
@@ -81,6 +82,18 @@ public abstract class SaveGame implements Serializable {
                 loadZombie.setHp(zombie.getHp());
                 loadZombie.setSlowed(zombie.isSlowed());
                 loadZombie.setFreezed(zombie.isFreezed());
+            }
+            for(Zombie zombie : data.hypnoZombies){
+                Zombie loadZombie = MapController.zombieFactory.createZombie(zombie,zombie.getRow());
+                ZombieFactory.zombies.remove(loadZombie);
+                loadZombie.setHp(zombie.getHp());
+                loadZombie.setSlowed(zombie.isSlowed());
+                loadZombie.setFreezed(zombie.isFreezed());
+                loadZombie.getImageView().setScaleX(-1);
+                loadZombie.setSpeed(zombie.getSpeed());
+                loadZombie.setHypno(zombie.isHypno());
+                loadZombie.setRedEffect();
+                Zombie.hypnoZombie.add(loadZombie);
             }
 
             for(Plant plant : data.plants){

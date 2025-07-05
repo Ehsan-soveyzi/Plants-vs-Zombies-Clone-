@@ -7,7 +7,7 @@ public class IMPZombie extends Zombie {
     private final static String IMPZombieImageAddress = "/Images/resources/graphics/Zombies/Imp/Zombiewalk/";
 
     public IMPZombie(int row) {
-        super(3, 40, 500, row,new Image(IMPZombieImageAddress + "0.png"));
+        super(3, -40, 500, row,new Image(IMPZombieImageAddress + "0.png"));
     }
 
     @Override

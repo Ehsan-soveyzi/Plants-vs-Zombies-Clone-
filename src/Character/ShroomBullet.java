@@ -12,7 +12,7 @@ public class ShroomBullet extends Bullet {
 
     @Override
     public void onHit(Zombie zombie){
-        zombie.takeDamage(1);
+        zombie.takeDamage();
         die();
     }
 }
