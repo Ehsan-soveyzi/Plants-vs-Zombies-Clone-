@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -41,6 +42,8 @@ public class MapController {
     private Label sunPoint;
     @FXML
     private ImageView menu;
+    @FXML
+    private ProgressBar gameProgressBar;
 
 
     //static fields used between ui and backend.
@@ -60,6 +63,7 @@ public class MapController {
 
     @FXML
     public void initialize() {
+        gameProgressBar.setScaleX(-1);
         GameMap.getInstance().initializeFog();
         zombieFactory = new ZombieFactory(paneWindow);
 
@@ -92,6 +96,11 @@ public class MapController {
 
         //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
+            gameProgressBar.setProgress(Zombie.NumberOfTotalZombies/57.0);
+            if(gameProgressBar.getProgress() >= 1 && ZombieFactory.zombies.isEmpty()) {
+                PauseGameController.isWin = 1;
+                pause();
+            }
             if(!shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
             if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)applyFog();

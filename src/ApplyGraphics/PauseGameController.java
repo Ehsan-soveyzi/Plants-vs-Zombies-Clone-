@@ -136,6 +136,7 @@ public class PauseGameController implements Serializable {
         ZombieFactory.zombies.clear();
         Zombie.hypnoZombie.clear();
         PeaShooter.bulletList.clear();
+        Zombie.NumberOfTotalZombies =  0;
         Grave.graves.clear();
         DoomShroom.explodeArea.clear();
         GameMap.getInstance().cleanGrave();
