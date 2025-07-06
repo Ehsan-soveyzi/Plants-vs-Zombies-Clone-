@@ -16,7 +16,7 @@ public class ConeHead extends Zombie implements Serializable {
             "/Images/resources/graphics/Zombies/ConeheadZombie/ConeheadZombie/ConeheadZombie_";
 
     public ConeHead(int row) {
-        super(7,30,500,row,new Image(coneHeadImageAddress + "0.png"));
+        super(7,-30,500,row,new Image(coneHeadImageAddress + "0.png"));
     }
 
 

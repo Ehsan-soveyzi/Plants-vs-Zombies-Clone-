@@ -1,10 +1,13 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
 import Save_Logic.SaveGame;
+import javafx.animation.Animation;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Map;
+import Map.Grave;
 
 import Character.*;
 
@@ -126,35 +129,73 @@ public class PauseGameController implements Serializable {
     }
 
     public void clearData(){
-        MapController.score = 1000;
+        resetCooldowns();
+        MapController.score = 10000;
         MapController.waveCount = 1;
         MapController.time = 0;
         ZombieFactory.zombies.clear();
+        Zombie.hypnoZombie.clear();
         PeaShooter.bulletList.clear();
-        GameMap.plants.clear();
-        MapController.map.refreshPlants();
+        Grave.graves.clear();
+        DoomShroom.explodeArea.clear();
+        GameMap.getInstance().cleanGrave();
+        GameMap.getInstance().plants.clear();
+        GameMap.getInstance().refreshPlants();
         Sun.sunList.clear();
+        isWin = 0;
         startTimelines();
+    }
+    public void resetCooldowns(){
+        SunFlower.isReady = true;
+        CherryBomb.isReady = true;
+        Jalapeno.isReady = true;
+        Blover.isReady = true;
+        CoffeeBean.isReady = true;
+        DoomShroom.isReady = true;
+        HypnoShroom.isReady = true;
+        IceShroom.isReady = true;
+        PeaShooter.isReady = true;
+        Repeater.isReady = true;
+        SnowPea.isReady = true;
+        Plantern.isReady = true;
+        ScaredyShroom.isReady = true;
+        PuffShroom.isReady = true;
+        WallNut.isReady = true;
+        TallNut.isReady = true;
+        GraveBuster.isReady = true;
     }
 
     public void startTimelines(){
+
         for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
             bullet.getTimeline().play();
         }
+
         for(Sun sun : Sun.sunList){
             if(sun.getTimeline() != null)sun.getTimeline().play();
             if(sun.getPause() != null)sun.getPause().play();
         }
+
         for(Zombie zombie : ZombieFactory.zombies){
-            if(zombie.getTimeline() != null)zombie.getTimeline().play();
-            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().play();
+            if(zombie.getTimeline() != null && !zombie.isFreezed())zombie.getTimeline().play();
+            if(zombie.getBiteTimeline() != null && !zombie.isFreezed())zombie.getBiteTimeline().play();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().play();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().play();
         }
-        for(Plant plant : GameMap.plants){
+
+        for(Zombie zombie : Zombie.hypnoZombie){
+            if(zombie.getTimeline() != null && !zombie.isFreezed())zombie.getTimeline().play();
+            if(zombie.getBiteTimeline() != null && !zombie.isFreezed())zombie.getBiteTimeline().play();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().play();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().play();
+        }
+
+        for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
                 plant.getTimeline().play();
             }
         }
+
         if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.play();
         if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.play();
         if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.play();
@@ -163,6 +204,9 @@ public class PauseGameController implements Serializable {
         if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.play();
         if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.play();
         if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.play();
+        if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.play();
+        if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.play();
+        if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.play();
     }
 
 

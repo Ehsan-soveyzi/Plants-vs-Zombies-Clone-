@@ -2,6 +2,8 @@ package Character.KindsOfZombie;
 
 import ApplyGraphics.MapController;
 import ApplyGraphics.PauseGameController;
+import Character.KindsOfPlants.HypnoShroom;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfPlants.Plant;
 import Map.GameMap;
 import Map.ZombieFactory;
@@ -9,12 +11,15 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -34,11 +39,16 @@ public abstract class Zombie implements Serializable {
     private boolean isEating;
     private boolean isSlowed;
     private boolean isBurn;
+    private boolean isFreezed;
+    private boolean isHypno;
     protected transient Timeline timeline;
     private transient Pane parentPane;
     private transient PauseTransition slowTimer;
     private transient Timeline biteTimeline;
     private transient ImageView imageView;
+    private transient PauseTransition freezeTimer;
+
+    public static ArrayList<Zombie> hypnoZombie = new ArrayList<>();
 
 
 
@@ -54,8 +64,7 @@ public abstract class Zombie implements Serializable {
         setY(row * 140 + 60);
         getImageView().setLayoutX(x);
         getImageView().setLayoutY(y);
-        MapController.totalZombies++;
-        System.out.println(MapController.totalZombies);
+        imageView.setMouseTransparent(true);
     }
 
 
@@ -75,7 +84,7 @@ public abstract class Zombie implements Serializable {
     //updating zombie movement per moment.
     public void update(double deltaTime) {
         if (!isEating && !isDead) {
-            x -= speed * deltaTime;
+            x += speed * deltaTime;
             imageView.setLayoutX(x);
             updateImageSituation();
             setCol(getCol());
@@ -86,12 +95,11 @@ public abstract class Zombie implements Serializable {
         }
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage() {
         if (isDead) return;
-        hp -= damage;
+        hp--;
         if (hp <= 0){
             die();
-
         }
     }
 
@@ -105,6 +113,7 @@ public abstract class Zombie implements Serializable {
         isDead = true;
         if(timeline != null)timeline.stop();
         ZombieFactory.zombies.remove(this);
+        hypnoZombie.remove(this);
         updateImageSituation();
     }
 
@@ -116,6 +125,15 @@ public abstract class Zombie implements Serializable {
     //if the target is a plant
     public void bite(Plant target) {
         target.takeDamage();
+        if(target instanceof HypnoShroom && !target.isDay()){
+            isHypno = true;
+            setRedEffect();
+        }
+    }
+    //overloading method
+    public void bite(Zombie zombie) {
+        if (zombie == null || zombie.isDead()) return;
+        zombie.takeDamage();
     }
 
     public void stopEating() {
@@ -131,12 +149,10 @@ public abstract class Zombie implements Serializable {
             setSlowedEffect();
         }
         if (isBurn){
-            System.out.println("one zombie burn");
             playDeathAnimation(19, "/Images/resources/graphics/Zombies/NormalZombie/BoomDie/BoomDie_");
             return;
         }
         if (isDead){
-            System.out.println("one zombie die");
             if (this instanceof IMPZombie){
                 playDeathAnimation(21, "/Images/resources/graphics/Zombies/Imp/ZombieDie/");
                 return;
@@ -144,10 +160,21 @@ public abstract class Zombie implements Serializable {
             playDeathAnimation(10 ,"/Images/resources/graphics/Zombies/NormalZombie/ZombieDie/ZombieDie_");
             return;
         }
+        if (isFreezed){
+            setFreezedEffect();
+            freezeZombie();
+            return;
+        }
         if (isEating) {
-            System.out.println("one zombie eating");
             playEatingAnimation();
         }
+        if(isHypno && speed < 0){
+            hypnoZombie.add(this);
+            ZombieFactory.zombies.remove(this);
+            speed *= -1;
+            imageView.setScaleX(-1);
+        }
+
     }
 
     public abstract void playWalkingAnimation(Pane pane);
@@ -216,11 +243,7 @@ public abstract class Zombie implements Serializable {
         timeline.setCycleCount(frames.length);
         timeline.setOnFinished(e -> {
             imageView.setImage(null);
-            imageView.setOnMouseClicked(mouseEvent -> {
-                System.out.println(mouseEvent.getSceneX());
-            });
             if(parentPane != null)parentPane.getChildren().remove(imageView);
-            else System.out.println("realllllllllly");
         });
         timeline.playFromStart();
     }
@@ -233,6 +256,30 @@ public abstract class Zombie implements Serializable {
         imageView.setEffect(colorAdjust);
     }
 
+    public void setRedEffect() {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setHue(-0.5); // حالت طبیعی، یا یک مقدار نزدیک به آن
+        colorAdjust.setSaturation(1); // اشباع بالا برای قوی‌تر کردن رنگ
+        colorAdjust.setContrast(-0.07);
+
+        colorAdjust.setBrightness(-0.19);
+        imageView.setEffect(colorAdjust);
+    }
+    private void setFreezedEffect() {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(0.33);
+        colorAdjust.setSaturation(-0.02);
+        colorAdjust.setContrast(0.09);
+        colorAdjust.setHue(1.0);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(11.76);
+        dropShadow.setWidth(23.34);
+        dropShadow.setHeight(25.71);
+        dropShadow.setInput(colorAdjust);
+        imageView.setEffect(dropShadow);
+    }
+
+
     //this method will call after the ice bullet damage.
     public void setSlowed(boolean slowed) {
         // فقط اگر سرعت فعلی هنوز زیاد بود، کندش کن
@@ -243,7 +290,7 @@ public abstract class Zombie implements Serializable {
             }
 
             isSlowed = true;
-            setSlowedEffect();
+//            setSlowedEffect();
             if (slowTimer != null) slowTimer.stop();
 
 
@@ -260,19 +307,31 @@ public abstract class Zombie implements Serializable {
         }
     }
 
-    public void startBiting(Plant plant, GameMap map) {
+    public void startBiting(Plant plant) {
         if (biteTimeline != null) return; // اگر در حال گاز زدن هست، برنگرد
-        AtomicInteger i = new AtomicInteger(1);
         biteTimeline = new Timeline(new KeyFrame(Duration.millis(eatingSpeed), e -> {
             bite(plant);
-            System.out.println("bite " + i.getAndIncrement());
             if(isDead){
                 stopBiting();
             }
-            if (plant.getHp() <= 0) {
-                plant.setDead(true);
-                GameMap.plants.remove(plant);
-                map.removePlant(plant.getRow(), plant.getCol());
+            if (plant.getHp() <= 0 || plant.isDead()) {
+                plant.die();
+                stopBiting();
+            }
+        }));
+        biteTimeline.setCycleCount(Timeline.INDEFINITE);
+        biteTimeline.play();
+    }
+    //overloading method
+    public void startBiting(Zombie zombie) {
+        if (biteTimeline != null || zombie == null || zombie.isDead()) return;
+        biteTimeline = new Timeline(new KeyFrame(Duration.millis(eatingSpeed), e -> {
+            bite(zombie);
+            if(isDead){
+                stopBiting();
+            }
+            if (zombie.getHp() <= 0 || zombie.isDead()) {
+                zombie.die();
                 stopBiting();
             }
         }));
@@ -280,10 +339,28 @@ public abstract class Zombie implements Serializable {
         biteTimeline.play();
     }
 
+    public void freezeZombie() {
+        getTimeline().pause();
+        if(getBiteTimeline() != null)getBiteTimeline().pause();
+        freezeTimer = new PauseTransition(Duration.seconds(5));
+        freezeTimer.setOnFinished(event -> {
+            getImageView().setEffect(null);
+            setFreezed(false);
+            if (getTimeline() != null && !isDead()) {
+                getTimeline().play();
+                if (getBiteTimeline() != null)getBiteTimeline().play();
+            }
+        });
+        freezeTimer.play();
+//        zombie.setFreezeTimer(freeze);
+
+    }
+
     public void stopBiting() {
         if (biteTimeline != null) {
             biteTimeline.stop();
             biteTimeline = null;
+            System.out.println("stopBiting");
         }
         setEating(false);
         timeline.stop();
@@ -315,4 +392,9 @@ public abstract class Zombie implements Serializable {
     public void setImageView(ImageView imageView) {this.imageView = imageView;}
     public void setHp(int hp) {this.hp = hp;}
     public int getHp(){return hp;}
+    public boolean isFreezed() {return isFreezed;}
+    public void setFreezed(boolean freezed) {isFreezed = freezed;}
+    public PauseTransition getFreezeTimer() {return freezeTimer;}
+    public boolean isHypno() {return isHypno;}
+    public void setHypno(boolean hypno) {isHypno = hypno;}
 }

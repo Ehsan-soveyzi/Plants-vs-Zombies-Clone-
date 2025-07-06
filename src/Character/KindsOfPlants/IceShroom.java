@@ -1,33 +1,67 @@
 package Character.KindsOfPlants;
 
+import Character.KindsOfZombie.Zombie;
+import Map.ZombieFactory;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-
+import javafx.util.Duration;
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class IceShroom extends BombPlant implements Serializable {
-    private static final String iceShooterImageAddress = "/Images/resources/graphics/Plants/Peashooter/Peashooter.gif";
-    private static final String iceShooterCardImageAddress = "/Images/resources/graphics/Cards/IceShroom.png";
-    public static int cooldown = 7;
+
+public class IceShroom extends Plant implements Serializable {
+    private static final String iceShroomImageAddress = "/Images/resources/graphics/Plants/IceShroom/IceShroom/IceShroom.gif";
+    private static final String iceShroomCardImageAddress = "/Images/resources/graphics/Cards/IceShroom.png";
+    public static int cooldown = 15;
+    private static final String iceShroomSleepImage = "/Images/resources/graphics/Plants/IceShroom/IceShroomSleep/IceShroomSleep.gif";
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
-    public IceShroom(int cost, int hp, Image image, Image cardImage) {
-        super(cost, hp, image, cardImage);
-    }
-
     public IceShroom() {
-        super(75,1000,new Image(iceShooterImageAddress),new Image(iceShooterCardImageAddress));
-    }
-
-    @Override
-    public void burnZombies() {
-
+        super(75,7, new Image(iceShroomImageAddress), new Image(iceShroomCardImageAddress));
+        setShroom(true);
     }
 
     @Override
     public void updateImageSituation(Pane pane) {
-
+        startCooldown();
+        if(!isDay()){
+            getImageView().setImage(new Image(iceShroomImageAddress));
+            setHp(1000);
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+                freeze();
+            }));
+            timeline.setCycleCount(1);
+            timeline.play();
+        }else{
+            getImageView().setImage(new Image(iceShroomSleepImage));
+        }
     }
+
+    public void startCooldown() {
+        isReady = false;
+
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            cooldown--;
+            if(cooldown == 0) {
+                cooldown = 15;
+                isReady = true;
+                cooldownTimeline.stop();
+            }
+        }));
+        timeline.setCycleCount(15);
+        timeline.play();
+    }
+
+    public void freeze() {
+        die();
+        for (Zombie zombie : new ArrayList<>(ZombieFactory.zombies)) {
+                zombie.setFreezed(true);
+                zombie.takeDamage();
+                zombie.updateImageSituation();
+        }
+    }
+
 }

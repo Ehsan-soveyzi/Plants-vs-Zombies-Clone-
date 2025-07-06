@@ -29,15 +29,17 @@ public class ChooseCardController {
     public static VBox cards = new VBox();
     public static GridPane cardList = new GridPane();
 
-    public static ArrayList<Plant> cardPlants = new ArrayList<>();
+    public static ArrayList<Plant> cardPlants;
 
     //this use to get the cardView images for each plant.
     public static final Plant[] plants = {new SunFlower(),new PeaShooter(),new Repeater(),new SnowPea(),new CherryBomb()
-            ,new Jalapeno(),new TallNut(),new WallNut(),new PuffShroom(),new IceShroom(),new ScaredyShroom()};
+            ,new Jalapeno(),new TallNut(),new WallNut(),new PuffShroom(),new IceShroom(),new ScaredyShroom(),new GraveBuster(),
+            new Blover(),new Plantern(),new DoomShroom(),new HypnoShroom(),new CoffeeBean()};
 
 
     @FXML
     public void initialize() {
+        cardPlants = new ArrayList<>();
         cardList = gridPane;
         cards = playerCards;
 
@@ -51,6 +53,7 @@ public class ChooseCardController {
             backButton();
         });
     }
+
     //adding imageViews to the grid
     public void createGrid(){
         int counter = 0;
@@ -81,129 +84,18 @@ public class ChooseCardController {
     }
 
     public void chooseCard(){
-        //define these objects for use their images and ...
-        SunFlower sunFlower = (SunFlower) plants[0];
-        PeaShooter peaShooter = (PeaShooter) plants[1];
-        Repeater repeater = (Repeater) plants[2];
-        SnowPea snowPea = (SnowPea) plants[3];
-        WallNut wallNut = (WallNut) plants[7];
-        TallNut tallNut = (TallNut) plants[6];
-        CherryBomb cherryBomb = (CherryBomb) plants[4];
-        Jalapeno jalapeno = (Jalapeno) plants[5];
-        PuffShroom puffShroom = (PuffShroom) plants[8];
-        IceShroom iceShroom = (IceShroom) plants[9];
-        ScaredyShroom scaredyShroom = (ScaredyShroom) plants[10];
-
-        sunFlower.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(sunFlower.getCardView())){
-                cardPlants.add(sunFlower);
-                selectCard(sunFlower.getCardView());
-            }
-            else{
-                cardPlants.remove(sunFlower);
-                removeCard(sunFlower.getCardView());
-            }
-        });
-        peaShooter.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(peaShooter.getCardView())){
-                cardPlants.add(peaShooter);
-                selectCard(peaShooter.getCardView());
-            }
-            else{
-                cardPlants.remove(peaShooter);
-                removeCard(peaShooter.getCardView());
-            }
-        });
-        repeater.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(repeater.getCardView())){
-                cardPlants.add(repeater);
-                selectCard(repeater.getCardView());
-            }
-            else{
-                cardPlants.remove(repeater);
-                removeCard(repeater.getCardView());
-            }
-        });
-        snowPea.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(snowPea.getCardView())){
-                cardPlants.add(snowPea);
-                selectCard(snowPea.getCardView());
-            }
-            else{
-                cardPlants.remove(snowPea);
-                removeCard(snowPea.getCardView());
-            }
-        });
-        wallNut.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(wallNut.getCardView())){
-                cardPlants.add(wallNut);
-                selectCard(wallNut.getCardView());
-            }
-            else{
-                cardPlants.remove(wallNut);
-                removeCard(wallNut.getCardView());
-            }
-        });
-        tallNut.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(tallNut.getCardView())){
-                cardPlants.add(tallNut);
-                selectCard(tallNut.getCardView());
-            }
-            else{
-                cardPlants.remove(tallNut);
-                removeCard(tallNut.getCardView());
-            }
-        });
-        cherryBomb.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(cherryBomb.getCardView())){
-                cardPlants.add(cherryBomb);
-                selectCard(cherryBomb.getCardView());
-            }
-            else{
-                cardPlants.remove(cherryBomb);
-                removeCard(cherryBomb.getCardView());
-            }
-        });
-        jalapeno.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(jalapeno.getCardView())){
-                cardPlants.add(jalapeno);
-                selectCard(jalapeno.getCardView());
-            }
-            else{
-                cardPlants.remove(jalapeno);
-                removeCard(jalapeno.getCardView());
-            }
-        });
-        puffShroom.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(puffShroom.getCardView())){
-                cardPlants.add(puffShroom);
-                selectCard(puffShroom.getCardView());
-            }
-            else{
-                cardPlants.remove(puffShroom);
-                removeCard(puffShroom.getCardView());
-            }
-        });
-        iceShroom.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(iceShroom.getCardView())){
-                cardPlants.add(iceShroom);
-                selectCard(iceShroom.getCardView());
-            }
-            else{
-                cardPlants.remove(iceShroom);
-                removeCard(iceShroom.getCardView());
-            }
-        });
-        scaredyShroom.getCardView().setOnMouseClicked(e -> {
-            if(!playerCards.getChildren().contains(scaredyShroom.getCardView())){
-                cardPlants.add(scaredyShroom);
-                selectCard(scaredyShroom.getCardView());
-            }
-            else{
-                cardPlants.remove(scaredyShroom);
-                removeCard(scaredyShroom.getCardView());
-            }
-        });
+        for(Plant plant : plants){
+            plant.getCardView().setOnMouseClicked(e -> {
+               if (!playerCards.getChildren().contains(plant.getCardView()) && cardPlants.size() <= 5) {
+                   cardPlants.add(plant);
+                   selectCard(plant.getCardView());
+               }
+               else if(playerCards.getChildren().contains(plant.getCardView()) && !cardPlants.isEmpty()) {
+                   cardPlants.remove(plant);
+                   removeCard(plant.getCardView());
+               }
+            });
+        }
 
     }
 
@@ -225,7 +117,6 @@ public class ChooseCardController {
     }
 
     public void removeCard(ImageView imageView) {
-        System.out.println(playerCards.getChildren().size());
         playerCards.getChildren().remove(imageView);
         cardList.getChildren().add(imageView);
         cardLabel.setText(playerCards.getChildren().size() + " card chosen!");

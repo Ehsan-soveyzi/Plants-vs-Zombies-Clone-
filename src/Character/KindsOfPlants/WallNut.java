@@ -13,8 +13,7 @@ public class WallNut extends NutPlant implements Serializable {
     private static final String WallNutImageAddress = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut.gif";
     private static final String WallNutImageAddress1 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut1.gif";
     private static final String WallNutImageAddress2 = "/Images/resources/graphics/Plants/WallNut/WallNut/WallNut2.gif";
-    public static final ImageView cardView = new ImageView(new Image(wallNutCardImageAddress));
-    public static int cooldown = 5;
+    public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -34,12 +33,12 @@ public class WallNut extends NutPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 5;
+                cooldown = 7;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(5);
+        cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
 

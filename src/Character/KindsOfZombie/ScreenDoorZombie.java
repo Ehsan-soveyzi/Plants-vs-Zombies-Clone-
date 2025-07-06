@@ -7,7 +7,7 @@ public class ScreenDoorZombie extends Zombie {
     private final static String screenDoorImageAddress =  "/Images/resources/graphics/Zombies/BucketheadZombie/BucketheadZombie/BucketheadZombie_";
 
     public ScreenDoorZombie(int row) {
-        super(10, 30, 500, row,  new Image(screenDoorImageAddress + "0.png"));
+        super(10, -30, 500, row,  new Image(screenDoorImageAddress + "0.png"));
     }
 
     @Override

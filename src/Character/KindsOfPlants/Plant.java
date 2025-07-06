@@ -1,5 +1,7 @@
 package Character.KindsOfPlants;
 
+import ApplyGraphics.ModeController;
+import Map.GameMap;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -13,13 +15,18 @@ public abstract class Plant implements Serializable {
     private int hp;
     private double x, y;
     private boolean isDead;
+    private static boolean isMorningAwake;
     private int row;
     private int col;
+    private boolean isDay;
     protected transient Timeline timeline;
     private transient ImageView cardView;
     private transient ImageView imageView;
+    private boolean isShroom;
 
-    Plant(int cost, int hp, Image image,Image cardImage) {
+
+
+    Plant(int cost, int hp, Image image, Image cardImage) {
         this.cost = cost;
         this.hp = hp;
         this.isDead = false;
@@ -27,20 +34,20 @@ public abstract class Plant implements Serializable {
         cardView = new ImageView(cardImage);
         imageView.setLayoutX(imageView.getX() + 20);
         imageView.setLayoutY(imageView.getY() + 20);
+        isDay = ModeController.Mode.DAY == ModeController.getSelectedMode();
     }
 
     public void takeDamage() {
         if (isDead) return;
+        hp--;
         if (hp <= 0){
             die();
-            return;
         }
-        hp--;
     }
 
     public void die() {
         isDead = true;
-        if(timeline != null) timeline.stop();
+        GameMap.getInstance().removePlant(row,col);
     }
 
     public void setEffect(){
@@ -50,6 +57,7 @@ public abstract class Plant implements Serializable {
         colorAdjust.setBrightness(3);
         imageView.setEffect(colorAdjust);
     }
+
 
     public abstract void updateImageSituation(Pane pane); // abstract
 
@@ -62,19 +70,17 @@ public abstract class Plant implements Serializable {
     public void setX(double x) {this.x = x;}
     public double getY() {return y;}
     public void setY(double y) {this.y = y;}
-    public boolean isDead() {
-        return isDead;
-    }
+    public boolean isDead() {return isDead;}
     public void setCol(int col) {this.col = col;}
     public int getCol() {return col;}
     public Timeline getTimeline() {return timeline;}
     public ImageView getCardView() {return cardView;}
-    public ImageView getImageView() {
-        return imageView;
-    }
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
-
+    public ImageView getImageView() {return imageView;}
+    public void setDead(boolean dead) {isDead = dead;}
+    public void setImageView(ImageView imageView) {this.imageView = imageView;}
+    public boolean isDay() {return isDay;}
+    public void setDay(boolean day) {isDay = day;}
+    public boolean isShroom() {return isShroom;}
+    public void setShroom(boolean shroom) {isShroom = shroom;}
 }
 

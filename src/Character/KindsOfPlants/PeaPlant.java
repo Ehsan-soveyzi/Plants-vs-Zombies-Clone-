@@ -24,7 +24,6 @@ public abstract class PeaPlant extends Plant implements Serializable {
 
     public void sameRowZombies() {
         boolean zombieInRow = false;
-
         for (Zombie z : ZombieFactory.zombies) {
             if (z.getRow() == getRow() && z.getX() - 10 >= getX()) {
                 zombieInRow = true;

@@ -1,14 +1,18 @@
 package ApplyGraphics;
 
 import Character.KindsOfPlants.*;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
+import Map.Grave;
 import Map.ZombieFactory;
 import Save_Logic.SaveGame;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -40,22 +44,23 @@ public class MapController {
 
 
     //static fields used between ui and backend.
-    public static GameMap map = new GameMap();
     public static ZombieFactory zombieFactory;
     public static int waveCount = 1;
     public static Timeline gameLoop;
     public static long time = 0;
     public static int score = 10000;
-    public static int totalZombies = 0;
+    private final ImageView[][] fogView = new ImageView[5][5];
 
 
     ImageCursor cursor;
     Plant choosenPlant;
     boolean shovelUsed  = false;
     ArrayList<Plant> cardPlants;
+    private final Pane[][] gridPanes = new Pane[5][9];
 
     @FXML
     public void initialize() {
+        GameMap.getInstance().initializeFog();
         zombieFactory = new ZombieFactory(paneWindow);
 
         //check if user enter to this part by loading or playButton.
@@ -71,7 +76,6 @@ public class MapController {
                     sun.removeSun();
                 });
             }
-            OptionController.clicked = -1;
         }
 
         //set the night or day.
@@ -83,15 +87,17 @@ public class MapController {
         cardPlants = ChooseCardController.cardPlants;
 
         mouseEvents();
+        createGrid();
 
 
         //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             if(!shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
+            if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)applyFog();
             time += 100;
             if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
-            map.checkWar();
+            GameMap.getInstance().checkWar();
             sunPoint.setText(Integer.toString(score));
             //apply zombies attack
             if(time % 1000 == 0 && time <= 120000){
@@ -101,7 +107,6 @@ public class MapController {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.playFromStart();
 
-        createGrid();
 
         MainMenuController.animateImage(menu);
         menu.setOnMouseClicked(event -> {
@@ -112,6 +117,7 @@ public class MapController {
                 if(!PauseGameController.pauseStage.isShowing())pause();
             }
         });
+        OptionController.clicked = -1;
     }
 
     //check what the card chosen from the user
@@ -123,7 +129,16 @@ public class MapController {
         else if(plant instanceof Jalapeno && Jalapeno.isReady)return new Jalapeno();
         else if(plant instanceof CherryBomb && CherryBomb.isReady)return new CherryBomb();
         else if(plant instanceof TallNut && TallNut.isReady)return new TallNut();
-        else if (plant instanceof Repeater && Repeater.isReady)return new Repeater();
+        else if(plant instanceof Repeater && Repeater.isReady)return new Repeater();
+        else if(plant instanceof GraveBuster)return new GraveBuster();
+        else if(plant instanceof Blover && Blover.isReady)return new Blover();
+        else if(plant instanceof Plantern && Plantern.isReady)return new Plantern();
+        else if(plant instanceof DoomShroom && DoomShroom.isReady){return new DoomShroom();}
+        else if(plant instanceof HypnoShroom && HypnoShroom.isReady){return new HypnoShroom();}
+        else if(plant instanceof ScaredyShroom && ScaredyShroom.isReady){return new ScaredyShroom();}
+        else if(plant instanceof PuffShroom && PuffShroom.isReady){return new PuffShroom();}
+        else if(plant instanceof IceShroom && IceShroom.isReady){return new IceShroom();}
+        else if(plant instanceof CoffeeBean && CoffeeBean.isReady)return new CoffeeBean();
         return null;
     }
 
@@ -153,7 +168,6 @@ public class MapController {
         gameLoop.stop();
         if(PauseGameController.isWin == 0) {
             try {
-
                 PauseGameController.pauseStage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(MapController.class.getResource("Pause.fxml"));
                 Parent root = fxmlLoader.load();
@@ -219,22 +233,51 @@ public class MapController {
         final int rows = gridPane.getRowCount();
         final int cols = gridPane.getColumnCount();
 
-        for(int i = 0 ; i < rows ; i++){
+        if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT && OptionController.clicked == -1) {
+            GameMap.getInstance().generateGrave();
+        }
+
+            for(int i = 0 ; i < rows ; i++){
             for(int j = 0; j < cols; j++){
                 Pane cell = new Pane();
+                gridPanes[i][j] = cell;
 
                 cell.setPrefSize(80, 80);
+                if(j < 5)fogView[i][j] = new ImageView(new Image("/Images/resources/graphics/extentions/fog0.png"));
 
+                    //adding graves!
+                    for(Grave grave : Grave.graves){
+                        if(grave.getCol() == j && grave.getRow() == i){
+                            cell.getChildren().add(grave.getImageView());
+                            GameMap.getInstance().setGraved(grave.getRow(), grave.getCol(), true);
+                            Platform.runLater(() -> {
+                                Bounds bounds = grave.getImageView().localToScene(grave.getImageView().getBoundsInLocal());
+                                grave.setX(bounds.getMinX());
+                                grave.setY(bounds.getMinY());
+                                System.out.println(grave.getCol());
+                                grave.getImageView().setLayoutX(5);
+                                grave.getImageView().setLayoutY(25);
+                            });
+
+                        }
+                    }
+
+                    for(Plant plant : DoomShroom.explodeArea){
+                        if(plant.getCol() == j && plant.getRow() == i){
+                            cell.getChildren().add(new ImageView(new Image("/Images/resources/graphics/Plants/DoomShroom/square bomb.png")));
+                        }
+                    }
+
+                    //this added when loading action
+                    for(Plant plant : GameMap.getInstance().plants){
+                        if(plant.getRow() == i && plant.getCol() == j){
+                            cell.getChildren().add(plant.getImageView());
+                            GameMap.getInstance().addPlant(plant, i, j);
+                            plant.updateImageSituation(paneWindow);
+                        }
+                    }
                 setOnCell(cell, i, j);
 
-                //this added when loading action
-                for(Plant plant : GameMap.plants){
-                    if(plant.getRow() == i && plant.getCol() == j){
-                        cell.getChildren().add(plant.getImageView());
-                        map.addPlant(plant, i, j);
-                        plant.updateImageSituation(paneWindow);
-                    }
-                }
 
                 gridPane.add(cell, j, i);
             }
@@ -243,27 +286,39 @@ public class MapController {
 
     public void setOnCell(Pane cell,int row,int col){
         cell.setOnMouseClicked(event -> {
-            if(!map.isCellEmpty(row, col) && shovelUsed){
+            if(!GameMap.getInstance().isCellEmpty(row, col) && shovelUsed){
                 //using shovel
                 shovel(row, col);
+                System.out.println("shovel used!");
+            }else if (choosenPlant instanceof CoffeeBean && GameMap.getInstance().isCellEmpty(row, col)) {
+                System.out.println("coffeeBean can only used on Plants!");
+            }else if(choosenPlant instanceof CoffeeBean && !GameMap.getInstance().getPlant(row, col).isShroom()){
+                System.out.println("coffeeBean can only used on shrooms!");
+            }
+            else if(choosenPlant instanceof CoffeeBean && GameMap.getInstance().getPlant(row, col).isShroom() && !GameMap.getInstance().getPlant(row, col).isDay()){
+                System.out.println("coffeeBean can used only on asleep shrooms!");
+            }
+            else if (!GameMap.getInstance().isCellEmpty(row, col) && !(choosenPlant instanceof CoffeeBean)) {
                 System.out.println("cell is already not empty");
-            } else if (!map.isCellEmpty(row, col)) {
-                System.out.println("cell is already not empty");
-            } else if (choosenPlant == null ){
+            } else if (choosenPlant == null){
                 System.out.println("No plant selected");
             }
-            else{
+            else if(choosenPlant instanceof GraveBuster && !GameMap.getInstance().getGraved(row, col)){
+                System.out.println("graveBooster must use on graves!");
+            } else if (!(choosenPlant instanceof GraveBuster) && GameMap.getInstance().getGraved(row, col)){
+                System.out.println("can't plant on graves!");
+            } else if (!cell.getChildren().isEmpty() && GameMap.getInstance().isCellEmpty(row, col) && !GameMap.getInstance().getGraved(row, col)) {
+                System.out.println("can't plant on exploded cell!");
+            } else{
                 cell.getChildren().add(choosenPlant.getImageView());
-                map.addPlant(choosenPlant, row, col);
+                GameMap.getInstance().addPlant(choosenPlant, row, col);
                 GameMap.plants.add(choosenPlant);
                 choosenPlant.setX(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinX());
                 choosenPlant.setY(choosenPlant.getImageView().localToScreen(choosenPlant.getImageView().getBoundsInLocal()).getMinY());
                 choosenPlant.setRow(row);
-                System.out.println(choosenPlant.getRow());
-                System.out.println(choosenPlant.getX() + " ..." + choosenPlant.getY());
-                choosenPlant.updateImageSituation(paneWindow);
                 choosenPlant.setRow(row);
                 choosenPlant.setCol(col);
+                choosenPlant.updateImageSituation(paneWindow);
                 score -= choosenPlant.getCost();
                 choosenPlant = null;
                 shovelUsed = false;
@@ -274,38 +329,53 @@ public class MapController {
 
     public void shovel(int row, int col){
         choosenPlant = null;
-        map.removePlant(row, col);
+        GameMap.getInstance().removePlant(row, col);
         shovelUsed = false;
     }
 
     //apply when pausing the game for stop the timelines!
     public static void stopTheGame(){
         for(Bullet bullet : PeaPlant.bulletList)if(bullet.getTimeline() != null){
-            bullet.getTimeline().stop();
+            bullet.getTimeline().pause();
         }
         for(Sun sun : Sun.sunList){
-            if(sun.getTimeline() != null)sun.getTimeline().stop();
-            if(sun.getPause() != null)sun.getPause().stop();
+            if(sun.getTimeline() != null)sun.getTimeline().pause();
+            if(sun.getPause() != null)sun.getPause().pause();
         }
         for(Zombie zombie : ZombieFactory.zombies){
-            if(zombie.getTimeline() != null)zombie.getTimeline().stop();
-            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().stop();
-            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().stop();
+            if(zombie.getTimeline() != null)zombie.getTimeline().pause();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().pause();
+            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
         }
-        for(Plant plant : GameMap.plants){
+        for(Zombie zombie : Zombie.hypnoZombie){
+            if(zombie.getTimeline() != null)zombie.getTimeline().pause();
+            if(zombie.getFreezeTimer() != null)zombie.getFreezeTimer().pause();
+            if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
+            if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
+        }
+        for(Plant plant : GameMap.getInstance().plants){
             if(plant.getTimeline() != null){
-                plant.getTimeline().stop();
+                plant.getTimeline().pause();
             }
         }
         //stop the cooldowns of each plant
-        if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.stop();
-        if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.stop();
-        if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.stop();
-        if(SunFlower.cooldownTimeline != null) SunFlower.cooldownTimeline.stop();
-        if(TallNut.cooldownTimeline != null) TallNut.cooldownTimeline.stop();
-        if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.stop();
-        if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.stop();
-        if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.stop();
+        if(PeaShooter.cooldownTimeline != null) PeaShooter.cooldownTimeline.pause();
+        if(Repeater.cooldownTimeline != null) Repeater.cooldownTimeline.pause();
+        if(SnowPea.cooldownTimeline != null) SnowPea.cooldownTimeline.pause();
+        if(SunFlower.cooldownTimeline != null) SunFlower.cooldownTimeline.pause();
+        if(TallNut.cooldownTimeline != null) TallNut.cooldownTimeline.pause();
+        if(WallNut.cooldownTimeline != null) WallNut.cooldownTimeline.pause();
+        if(Jalapeno.cooldownTimeline != null) Jalapeno.cooldownTimeline.pause();
+        if(CherryBomb.cooldownTimeline != null) CherryBomb.cooldownTimeline.pause();
+        if(GraveBuster.cooldownTimeline != null) GraveBuster.cooldownTimeline.pause();
+        if(ScaredyShroom.cooldownTimeline != null) ScaredyShroom.cooldownTimeline.pause();
+        if(PuffShroom.cooldownTimeline != null) PuffShroom.cooldownTimeline.pause();
+        if(IceShroom.cooldownTimeline != null) IceShroom.cooldownTimeline.pause();
+        if(Blover.cooldownTimeline != null) Blover.cooldownTimeline.pause();
+        if(Plantern.cooldownTimeline != null) Plantern.cooldownTimeline.pause();
+        if(DoomShroom.cooldownTimeline != null)DoomShroom.cooldownTimeline.pause();
+        if(HypnoShroom.cooldownTimeline != null)HypnoShroom.cooldownTimeline.pause();
     }
 
     private void handleZombiesWave1() {
@@ -332,6 +402,7 @@ public class MapController {
         if (isStrongAttack) {
             if (current % 3 != 0) return;
             numberOfZombies = 2 + (int)(current / 35);
+            if(ModeController.getSelectedMode() == ModeController.Mode.NIGHT)GameMap.getInstance().zombieGraveAttack();
         }
         else {
             if (current % 6 != 0) return;
@@ -344,11 +415,26 @@ public class MapController {
             int lane = rand.nextInt(5);
             zombieFactory.createZombie(types.get(index), lane);
 
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
+        }
+    }
+    public void applyFog(){
+        for(int i = 0; i < 5;i++){
+            for(int j = 5; j < 9;j++){
+                fogView[i][j - 5].setMouseTransparent(true);
+                fogView[i][j - 5].setFitWidth(400);
+                fogView[i][j - 5].setFitHeight(400);
+                if(GameMap.getInstance().getFog(i,j) && !paneWindow.getChildren().contains(fogView[i][j - 5])) {
+                    fogView[i][j - 5].setOpacity(0.8);
+                    paneWindow.getChildren().add(fogView[i][j - 5]);
+                    fogView[i][j - 5].setLayoutX(gridPanes[i][j].localToScreen(gridPanes[i][j].getBoundsInLocal()).getMinX());
+                    fogView[i][j - 5].setLayoutY(gridPanes[i][j].localToScreen(gridPanes[i][j].getBoundsInLocal()).getMinY() - 200);
+                    fogView[i][j - 5].toFront();
+                    fogView[i][j - 5].setViewOrder(-1);
+                }
+                else if(!GameMap.getInstance().getFog(i,j)) {
+                    paneWindow.getChildren().remove(fogView[i][j - 5]);
+                }
+            }
         }
     }
 

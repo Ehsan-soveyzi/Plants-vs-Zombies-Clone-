@@ -3,12 +3,15 @@ package Save_Logic;
 import ApplyGraphics.ChooseCardController;
 import ApplyGraphics.MapController;
 import ApplyGraphics.ModeController;
+import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfPlants.PeaShooter;
 import Character.KindsOfPlants.Plant;
 import Character.KindsOfPlants.*;
 import Character.KindsOfZombie.*;
 import Map.GameMap;
 import Character.*;
+import Map.Grave;
+import Map.ZombieFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.*;
@@ -26,13 +29,23 @@ public abstract class SaveGame implements Serializable {
         if(plant instanceof TallNut)return new TallNut();
         if(plant instanceof WallNut)return new WallNut();
         if(plant instanceof Jalapeno)return new Jalapeno();
-        if(plant instanceof CherryBomb)return new CherryBomb()  ;
+        if(plant instanceof CherryBomb)return new CherryBomb();
+        if(plant instanceof GraveBuster)return new GraveBuster();
+        if(plant instanceof ScaredyShroom)return new ScaredyShroom();
+        if(plant instanceof PuffShroom)return new PuffShroom();
+        if(plant instanceof Plantern )return new Plantern();
+        if(plant instanceof Blover)return new Blover();
+        if(plant instanceof DoomShroom)return new DoomShroom();
+        if(plant instanceof HypnoShroom)return new HypnoShroom();
+        if(plant instanceof IceShroom)return new IceShroom();
+        if (plant instanceof CoffeeBean)return new CoffeeBean();
         return null;
     }
 
     public static Bullet identifyKindsOfBullet(Bullet bullet){
         if(bullet instanceof NormalBullet)return new NormalBullet(bullet.getX(),bullet.getY(),bullet.getRow());
         if(bullet instanceof SnowBullet)return new SnowBullet(bullet.getX(),bullet.getY(),bullet.getRow());
+        if(bullet instanceof ShroomBullet)return new ShroomBullet(bullet.getX(),bullet.getY(),bullet.getRow());
         return null;
     }
 
@@ -68,6 +81,19 @@ public abstract class SaveGame implements Serializable {
                 Zombie loadZombie = MapController.zombieFactory.createZombie(zombie,zombie.getRow());
                 loadZombie.setHp(zombie.getHp());
                 loadZombie.setSlowed(zombie.isSlowed());
+                loadZombie.setFreezed(zombie.isFreezed());
+            }
+            for(Zombie zombie : data.hypnoZombies){
+                Zombie loadZombie = MapController.zombieFactory.createZombie(zombie,zombie.getRow());
+                ZombieFactory.zombies.remove(loadZombie);
+                loadZombie.setHp(zombie.getHp());
+                loadZombie.setSlowed(zombie.isSlowed());
+                loadZombie.setFreezed(zombie.isFreezed());
+                loadZombie.getImageView().setScaleX(-1);
+                loadZombie.setSpeed(zombie.getSpeed());
+                loadZombie.setHypno(zombie.isHypno());
+                loadZombie.setRedEffect();
+                Zombie.hypnoZombie.add(loadZombie);
             }
 
             for(Plant plant : data.plants){
@@ -77,6 +103,8 @@ public abstract class SaveGame implements Serializable {
                 loadPlant.setX(plant.getX());
                 loadPlant.setY(plant.getY());
                 loadPlant.setCol(plant.getCol());
+                loadPlant.setShroom(plant.isShroom());
+                loadPlant.setDay(plant.isDay());
                 GameMap.plants.add(loadPlant);
             }
 
@@ -94,12 +122,16 @@ public abstract class SaveGame implements Serializable {
                 Bullet loadBullet = identifyKindsOfBullet(bullet);
                 PeaPlant.bulletList.add(loadBullet);
             }
-            System.out.println(data.suns.size());
+            DoomShroom.explodeArea.addAll(data.explodes);
             for(Sun sun : data.suns){
                 sun.setImageView(new ImageView(new Image("/Images/resources/graphics/Plants/Sun/sun.png")));
                 sun.getImageView().setX(sun.getX());
                 sun.getImageView().setY(sun.getY());
                 Sun.sunList.add(sun);
+            }
+            for(Grave grave : data.graves){
+                grave.setImageView(new ImageView("/Images/resources/graphics/extentions/grave.png"));
+                Grave.graves.add(grave);
             }
 
         }catch (Exception e){

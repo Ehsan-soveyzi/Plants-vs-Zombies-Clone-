@@ -13,8 +13,7 @@ public class TallNut extends NutPlant implements Serializable {
     private static final String TallNutImageAddress = "/Images/resources/graphics/Plants/TallNut/TallNut.gif";
     private static final String TallNutImageAddress1 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked1.gif";
     private static final String TallNutImageAddress2 = "/Images/resources/graphics/Plants/TallNut/TallNutCracked2.gif";
-    public static final ImageView cardView = new ImageView(new Image(tallNutCardImageAddress));
-    public static int cooldown = 7;
+    public static int cooldown = 10;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -29,12 +28,12 @@ public class TallNut extends NutPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 7;
+                cooldown = 10;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(7);
+        cooldownTimeline.setCycleCount(10);
         cooldownTimeline.play();
     }
 

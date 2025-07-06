@@ -13,7 +13,7 @@ public class SnowBullet extends Bullet implements Serializable {
 
     @Override
     public void onHit(Zombie zombie){
-        zombie.takeDamage(1);
+        zombie.takeDamage();
         zombie.setSlowed(true);
         die();
     }

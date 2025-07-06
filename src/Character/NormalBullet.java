@@ -14,7 +14,7 @@ public class NormalBullet extends Bullet implements Serializable {
 
     @Override
     public void onHit(Zombie zombie){
-        zombie.takeDamage(1);
+        zombie.takeDamage();
         die();
     }
     

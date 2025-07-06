@@ -9,7 +9,7 @@ public class Regular extends Zombie implements Serializable {
             "/Images/resources/graphics/Zombies/NormalZombie/Zombie/Zombie_";
 
     public Regular(int row) {
-        super(5,30,500,row,new Image(regularImageAddress + "0.png"));
+        super(5,-30,500,row,new Image(regularImageAddress + "0.png"));
     }
 
     public void  playEatingAnimation(){
