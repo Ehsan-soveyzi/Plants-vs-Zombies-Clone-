@@ -3,6 +3,7 @@ package ApplyGraphics;
 import Character.KindsOfPlants.*;
 import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
+import GameServer.Server;
 import Map.GameMap;
 import Map.Grave;
 import Map.ZombieFactory;
@@ -27,6 +28,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import Character.Sun;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -110,7 +113,11 @@ public class MapController {
             sunPoint.setText(Integer.toString(score));
             //apply zombies attack
             if(time % 1000 == 0 && time <= 120000){
-                handleZombiesWave1();
+                try {
+                    handleZombiesWave1();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -387,10 +394,9 @@ public class MapController {
         if(HypnoShroom.cooldownTimeline != null)HypnoShroom.cooldownTimeline.pause();
     }
 
-    private void handleZombiesWave1() {
+    private void handleZombiesWave1() throws IOException {
         long current = time / 1000;
         ArrayList<Zombie> types;
-        Random rand = new Random();
 
         // choose zombies depending on the time
         boolean normal = true;
@@ -420,8 +426,8 @@ public class MapController {
         }
 
         for (int i = 0; i < numberOfZombies; i++) {
-            int index = rand.nextInt(types.size());
-            int lane = rand.nextInt(5);
+            int index = Server.generateRandom(types.size());
+            int lane = Server.generateRandom(5);
             zombieFactory.createZombie(types.get(index), lane);
 
         }
