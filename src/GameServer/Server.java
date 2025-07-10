@@ -1,6 +1,8 @@
 package GameServer;
 
 import ApplyGraphics.GameMain;
+import ApplyGraphics.MapController;
+import ApplyGraphics.PauseGameController;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -13,10 +15,10 @@ public class Server {
     public static BufferedReader in;
     public static PrintWriter out;
     public static Socket socket;
-
+    static ServerSocket serverSocket;
     public static void main(String[] args)throws IOException {
         GameMain.runner = "Server";
-        ServerSocket serverSocket = new ServerSocket(PORT);
+        serverSocket = new ServerSocket(PORT);
         System.out.println("Waiting for client...");
         socket = serverSocket.accept();
         System.out.println("what happening?");
@@ -28,17 +30,47 @@ public class Server {
         GameMain.main(args);
     }
 
+    public static void sendEndMessage(int win) throws IOException {
+        String line = "End" + win;
+        if(GameMain.runner.equals("Server")) {
+            Server.out.println(line);
+        }
+        if(GameMain.runner.equals("Client")) {
+            Client.out.println(line);
+        }
+    }
+
+    public static boolean winTheGame() throws IOException {
+        if(GameMain.runner.equals("Server")) {
+        if(in.ready()) {
+            return true;
+        }
+        }
+        return false;
+    }
+
+//    public static boolean readEndMessage() throws IOException {
+//        if(GameMain.runner.equals("Server")) {
+//
+//        }
+//    }
+
     public static int generateRandom(int range) throws IOException {
-        if(GameMain.runner == "GameMain"){
+        if(GameMain.runner.equals("GameMain")){
             return random.nextInt(range);
         }
         else if(GameMain.runner.equals("Client")){
-            return Integer.parseInt(Client.in.readLine());
+            String line = Client.in.readLine();
+            if(line.startsWith("rand:")){
+                return Integer.parseInt(line.substring(5));
+            }
         }
         else{
             int rand = random.nextInt(range);
-            out.println(rand);
+            String line = "rand:" + rand;
+            out.println(line);
             return rand;
         }
+        return 0;
     }
 }

@@ -100,7 +100,12 @@ public class MapController {
         //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             gameProgressBar.setProgress(Zombie.NumberOfTotalZombies/57.0);
-            if(gameProgressBar.getProgress() >= 1 && ZombieFactory.zombies.isEmpty()) {
+            if((gameProgressBar.getProgress() >= 1 && ZombieFactory.zombies.isEmpty()) || GameMain.winner) {
+                try {
+                    Server.sendEndMessage(1);
+                }catch(IOException e1) {
+                    e1.printStackTrace();
+                }
                 PauseGameController.isWin = 1;
                 pause();
             }
@@ -108,7 +113,13 @@ public class MapController {
             setOnMouseEntered();
             if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)applyFog();
             time += 100;
-            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
+            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000) {
+                try {
+                    Sun.addToPane(paneWindow);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             GameMap.getInstance().checkWar();
             sunPoint.setText(Integer.toString(score));
             //apply zombies attack
@@ -118,6 +129,12 @@ public class MapController {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+
+            try {
+                GameMain.loser = Server.winTheGame();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -191,7 +208,7 @@ public class MapController {
                 PauseGameController.pauseStage.setScene(scene);
                 PauseGameController.pauseStage.setResizable(false);
                 PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
+//                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
                 PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
                 PauseGameController.pauseStage.show();
             } catch (Exception e) {
@@ -206,7 +223,7 @@ public class MapController {
                 PauseGameController.pauseStage.setScene(scene);
                 PauseGameController.pauseStage.setResizable(false);
                 PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
+//                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
                 PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
                 PauseGameController.pauseStage.show();
             } catch (Exception e) {

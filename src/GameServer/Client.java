@@ -1,6 +1,8 @@
 package GameServer;
 
 import ApplyGraphics.GameMain;
+import ApplyGraphics.MapController;
+import ApplyGraphics.PauseGameController;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -18,13 +20,25 @@ public class Client {
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            System.out.println(in2.equals(in));
 
             GameMain.main(args);
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
 
-
+    public static void sendEndMessage() throws IOException {
+        out.println(PauseGameController.isWin);
+        int number = Integer.parseInt(in.readLine());
+        if(number == -1){
+            PauseGameController.isWin = 1;
+            MapController.pause();
+        }else if(number == 1){
+            PauseGameController.isWin = -1;
+            MapController.pause();
+        }
     }
 }
