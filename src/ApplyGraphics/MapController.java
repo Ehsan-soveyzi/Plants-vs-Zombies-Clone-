@@ -3,6 +3,7 @@ package ApplyGraphics;
 import Character.KindsOfPlants.*;
 import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
+import GameServer.Client;
 import GameServer.Server;
 import Map.GameMap;
 import Map.Grave;
@@ -103,8 +104,8 @@ public class MapController {
             if((gameProgressBar.getProgress() >= 1 && ZombieFactory.zombies.isEmpty()) || GameMain.winner) {
                 try {
                     Server.sendEndMessage(1);
-                }catch(IOException e1) {
-                    e1.printStackTrace();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
                 PauseGameController.isWin = 1;
                 pause();
@@ -132,7 +133,15 @@ public class MapController {
             }
 
             try {
-                GameMain.loser = Server.winTheGame();
+                int number = Server.winTheGame();
+                System.out.println("Number of ???: " + number);
+                if(number == 1){
+                    GameMain.winner = true;
+                }
+                if (number == -1) {
+                    GameMain.loser = true;
+                }
+
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

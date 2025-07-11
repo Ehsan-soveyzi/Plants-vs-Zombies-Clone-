@@ -31,39 +31,46 @@ public class Server {
     }
 
     public static void sendEndMessage(int win) throws IOException {
-        String line = "End" + win;
         if(GameMain.runner.equals("Server")) {
-            Server.out.println(line);
+            Server.out.println(win);
         }
         if(GameMain.runner.equals("Client")) {
-            Client.out.println(line);
+            Client.out.println(win);
         }
     }
 
-    public static boolean winTheGame() throws IOException {
-        if(GameMain.runner.equals("Server")) {
-        if(in.ready()) {
-            return true;
+    public static int winTheGame() throws IOException {
+        if (GameMain.runner.equals("Server")) {
+            if(in.ready()){
+                String line = in.readLine();
+                System.out.println(line);
+                System.out.println();
+                if(line.contains("-1"))return 1;
+                if(line.contains("1")) {
+                    return -1;
+                }
+                return -1;
+            }
         }
+        if(GameMain.runner.equals("Client")) {
+            if(Client.in.ready()){
+                String line = Client.in.readLine();
+                System.out.println(line);
+                Client.info.add(line);
+                if(line.contains("-1"))return 1;
+                if(line.contains("1") && !line.contains("rand"))return -1;
+            }
         }
-        return false;
+        return 0;
     }
 
-//    public static boolean readEndMessage() throws IOException {
-//        if(GameMain.runner.equals("Server")) {
-//
-//        }
-//    }
-
-    public static int generateRandom(int range) throws IOException {
+    public static int generateRandom(int range){
         if(GameMain.runner.equals("GameMain")){
             return random.nextInt(range);
         }
         else if(GameMain.runner.equals("Client")){
-            String line = Client.in.readLine();
-            if(line.startsWith("rand:")){
-                return Integer.parseInt(line.substring(5));
-            }
+            String line = Client.info.get(Client.clientCounter++);
+            return Integer.parseInt(line.substring(5));
         }
         else{
             int rand = random.nextInt(range);
@@ -71,6 +78,5 @@ public class Server {
             out.println(line);
             return rand;
         }
-        return 0;
     }
 }

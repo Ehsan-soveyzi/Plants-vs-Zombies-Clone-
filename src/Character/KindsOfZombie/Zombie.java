@@ -115,7 +115,7 @@ public abstract class Zombie implements Serializable {
     }
 
     public void die() {
-        System.out.println(NumberOfTotalZombies++);
+        NumberOfTotalZombies++;
         isDead = true;
         if(timeline != null)timeline.stop();
         ZombieFactory.zombies.remove(this);
