@@ -51,8 +51,8 @@ public class IceShroom extends Plant implements Serializable {
                 cooldownTimeline.stop();
             }
         }));
-        timeline.setCycleCount(15);
-        timeline.play();
+        cooldownTimeline.setCycleCount(15);
+        cooldownTimeline.play();
     }
 
     public void freeze() {
