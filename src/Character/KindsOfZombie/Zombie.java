@@ -130,12 +130,13 @@ public abstract class Zombie implements Serializable {
 
     //if the target is a plant
     public void bite(Plant target) {
-        target.takeDamage();
-        if(target instanceof HypnoShroom && !target.isDay()){
+        if(target instanceof HypnoShroom && !target.isDay() && !target.isDead()){
             isHypno = true;
             setRedEffect();
         }
+        target.takeDamage();
     }
+
     //overloading method
     public void bite(Zombie zombie) {
         if (zombie == null || zombie.isDead()) return;
