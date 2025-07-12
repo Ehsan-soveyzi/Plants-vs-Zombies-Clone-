@@ -21,9 +21,12 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
     public static int cooldown = 5;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
+    //doing this for prevent of generating new image object each time! it better use in other plants too!
+    private static final Image scaredyShroomImage = new Image(scaredyShroomImageAddress);
+    private static final Image scaredyshroomcryImage = new Image(ScaredyShroomCryImageAddress);
 
     public ScaredyShroom() {
-        super(25, 5, new Image(scaredyShroomImageAddress), new Image(cardViewImageAddress));
+        super(25, 5, scaredyShroomImage, new Image(cardViewImageAddress));
         setShroom(true);
     }
 
@@ -80,11 +83,13 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
                 zombieInRow = true;
             }
             else if (z.getRow() == getRow() && z.getX() - 10 >= getX() && z.getCol() - getCol() < 2){
-                getImageView().setImage(new Image(ScaredyShroomCryImageAddress));
+                getImageView().setImage(scaredyshroomcryImage);
                 zombieInRow = false;
                 break;
             }
-            else getImageView().setImage(new Image(scaredyShroomImageAddress));
+            else {
+                getImageView().setImage(scaredyShroomImage);
+            }
         }
         setCheckShot(zombieInRow);
     }
