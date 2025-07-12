@@ -103,7 +103,7 @@ public class MapController {
             }
             if(!shovelUsed) paneWindow.setCursor(Cursor.DEFAULT);
             setOnMouseEntered();
-            if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)applyFog();
+            if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)Platform.runLater(this::applyFog);
             time += 100;
             if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
             GameMap.getInstance().checkWar();
