@@ -87,7 +87,6 @@ public class ScaredyShroom extends PeaPlant implements Serializable {
             }
             else {
                 getImageView().setImage(scaredyShroom);
-                break;
             }
         }
         setCheckShot(zombieInRow);
