@@ -134,7 +134,6 @@ public class MapController {
 
             try {
                 int number = Server.winTheGame();
-                System.out.println("Number of ???: " + number);
                 if(number == 1){
                     GameMain.winner = true;
                 }

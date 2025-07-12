@@ -3,6 +3,7 @@ package Map;
 import Character.KindsOfPlants.Plant;
 import Character.KindsOfPlants.Plantern;
 import Character.KindsOfZombie.Zombie;
+import GameServer.Server;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,9 +68,8 @@ public class GameMap {
         }
     }
 
-    public void zombieGraveAttack() {
-        Random rand = new Random();
-        int numberOfZombies = rand.nextInt(Grave.graves.size());
+    public void zombieGraveAttack() {;
+        int numberOfZombies = Server.generateRandom(Grave.graves.size());
         for(Grave grave : Grave.graves) {
             grave.generateZombies();
             numberOfZombies--;
@@ -105,12 +105,11 @@ public class GameMap {
     }
 
     public void generateGrave(){
-        Random rand = new Random();
         //at most 5 grave can be existed in the map
-        int numberOfGraves = rand.nextInt(5);
+        int numberOfGraves = Server.generateRandom(5);
         for(int i = 0; i < numberOfGraves; i++){
-            int row = rand.nextInt(5);
-            int col = rand.nextInt(3) + 6;
+            int row = Server.generateRandom(5);
+            int col = Server.generateRandom(3) + 6;
             new Grave(row,col);
             graved[row][col] = true;
         }
