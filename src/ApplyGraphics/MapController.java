@@ -66,7 +66,7 @@ public class MapController {
     private final Pane[][] gridPanes = new Pane[5][9];
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         gameProgressBar.setScaleX(-1);
         GameMap.getInstance().initializeFog();
         zombieFactory = new ZombieFactory(paneWindow);
@@ -231,7 +231,6 @@ public class MapController {
                 PauseGameController.pauseStage.setScene(scene);
                 PauseGameController.pauseStage.setResizable(false);
                 PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-//                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
                 PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
                 PauseGameController.pauseStage.show();
             } catch (Exception e) {
@@ -270,7 +269,7 @@ public class MapController {
     }
 
 
-    public void createGrid(){
+    public void createGrid() throws IOException {
         final int rows = gridPane.getRowCount();
         final int cols = gridPane.getColumnCount();
 
@@ -284,9 +283,12 @@ public class MapController {
                 gridPanes[i][j] = cell;
 
                 cell.setPrefSize(80, 80);
-                if(j < 5)fogView[i][j] = new ImageView(new Image("/Images/resources/graphics/extentions/fog0.png"));
 
-                    //adding graves!
+                if(j < 5) {
+                    fogView[i][j] = new ImageView(new Image("/Images/resources/graphics/extentions/fog0.png"));
+                }
+
+//                  adding graves!
                     for(Grave grave : Grave.graves){
                         if(grave.getCol() == j && grave.getRow() == i){
                             cell.getChildren().add(grave.getImageView());
@@ -310,7 +312,7 @@ public class MapController {
                     }
 
                     //this added when loading action
-                    for(Plant plant : GameMap.getInstance().plants){
+                    for(Plant plant : GameMap.plants){
                         if(plant.getRow() == i && plant.getCol() == j){
                             cell.getChildren().add(plant.getImageView());
                             GameMap.getInstance().addPlant(plant, i, j);
@@ -395,7 +397,7 @@ public class MapController {
             if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
         }
-        for(Plant plant : GameMap.getInstance().plants){
+        for(Plant plant : GameMap.plants){
             if(plant.getTimeline() != null){
                 plant.getTimeline().pause();
             }

@@ -1,9 +1,6 @@
 package GameServer;
 
 import ApplyGraphics.GameMain;
-import ApplyGraphics.MapController;
-import ApplyGraphics.PauseGameController;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -44,7 +41,6 @@ public class Server {
             if(in.ready()){
                 String line = in.readLine();
                 System.out.println(line);
-                System.out.println();
                 if(line.contains("-1"))return 1;
                 if(line.contains("1")) {
                     return -1;
@@ -64,11 +60,15 @@ public class Server {
         return 0;
     }
 
-    public static int generateRandom(int range){
+    public static int generateRandom(int range) throws IOException {
         if(GameMain.runner.equals("GameMain")){
             return random.nextInt(range);
         }
         else if(GameMain.runner.equals("Client")){
+            while(Client.in.ready()){
+                winTheGame();
+            }
+
             String line = Client.info.get(Client.clientCounter++);
             return Integer.parseInt(line.substring(5));
         }
@@ -76,6 +76,7 @@ public class Server {
             int rand = random.nextInt(range);
             String line = "rand:" + rand;
             out.println(line);
+            System.out.println(line);
             return rand;
         }
     }

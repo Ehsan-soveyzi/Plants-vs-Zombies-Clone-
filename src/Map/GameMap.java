@@ -1,13 +1,13 @@
 package Map;
 
 import Character.KindsOfPlants.Plant;
-import Character.KindsOfPlants.Plantern;
 import Character.KindsOfZombie.Zombie;
 import GameServer.Server;
 import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class GameMap {
 
@@ -68,7 +68,7 @@ public class GameMap {
         }
     }
 
-    public void zombieGraveAttack() {;
+    public void zombieGraveAttack() throws IOException {
         int numberOfZombies = Server.generateRandom(Grave.graves.size());
         for(Grave grave : Grave.graves) {
             grave.generateZombies();
@@ -84,7 +84,6 @@ public class GameMap {
                 Pane parent = (Pane) plant.getImageView().getParent();
                 if (parent != null) parent.getChildren().remove(plant.getImageView());
                 plant.setDead(true);
-//                if(plant instanceof Plantern)((Plantern) plant).setFog(true);
             }
             plants.remove(plant);
             grid[row][col] = null;
@@ -104,9 +103,10 @@ public class GameMap {
         return row >= 0 && row < ROWS && col >= 0 && col < COLS;
     }
 
-    public void generateGrave(){
+    public void generateGrave() throws IOException {
         //at most 5 grave can be existed in the map
         int numberOfGraves = Server.generateRandom(5);
+
         for(int i = 0; i < numberOfGraves; i++){
             int row = Server.generateRandom(5);
             int col = Server.generateRandom(3) + 6;
@@ -122,7 +122,6 @@ public class GameMap {
             }
         }
     }
-
 
 
     public void cleanGrave(){
