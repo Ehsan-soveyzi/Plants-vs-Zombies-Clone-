@@ -1,10 +1,12 @@
 package Character.KindsOfZombie;
 
+import ApplyGraphics.GameMain;
 import ApplyGraphics.MapController;
 import ApplyGraphics.PauseGameController;
 import Character.KindsOfPlants.HypnoShroom;
 import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfPlants.Plant;
+import GameServer.Server;
 import Map.GameMap;
 import Map.ZombieFactory;
 import javafx.animation.Animation;
@@ -18,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -82,13 +86,14 @@ public abstract class Zombie implements Serializable {
 
 
     //updating zombie movement per moment.
-    public void update(double deltaTime) {
+    public void update(double deltaTime) throws IOException {
         if (!isEating && !isDead) {
             x += speed * deltaTime;
             imageView.setLayoutX(x);
             updateImageSituation();
             setCol(getCol());
-            if(col <= 0) {
+            if(col <= 0 || GameMain.loser) {
+                Server.sendEndMessage(-1);
                 PauseGameController.isWin = -1;
                 MapController.pause();
             }
@@ -110,7 +115,7 @@ public abstract class Zombie implements Serializable {
     }
 
     public void die() {
-        System.out.println(NumberOfTotalZombies++);
+        NumberOfTotalZombies++;
         isDead = true;
         if(timeline != null)timeline.stop();
         ZombieFactory.zombies.remove(this);
@@ -131,6 +136,7 @@ public abstract class Zombie implements Serializable {
         }
         target.takeDamage();
     }
+
     //overloading method
     public void bite(Zombie zombie) {
         if (zombie == null || zombie.isDead()) return;
@@ -216,7 +222,11 @@ public abstract class Zombie implements Serializable {
         final int[] frameIndex = {0};
 
         timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            this.update(0.1);
+            try {
+                this.update(0.1);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             zombieView.setImage(frames[frameIndex[0]]);
             frameIndex[0] = (frameIndex[0] + 1) % frames.length;
         }));

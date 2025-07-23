@@ -42,7 +42,6 @@ public class HypnoShroom extends Plant implements Serializable {
         if(!isDay()){
             getImageView().setImage(new Image(hypnoShroomImageAddress));
             setHp(1);
-
         }else{
             getImageView().setImage(new Image(hypnoShroomSleepImageAddress));
         }

@@ -67,7 +67,7 @@ public class ChooseCardController {
                     counter++;
                 }
             }
-    }
+        }
 
     public void backButton(){
         try {

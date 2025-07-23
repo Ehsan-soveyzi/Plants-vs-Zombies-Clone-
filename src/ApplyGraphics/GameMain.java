@@ -13,8 +13,12 @@ import java.io.IOException;
 public class GameMain extends Application {
     //all the scene must set to this stage!
     public static Stage mainStage;
+    public static String runner = "GameMain";
+    public static boolean winner = false;
+    public static boolean loser = false;
 
     public static void main(String[] args) {
+        System.out.println(runner);
         launch(args);
     }
 
@@ -26,10 +30,9 @@ public class GameMain extends Application {
         Scene scene = new Scene(root);
         mainStage = primaryStage;
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Map");
+        primaryStage.setTitle(runner);
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
-        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.show();
     }
     //use this effect for set fade effect to transferring cross the stages
