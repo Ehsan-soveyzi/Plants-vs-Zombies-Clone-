@@ -50,15 +50,6 @@ public abstract class Plant implements Serializable {
         GameMap.getInstance().removePlant(row,col);
     }
 
-    public void setEffect(){
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setHue(5);
-        colorAdjust.setContrast(2);
-        colorAdjust.setBrightness(3);
-        imageView.setEffect(colorAdjust);
-    }
-
-
     public abstract void updateImageSituation(Pane pane); // abstract
 
     public int getRow(){return row;};

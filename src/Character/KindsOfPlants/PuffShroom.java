@@ -75,6 +75,7 @@ public class PuffShroom extends PeaPlant implements Serializable {
         for (Zombie z : ZombieFactory.zombies) {
             if (z.getRow() == getRow() && z.getX() - 10 >= getX() && z.getCol() - getCol() <= 4) {
                 zombieInRow = true;
+                break;
             }
         }
         setCheckShot(zombieInRow);

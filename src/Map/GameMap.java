@@ -84,7 +84,6 @@ public class GameMap {
                 Pane parent = (Pane) plant.getImageView().getParent();
                 if (parent != null) parent.getChildren().remove(plant.getImageView());
                 plant.setDead(true);
-//                if(plant instanceof Plantern)((Plantern) plant).setFog(true);
             }
             plants.remove(plant);
             grid[row][col] = null;

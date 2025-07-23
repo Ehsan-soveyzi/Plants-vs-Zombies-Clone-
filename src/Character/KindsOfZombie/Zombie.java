@@ -49,7 +49,7 @@ public abstract class Zombie implements Serializable {
     private transient PauseTransition freezeTimer;
 
     public static ArrayList<Zombie> hypnoZombie = new ArrayList<>();
-
+    public static int NumberOfTotalZombies = 0;
 
 
     public Zombie(int hp, double speed, double eatingSpeed, int row, Image image) {
@@ -110,6 +110,7 @@ public abstract class Zombie implements Serializable {
     }
 
     public void die() {
+        System.out.println(NumberOfTotalZombies++);
         isDead = true;
         if(timeline != null)timeline.stop();
         ZombieFactory.zombies.remove(this);
@@ -124,11 +125,11 @@ public abstract class Zombie implements Serializable {
 
     //if the target is a plant
     public void bite(Plant target) {
-        target.takeDamage();
-        if(target instanceof HypnoShroom && !target.isDay()){
+        if(target instanceof HypnoShroom && !target.isDay() && !target.isDead()){
             isHypno = true;
             setRedEffect();
         }
+        target.takeDamage();
     }
     //overloading method
     public void bite(Zombie zombie) {
