@@ -216,7 +216,7 @@ public class MapController {
                 PauseGameController.pauseStage.setScene(scene);
                 PauseGameController.pauseStage.setResizable(false);
                 PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-//                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
+                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
                 PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
                 PauseGameController.pauseStage.show();
             } catch (Exception e) {
