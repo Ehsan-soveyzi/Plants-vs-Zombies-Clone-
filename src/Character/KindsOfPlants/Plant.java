@@ -7,7 +7,10 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
 import java.io.Serializable;
 
 public abstract class Plant implements Serializable {
@@ -48,6 +51,13 @@ public abstract class Plant implements Serializable {
     public void die() {
         isDead = true;
         GameMap.getInstance().removePlant(row,col);
+    }
+    public void cooldownApply(ImageView imageView, int cooldown, int currentCooldown) {
+        javafx.scene.shape.Rectangle darkOverlay = new Rectangle();
+        darkOverlay.setWidth(imageView.getFitWidth());
+        darkOverlay.setHeight(imageView.getFitHeight());
+        darkOverlay.setFill(Color.color(0, 0, 0, 0.6));
+
     }
 
     public abstract void updateImageSituation(Pane pane); // abstract
