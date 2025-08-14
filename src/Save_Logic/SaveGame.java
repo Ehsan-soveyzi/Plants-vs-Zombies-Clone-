@@ -76,6 +76,7 @@ public abstract class SaveGame implements Serializable {
             CherryBomb.cooldown = data.cherryBombCooldown;
             WallNut.cooldown = data.wallNutCooldown;
             SunFlower.cooldown = data.sunFlowerCooldown;
+            Zombie.NumberOfTotalZombies = data.numberOfDeadZombies;
 
             for(Zombie zombie : data.zombies){
                 Zombie loadZombie = MapController.zombieFactory.createZombie(zombie,zombie.getRow());

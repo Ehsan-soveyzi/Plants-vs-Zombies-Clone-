@@ -2,7 +2,6 @@ package Map;
 
 import Character.KindsOfZombie.*;
 import javafx.scene.layout.Pane;
-
 import java.util.ArrayList;
 
 public class ZombieFactory {

@@ -1,6 +1,6 @@
 package Character.KindsOfPlants;
 
-import ApplyGraphics.ModeController;
+
 import Character.KindsOfZombie.Zombie;
 import Map.ZombieFactory;
 import javafx.animation.KeyFrame;
@@ -41,7 +41,7 @@ public class PuffShroom extends PeaPlant implements Serializable {
         if(!isDay()){
             getImageView().setImage(new Image(puffShroomImageAddress));
             checkBullet();
-            timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), e ->{
                 if(getCheckShot()){
                     shoot(pane);
                 }

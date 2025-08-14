@@ -1,15 +1,8 @@
 package Character.KindsOfZombie;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 public class ConeHead extends Zombie implements Serializable {
     private final static String coneHeadImageAddress =

@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 
 public class Blover extends Plant implements Serializable {
@@ -27,6 +26,7 @@ public class Blover extends Plant implements Serializable {
             }
         }
     }
+
     public static void startCooldown() {
         isReady = false;
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {

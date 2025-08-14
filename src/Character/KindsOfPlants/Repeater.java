@@ -49,11 +49,11 @@ public class Repeater extends PeaPlant implements Serializable {
     public void updateImageSituation(Pane pane) {
         checkBullet();
         timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1.75), e -> {
+                new KeyFrame(Duration.seconds(1), e -> {
                     if (getCheckShot()) shoot(pane);
                     if(isDead())timeline.stop();
                 }),
-                new KeyFrame(Duration.seconds(1.85), e -> {
+                new KeyFrame(Duration.seconds(1.1), e -> {
                     if (getCheckShot()) shoot(pane);
                 })
         );

@@ -14,7 +14,7 @@ public class GraveBuster extends Plant implements Serializable {
     private static final String graveBusterImageAddress = "/Images/resources/graphics/Plants/GraveBuster/GraveBuster.gif";
     private static final String graveBusterCardImageAddress = "/Images/resources/graphics/Cards/graveBuster.jpg";
     private Grave grave;
-    public static int cooldown = 10;
+    public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
@@ -29,12 +29,12 @@ public class GraveBuster extends Plant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 10;
+                cooldown = 7;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(10);
+        cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
 

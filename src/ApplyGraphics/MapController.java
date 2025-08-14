@@ -3,7 +3,6 @@ package ApplyGraphics;
 import Character.KindsOfPlants.*;
 import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
-import GameServer.Client;
 import GameServer.Server;
 import Map.GameMap;
 import Map.Grave;
@@ -29,10 +28,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import Character.Sun;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class MapController {
 
@@ -55,7 +53,7 @@ public class MapController {
     public static int waveCount = 1;
     public static Timeline gameLoop;
     public static long time = 0;
-    public static int score = 10000;
+    public static int score = 300;
     private final ImageView[][] fogView = new ImageView[5][5];
 
 
@@ -64,6 +62,7 @@ public class MapController {
     boolean shovelUsed  = false;
     ArrayList<Plant> cardPlants;
     private final Pane[][] gridPanes = new Pane[5][9];
+
 
     @FXML
     public void initialize() throws IOException {
@@ -216,7 +215,7 @@ public class MapController {
                 PauseGameController.pauseStage.setScene(scene);
                 PauseGameController.pauseStage.setResizable(false);
                 PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-//                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
+                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
                 PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
                 PauseGameController.pauseStage.show();
             } catch (Exception e) {

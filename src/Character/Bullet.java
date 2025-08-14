@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 
 public abstract class Bullet implements Serializable {
@@ -44,7 +43,6 @@ public abstract class Bullet implements Serializable {
         isAlive = false;
         if (timeline != null) timeline.stop();
         if (parentPane != null) parentPane.getChildren().remove(imageView);
-        // اگر لیستی از گلوله‌ها داری، از اون لیست هم حذف کن
     }
 
     public abstract void onHit(Zombie z);

@@ -51,7 +51,6 @@ public class Server {
         if(GameMain.runner.equals("Client")) {
             if(Client.in.ready()){
                 String line = Client.in.readLine();
-                System.out.println(line);
                 Client.info.add(line);
                 if(line.contains("-1"))return 1;
                 if(line.contains("1") && !line.contains("rand"))return -1;
@@ -76,7 +75,6 @@ public class Server {
             int rand = random.nextInt(range);
             String line = "rand:" + rand;
             out.println(line);
-            System.out.println(line);
             return rand;
         }
     }

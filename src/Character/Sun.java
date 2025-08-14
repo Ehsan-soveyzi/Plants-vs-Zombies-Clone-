@@ -7,11 +7,10 @@ import javafx.animation.Timeline;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class Sun implements Serializable {
 
