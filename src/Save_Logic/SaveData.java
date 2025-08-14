@@ -27,6 +27,7 @@ public class SaveData implements Serializable {
     int wallNutCooldown;
     int cherryBombCooldown;
     int jalapenoCooldown;
+    int numberOfDeadZombies;
     ArrayList<Zombie> zombies;
     ArrayList<Plant> plants;
     ArrayList<Sun> suns;
@@ -46,6 +47,7 @@ public class SaveData implements Serializable {
             this.wallNutCooldown = WallNut.cooldown;
             this.cherryBombCooldown = CherryBomb.cooldown;
             this.jalapenoCooldown = Jalapeno.cooldown;
+            this.numberOfDeadZombies = Zombie.NumberOfTotalZombies;
             this.time = MapController.time;
             this.wave = MapController.waveCount;
             this.zombies = ZombieFactory.zombies;

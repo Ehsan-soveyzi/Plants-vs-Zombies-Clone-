@@ -1,14 +1,16 @@
 package Character;
 
 import ApplyGraphics.MapController;
+import GameServer.Server;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class Sun implements Serializable {
 
@@ -23,7 +25,7 @@ public class Sun implements Serializable {
     public static ArrayList<Sun> sunList = new ArrayList<>();
     private static final String sunAddress = "/Images/resources/graphics/Plants/Sun/sun.png";
 
-    public Sun(){ // random in map
+    public Sun() throws IOException { // random in map
         sunImageView = new ImageView(sunAddress);
         sunMovement();
         sunImageView.setOnMouseClicked(event -> {
@@ -49,7 +51,7 @@ public class Sun implements Serializable {
         sunList.add(this);
     }
 
-    public static void addToPane(Pane pane){
+    public static void addToPane(Pane pane) throws IOException {
         Sun sun = new Sun();
         pane.getChildren().add(sun.getImageView());
     }
@@ -68,10 +70,9 @@ public class Sun implements Serializable {
         pause.play();
     }
 
-    private void sunMovement(){
-        Random rand = new Random();
-        int x = rand.nextInt(1030) + 370;
-        int y = rand.nextInt(180) + 20;
+    private void sunMovement() throws IOException {
+        int x = Server.generateRandom(1030) + 370;
+        int y = Server.generateRandom(180) + 20;
         timelineRemaining = y;
         this.setX(x);
         sunImageView.setX(x);

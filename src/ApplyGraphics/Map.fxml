@@ -37,7 +37,7 @@
                 <Image url="@../Images/resources/graphics/extentions/SunBack.png" />
             </image>
         </ImageView>
-        <Label fx:id="sunPoint" layoutX="129.0" layoutY="6.0" prefHeight="78.0" prefWidth="181.0" text="123">
+        <Label fx:id="sunPoint" layoutX="129.0" layoutY="6.0" prefHeight="78.0" prefWidth="181.0" text="100">
             <font>
                 <Font name="G2 Rubber Stamp LET Plain" size="43.0" />
             </font>

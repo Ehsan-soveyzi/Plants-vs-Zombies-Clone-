@@ -34,7 +34,7 @@ public class SnowPea extends PeaPlant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         checkBullet();
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e ->{
             if(getCheckShot()){
                 shoot(pane);
             }
@@ -49,7 +49,7 @@ public class SnowPea extends PeaPlant implements Serializable {
     public static void startCooldown() {
         isReady = false;
 
-        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(7),event -> {
             cooldown--;
             if(cooldown == 0) {
                 cooldown = 7;

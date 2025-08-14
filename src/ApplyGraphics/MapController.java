@@ -3,6 +3,7 @@ package ApplyGraphics;
 import Character.KindsOfPlants.*;
 import Character.KindsOfPlants.IceShroom;
 import Character.KindsOfZombie.Zombie;
+import GameServer.Server;
 import Map.GameMap;
 import Map.Grave;
 import Map.ZombieFactory;
@@ -27,8 +28,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import Character.Sun;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class MapController {
 
@@ -51,7 +53,7 @@ public class MapController {
     public static int waveCount = 1;
     public static Timeline gameLoop;
     public static long time = 0;
-    public static int score = 10000;
+    public static int score = 300;
     private final ImageView[][] fogView = new ImageView[5][5];
 
 
@@ -61,8 +63,9 @@ public class MapController {
     ArrayList<Plant> cardPlants;
     private final Pane[][] gridPanes = new Pane[5][9];
 
+
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         gameProgressBar.setScaleX(-1);
         GameMap.getInstance().initializeFog();
         zombieFactory = new ZombieFactory(paneWindow);
@@ -97,7 +100,12 @@ public class MapController {
         //main loop
         gameLoop = new Timeline(new KeyFrame(Duration.millis(100),e -> {
             gameProgressBar.setProgress(Zombie.NumberOfTotalZombies/57.0);
-            if(gameProgressBar.getProgress() >= 1 && ZombieFactory.zombies.isEmpty()) {
+            if((gameProgressBar.getProgress() >= 1 && ZombieFactory.zombies.isEmpty()) || GameMain.winner) {
+                try {
+                    Server.sendEndMessage(1);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 PauseGameController.isWin = 1;
                 pause();
             }
@@ -105,12 +113,35 @@ public class MapController {
             setOnMouseEntered();
             if (ModeController.getSelectedMode() == ModeController.Mode.NIGHT)Platform.runLater(this::applyFog);
             time += 100;
-            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000)Sun.addToPane(paneWindow);
+            if(time % 10000 == 0 && ModeController.getSelectedMode() == ModeController.Mode.DAY && time <= 120000) {
+                try {
+                    Sun.addToPane(paneWindow);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             GameMap.getInstance().checkWar();
             sunPoint.setText(Integer.toString(score));
             //apply zombies attack
             if(time % 1000 == 0 && time <= 120000){
-                handleZombiesWave1();
+                try {
+                    handleZombiesWave1();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            try {
+                int number = Server.winTheGame();
+                if(number == 1){
+                    GameMain.winner = true;
+                }
+                if (number == -1) {
+                    GameMain.loser = true;
+                }
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -199,7 +230,6 @@ public class MapController {
                 PauseGameController.pauseStage.setScene(scene);
                 PauseGameController.pauseStage.setResizable(false);
                 PauseGameController.pauseStage.initOwner(GameMain.mainStage);
-                PauseGameController.pauseStage.initModality(Modality.APPLICATION_MODAL);
                 PauseGameController.pauseStage.initStyle(StageStyle.UNDECORATED);
                 PauseGameController.pauseStage.show();
             } catch (Exception e) {
@@ -238,7 +268,7 @@ public class MapController {
     }
 
 
-    public void createGrid(){
+    public void createGrid() throws IOException {
         final int rows = gridPane.getRowCount();
         final int cols = gridPane.getColumnCount();
 
@@ -252,9 +282,12 @@ public class MapController {
                 gridPanes[i][j] = cell;
 
                 cell.setPrefSize(80, 80);
-                if(j < 5)fogView[i][j] = new ImageView(new Image("/Images/resources/graphics/extentions/fog0.png"));
 
-                    //adding graves!
+                if(j < 5) {
+                    fogView[i][j] = new ImageView(new Image("/Images/resources/graphics/extentions/fog0.png"));
+                }
+
+//                  adding graves!
                     for(Grave grave : Grave.graves){
                         if(grave.getCol() == j && grave.getRow() == i){
                             cell.getChildren().add(grave.getImageView());
@@ -278,7 +311,7 @@ public class MapController {
                     }
 
                     //this added when loading action
-                    for(Plant plant : GameMap.getInstance().plants){
+                    for(Plant plant : GameMap.plants){
                         if(plant.getRow() == i && plant.getCol() == j){
                             cell.getChildren().add(plant.getImageView());
                             GameMap.getInstance().addPlant(plant, i, j);
@@ -363,7 +396,7 @@ public class MapController {
             if(zombie.getBiteTimeline() != null)zombie.getBiteTimeline().pause();
             if(zombie.getSlowTimer() != null)zombie.getSlowTimer().pause();
         }
-        for(Plant plant : GameMap.getInstance().plants){
+        for(Plant plant : GameMap.plants){
             if(plant.getTimeline() != null){
                 plant.getTimeline().pause();
             }
@@ -387,10 +420,9 @@ public class MapController {
         if(HypnoShroom.cooldownTimeline != null)HypnoShroom.cooldownTimeline.pause();
     }
 
-    private void handleZombiesWave1() {
+    private void handleZombiesWave1() throws IOException {
         long current = time / 1000;
         ArrayList<Zombie> types;
-        Random rand = new Random();
 
         // choose zombies depending on the time
         boolean normal = true;
@@ -420,8 +452,8 @@ public class MapController {
         }
 
         for (int i = 0; i < numberOfZombies; i++) {
-            int index = rand.nextInt(types.size());
-            int lane = rand.nextInt(5);
+            int index = Server.generateRandom(types.size());
+            int lane = Server.generateRandom(5);
             zombieFactory.createZombie(types.get(index), lane);
 
         }

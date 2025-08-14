@@ -6,8 +6,6 @@ import Character.KindsOfZombie.Zombie;
 import Map.GameMap;
 import Map.ZombieFactory;
 import Save_Logic.SaveGame;
-import javafx.animation.Animation;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +16,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.Serializable;
 import Map.Grave;
-
 import Character.*;
 
 public class PauseGameController implements Serializable {
@@ -130,7 +127,7 @@ public class PauseGameController implements Serializable {
 
     public void clearData(){
         resetCooldowns();
-        MapController.score = 10000;
+        MapController.score = 300;
         MapController.waveCount = 1;
         MapController.time = 0;
         ZombieFactory.zombies.clear();

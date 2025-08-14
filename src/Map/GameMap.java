@@ -1,12 +1,12 @@
 package Map;
 
 import Character.KindsOfPlants.Plant;
-import Character.KindsOfPlants.Plantern;
 import Character.KindsOfZombie.Zombie;
+import GameServer.Server;
 import javafx.scene.layout.Pane;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class GameMap {
 
@@ -21,7 +21,7 @@ public class GameMap {
     public static ArrayList<Plant> plants = new ArrayList<>();
 
 
-    private GameMap() {}
+    private GameMap() {} // here use singleton design pattern to prevent creating object of game map more that once!
 
     public static GameMap getInstance() {
         if(instance == null) instance = new GameMap();
@@ -67,13 +67,14 @@ public class GameMap {
         }
     }
 
-    public void zombieGraveAttack() {
-        Random rand = new Random();
-        int numberOfZombies = rand.nextInt(Grave.graves.size());
-        for(Grave grave : Grave.graves) {
-            grave.generateZombies();
-            numberOfZombies--;
-            if(numberOfZombies == -1) break;
+    public void zombieGraveAttack() throws IOException {
+        if(!Grave.graves.isEmpty()) {
+            int numberOfZombies = Server.generateRandom(Grave.graves.size());
+            for (Grave grave : Grave.graves) {
+                grave.generateZombies();
+                numberOfZombies--;
+                if (numberOfZombies == -1) break;
+            }
         }
     }
 
@@ -103,13 +104,13 @@ public class GameMap {
         return row >= 0 && row < ROWS && col >= 0 && col < COLS;
     }
 
-    public void generateGrave(){
-        Random rand = new Random();
+    public void generateGrave() throws IOException {
         //at most 5 grave can be existed in the map
-        int numberOfGraves = rand.nextInt(5);
+        int numberOfGraves = Server.generateRandom(5);
+
         for(int i = 0; i < numberOfGraves; i++){
-            int row = rand.nextInt(5);
-            int col = rand.nextInt(3) + 6;
+            int row = Server.generateRandom(5);
+            int col = Server.generateRandom(3) + 6;
             new Grave(row,col);
             graved[row][col] = true;
         }
@@ -122,7 +123,6 @@ public class GameMap {
             }
         }
     }
-
 
 
     public void cleanGrave(){
@@ -149,10 +149,6 @@ public class GameMap {
         return grid;
     }
     public boolean getFog(int row, int col) {return foged[row][col];}
-
-    public boolean[][] getFoged() {
-        return foged;
-    }
 }
 
 

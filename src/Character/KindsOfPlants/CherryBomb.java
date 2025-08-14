@@ -7,22 +7,21 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+
 
 public  class CherryBomb extends BombPlant implements Serializable {
     private static final String cherryBombCardImageAddress = "/Images/resources/graphics/Cards/CherryBomb.png";
     private static final String cherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/CherryBomb.gif";
     private static final String ExplodeCherryBombImageAddress = "/Images/resources/graphics/Plants/CherryBomb/Boom.gif";
-    public static int cooldown = 10;
+    public static int cooldown = 7;
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
 
     public CherryBomb() {
         //dont have idea about the hp!
         super(150, 100000, new Image(cherryBombImageAddress),new Image(cherryBombCardImageAddress));
-
     }
 
     @Override
@@ -48,12 +47,12 @@ public  class CherryBomb extends BombPlant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 10;
+                cooldown = 7;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(10);
+        cooldownTimeline.setCycleCount(7);
         cooldownTimeline.play();
     }
 }

@@ -33,7 +33,7 @@ public class PeaShooter extends PeaPlant implements Serializable {
 
     public static void startCooldown() {
         isReady = false;
-         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
+        cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1),event -> {
              cooldown--;
             if(cooldown == 0) {
                 cooldown = 5;
@@ -48,7 +48,8 @@ public class PeaShooter extends PeaPlant implements Serializable {
     @Override
     public void updateImageSituation(Pane pane) {
         checkBullet();
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1.75), e ->{
+        // shot per one second
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e ->{
             if(getCheckShot()){
                 shoot(pane);
             }

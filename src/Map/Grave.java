@@ -1,13 +1,12 @@
 package Map;
 
 import ApplyGraphics.MapController;
+import GameServer.Server;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Grave implements Serializable {
     private static final String ImageAddress = "/Images/resources/graphics/extentions/grave.png";
@@ -28,16 +27,16 @@ public class Grave implements Serializable {
         graves.add(this);
     }
 
-    public void generateZombies() {
-        double random = Math.random();
+    public void generateZombies() throws IOException {
+        int number = Server.generateRandom(10);
         if(MapController.time/1000 <= 60){
-            if(random < 0.5)MapController.zombieFactory.createRegularZombie(row, x);
+            if(number < 5)MapController.zombieFactory.createRegularZombie(row, x);
             else MapController.zombieFactory.createConeHeadZombie(row, x);
         }
         else{
-            if(random < 0.4)MapController.zombieFactory.createRegularZombie(row, x);
-            else if(random < 0.7)MapController.zombieFactory.createConeHeadZombie(row, x);
-            else if(random < 0.9)MapController.zombieFactory.createScreenDoorZombie(row, x);
+            if(number < 4)MapController.zombieFactory.createRegularZombie(row, x);
+            else if(number < 7)MapController.zombieFactory.createConeHeadZombie(row, x);
+            else if(number < 9)MapController.zombieFactory.createScreenDoorZombie(row, x);
             else MapController.zombieFactory.createIMPZombie(row, x);
         }
     }

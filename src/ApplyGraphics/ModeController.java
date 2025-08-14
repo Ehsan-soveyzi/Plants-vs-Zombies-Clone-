@@ -17,8 +17,7 @@ public class ModeController implements Serializable {
     }
 
     private static Mode selectedMode;
-
-
+    
     @FXML
     private ImageView dayMode;
     @FXML
@@ -47,6 +46,7 @@ public class ModeController implements Serializable {
         });
     }
 
+
     public void modeSelected(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ChooseCard.fxml"));
@@ -60,6 +60,7 @@ public class ModeController implements Serializable {
             e.printStackTrace();
         }
     }
+
     public void backButton(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
@@ -81,3 +82,4 @@ public class ModeController implements Serializable {
         selectedMode = mode;
     }
 }
+

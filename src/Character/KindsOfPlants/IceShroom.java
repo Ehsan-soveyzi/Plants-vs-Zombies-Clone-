@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class IceShroom extends Plant implements Serializable {
     private static final String iceShroomImageAddress = "/Images/resources/graphics/Plants/IceShroom/IceShroom/IceShroom.gif";
     private static final String iceShroomCardImageAddress = "/Images/resources/graphics/Cards/IceShroom.png";
-    public static int cooldown = 15;
+    public static int cooldown = 10;
     private static final String iceShroomSleepImage = "/Images/resources/graphics/Plants/IceShroom/IceShroomSleep/IceShroomSleep.gif";
     public static boolean isReady = true;
     public static Timeline cooldownTimeline;
@@ -46,12 +46,12 @@ public class IceShroom extends Plant implements Serializable {
         cooldownTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             cooldown--;
             if(cooldown == 0) {
-                cooldown = 15;
+                cooldown = 10;
                 isReady = true;
                 cooldownTimeline.stop();
             }
         }));
-        cooldownTimeline.setCycleCount(15);
+        cooldownTimeline.setCycleCount(10);
         cooldownTimeline.play();
     }
 

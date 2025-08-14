@@ -3,11 +3,9 @@ package Character.KindsOfPlants;
 import ApplyGraphics.ModeController;
 import Map.GameMap;
 import javafx.animation.Timeline;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-
 import java.io.Serializable;
 
 public abstract class Plant implements Serializable {

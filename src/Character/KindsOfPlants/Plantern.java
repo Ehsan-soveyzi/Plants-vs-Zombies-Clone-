@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.security.Key;
 
 public class Plantern extends Plant {
     private static final String planternImageAddress = "/Images/resources/graphics/Plants/Plantern/Plantern.gif";
